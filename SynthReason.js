@@ -10,8 +10,8 @@
    License along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
-var resource = "/sdcard/uber.txt";
-var rules = "/sdcard/reason.txt";
+var resource = "/sdcard/n.txt";
+var rules = "/sdcard/uber.txt";
 var output = "";
 var txt = "";
 function OnStart()
@@ -28,10 +28,9 @@ function OnStart()
 
 function btnLoad_OnTouch()
 {
-	var count = 0;
 	var vocabproc = "";
 	var vocabsyn = "";
-	for (count = 0; count < 100; count++)
+	for (var count = 0; count < 100; count++)
 	{
 		vocabproc = app.ReadFile("/sdcard/test/" + count + ".txt");
 		if (vocabproc.length > 0)
@@ -43,7 +42,6 @@ function btnLoad_OnTouch()
 			break;
 		}
 	}
-
 	var KB = app.ReadFile(rules);
 	var enx = KB.split(" ");
 	var vocabprep = vocabsyn.split(":::::");
@@ -70,6 +68,20 @@ function btnLoad_OnTouch()
 				output += en[i] + " ";
 				app.SetClipboardText(output);
 				edt.SetText(output);
+				if (cat[b] == 2)
+				{
+					var pool = "";
+					var sentence = KB.split(".");
+					for (var j = 0; j != sentence.length - 1; j++)
+					{
+						if (sentence[j].indexOf(en[i]) > -1)
+						{
+							pool += sentence[j];
+						}
+					}
+					en = pool.split(" ");
+					output += "\n\n";
+				}
 				i = Math.floor(Math.random() * en.length);
 				break;
 			}
