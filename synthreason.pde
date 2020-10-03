@@ -17,10 +17,10 @@ String output = "";
 String txt = "";
 void setup()
 {
-  int count = 0;
+  // Load vocabulary
   String[]vocabproc;
   String vocabsyn = "";
-  for (count = 0; count < 20; count++)
+  for (int count = 0; count < 20; count++)
   {
     vocabproc = loadStrings(count + ".txt");
     if (vocabproc != null)
@@ -36,6 +36,7 @@ void setup()
       }
     }
   }
+  //Load rules
   String str = "";
   String[]KB = loadStrings(rules);
   for (int i = 0; i < KB.length; i++)
@@ -56,6 +57,7 @@ void setup()
     }
   }
   str = "";
+  //Load knowledgebase
   KB = loadStrings(resource);
   for (int i = 0; i < KB.length; i++)
   {
@@ -64,35 +66,30 @@ void setup()
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
   String output2 = "";
-
-  for (int b = 0; b != cat.length; b++)
+  for (int b = 0; b != cat.length; b++)//Execute rules
   {
     float r = random(en.length);
-    for (int i = round(r); i < en.length; i++)
+    for (int i = round(r); i < en.length; i++)//Continuum
     {
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
       {
         output += en[i] + " "; 
         if (int (cat[b]) == 2)
         {
-          KB = loadStrings("https://en.wikipedia.org/wiki/" + en[i]);
-          for (int j = 0; j < KB.length; j++)
-          {
-            str += KB[j];
-          }
-          en = str.split(" ");
-        }
-
-        if (int (cat[b]) == 2)
-        {
           String[]outputl = output.split(" ");
-          if (outputl.length > 10 && outputl.length < 20) {
+          if (outputl.length > 10 && outputl.length < 20) {//Sentence sizer
             String ss = output.substring(0, output.length() -1);
             output2 += ss + ".\n\n";
             outputx = createWriter("output.txt");
             outputx.println(output2);
             outputx.flush();
             outputx.close();
+            KB = loadStrings("https://en.wikipedia.org/wiki/" + en[i]);//Learn
+            for (int j = 0; j < KB.length; j++)
+            {
+              str += KB[j];
+            }
+            en = str.split(" ");
           }
           output = "";
         }
@@ -102,7 +99,7 @@ void setup()
       }
     }
   }
-  outputx.println(output2);
+  outputx.println(output2);//Save to file
   outputx.flush();
   outputx.close();
   exit();
