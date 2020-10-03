@@ -11,8 +11,8 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 PrintWriter outputx;
-String resource = "reason.txt";
-String rules = "uber.txt";
+String resource = "uber.txt";
+String rules = "reason.txt";
 String output = "";
 String txt = "";
 void setup()
@@ -64,7 +64,7 @@ void setup()
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
   String output2 = "";
-  outputx = createWriter("output.txt");
+
   for (int b = 0; b != cat.length; b++)
   {
     float r = random(en.length);
@@ -73,13 +73,26 @@ void setup()
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
       {
         output += en[i] + " "; 
-        
+        if (int (cat[b]) == 2)
+        {
+          KB = loadStrings("https://en.wikipedia.org/wiki/" + en[i]);
+          for (int j = 0; j < KB.length; j++)
+          {
+            str += KB[j];
+          }
+          en = str.split(" ");
+        }
+
         if (int (cat[b]) == 2)
         {
           String[]outputl = output.split(" ");
-          if (outputl.length > 0 && outputl.length < 17) {
+          if (outputl.length > 10 && outputl.length < 20) {
             String ss = output.substring(0, output.length() -1);
-            output2 += ss + ". \n\n ";
+            output2 += ss + ".\n\n";
+            outputx = createWriter("output.txt");
+            outputx.println(output2);
+            outputx.flush();
+            outputx.close();
           }
           output = "";
         }
