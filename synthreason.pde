@@ -11,8 +11,8 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 PrintWriter outputx;
-String resource = "philosophy.txt";
-String rules = "n.txt";
+String resource = "reason.txt";
+String rules = "uber.txt";
 String output = "";
 String txt = "";
 void setup()
@@ -73,12 +73,13 @@ void setup()
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
       {
         output += en[i] + " "; 
+        
         if (int (cat[b]) == 2)
         {
           String[]outputl = output.split(" ");
-          if (outputl.length > 6 && outputl.length < 17) {
+          if (outputl.length > 0 && outputl.length < 17) {
             String ss = output.substring(0, output.length() -1);
-            output2 += ss + ". ";
+            output2 += ss + ". \n\n ";
           }
           output = "";
         }
