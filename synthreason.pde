@@ -76,7 +76,7 @@ void setup()
         if (int (cat[b]) == 2)
         {
           String[]outputl = output.split(" ");
-          if (outputl.length < 6 && outputl.length < 17) {
+          if (outputl.length > 6 && outputl.length < 17) {
             String ss = output.substring(0, output.length() -1);
             output2 += ss + ". ";
           }
