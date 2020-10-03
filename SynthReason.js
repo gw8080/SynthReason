@@ -70,6 +70,7 @@ function btnLoad_OnTouch()
 				output += en[i] + " ";
 				app.SetClipboardText(output);
 				edt.SetText(output);
+				i = Math.floor(Math.random() * en.length);
 				break;
 			}
 		}
