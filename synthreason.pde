@@ -11,8 +11,8 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 PrintWriter outputx;
-String resource = "n.txt";
-String rules = "uber.txt";
+String resource = "uber.txt";
+String rules = "reason.txt";
 String output = "";
 String txt = "";
 void setup()
