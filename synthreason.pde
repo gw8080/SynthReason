@@ -63,8 +63,9 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
+  int br = 0;
   outputx = createWriter("output.txt");
-  for (int b = 0; b != cat.length - 1; b++)
+  for (int b = 2; b != cat.length - 10; b++)
   {
     float r = random(en.length);
     for (int i = round(r); i < en.length; i++)
@@ -72,33 +73,51 @@ void setup()
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
       {
         //inference rules
-        if (int (cat[b]) == 4 && int (cat[b+1]) == 4) {
-          break;
-        }
-        if (int (cat[b]) == 1 && int (cat[b+1]) == 4) {
-          break;
-        }
-        if (int (cat[b]) == 4 && int (cat[b+1]) == 1) {
-          break;
-        }
-        if (int (cat[b]) == 1 && int (cat[b+1]) == 1) {
-          break;
-        }
-        if (int (cat[b]) == 0 && int (cat[b+1]) == 1) {
-          break;
-        }
-        if (int (cat[b]) == 0 && int (cat[b+1]) == 0) {
-          break;
+        while (true) {
+          if (int (cat[b]) == 4 && int (cat[b+1]) == 4) {
+            output += enx[b] + " ";
+            b++;
+            br++;
+          }
+          if (int (cat[b]) == 1 && int (cat[b+1]) == 4) {
+            output += enx[b] + " ";
+            b++;
+            br++;
+          }
+          if (int (cat[b]) == 4 && int (cat[b+1]) == 1) {
+            output += enx[b] + " ";
+            b++;
+            br++;
+          }
+          if (int (cat[b]) == 1 && int (cat[b+1]) == 1) {
+            output += enx[b] + " ";
+            b++;
+            br++;
+          }
+          if (int (cat[b]) == 0 && int (cat[b+1]) == 1) {
+            output += enx[b] + " ";
+            b++;
+            br++;
+          }
+          if (int (cat[b]) == 1 && int (cat[b+1]) == 0) {
+            output += enx[b] + " ";
+            b++;
+            br++;
+          }
+          if (br == 0) {
+            break;
+          }
+          br = 0;
         }
         if (int (cat[b]) == 10) {//learn from internet trigger
-         KB = loadStrings("https://en.wikipedia.org/wiki/" + en[i]);//Learn
-            for (int j = 0; j < KB.length; j++)
-            {
-              str += KB[j];
-            }
-            en = str.split(" ");
+          KB = loadStrings("https://en.wikipedia.org/wiki/" + en[i]);//Learn
+          for (int j = 0; j < KB.length; j++)
+          {
+            str += KB[j];
           }
-        output += en[i] + " ";
+          en = str.split(" ");
+        }
+        output += en[i] + cat[b] + " ";
         r = random(en.length);
         i = round(r);
         break;
