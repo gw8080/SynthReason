@@ -11,7 +11,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 PrintWriter outputx;
-String resource = "uber.txt";
+String resource = "n.txt";
 String rules = "reason.txt";
 String output = "";
 String txt = "";
@@ -100,6 +100,11 @@ void setup()
             br++;
           }
           if (int (cat[b]) == 1 && int (cat[b+1]) == 0) {
+            output += enx[b] + " ";
+            b++;
+            br++;
+          }
+           if (int (cat[b]) == 1 && int (cat[b+1]) == 7) {
             output += enx[b] + " ";
             b++;
             br++;
