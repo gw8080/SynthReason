@@ -122,7 +122,7 @@ void setup()
           }
           en = str.split(" ");
         }
-        output += en[i] + cat[b] + " ";
+        output += en[i] + " ";
         r = random(en.length);
         i = round(r);
         break;
