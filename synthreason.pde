@@ -17,10 +17,10 @@ String output = "";
 String txt = "";
 void setup()
 {
-  // Load vocabulary
+  int count = 0;
   String[]vocabproc;
   String vocabsyn = "";
-  for (int count = 0; count < 20; count++)
+  for (count = 0; count < 20; count++)
   {
     vocabproc = loadStrings(count + ".txt");
     if (vocabproc != null)
@@ -36,7 +36,6 @@ void setup()
       }
     }
   }
-  //Load rules
   String str = "";
   String[]KB = loadStrings(rules);
   for (int i = 0; i < KB.length; i++)
@@ -57,7 +56,6 @@ void setup()
     }
   }
   str = "";
-  //Load knowledgebase
   KB = loadStrings(resource);
   for (int i = 0; i < KB.length; i++)
   {
@@ -65,41 +63,49 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
-  String output2 = "";
-  for (int b = 0; b != cat.length; b++)//Execute rules
+  outputx = createWriter("output.txt");
+  for (int b = 0; b != cat.length - 1; b++)
   {
     float r = random(en.length);
-    for (int i = round(r); i < en.length; i++)//Continuum
+    for (int i = round(r); i < en.length; i++)
     {
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
       {
-        output += en[i] + " "; 
-        if (int (cat[b]) == 2)
-        {
-          String[]outputl = output.split(" ");
-          if (outputl.length > 10 && outputl.length < 20) {//Sentence sizer
-            String ss = output.substring(0, output.length() -1);
-            output2 += ss + ".\n\n";
-            outputx = createWriter("output.txt");
-            outputx.println(output2);
-            outputx.flush();
-            outputx.close();
-            KB = loadStrings("https://en.wikipedia.org/wiki/" + en[i]);//Learn
+        //inference rules
+        if (int (cat[b]) == 4 && int (cat[b+1]) == 4) {
+          break;
+        }
+        if (int (cat[b]) == 1 && int (cat[b+1]) == 4) {
+          break;
+        }
+        if (int (cat[b]) == 4 && int (cat[b+1]) == 1) {
+          break;
+        }
+        if (int (cat[b]) == 1 && int (cat[b+1]) == 1) {
+          break;
+        }
+        if (int (cat[b]) == 0 && int (cat[b+1]) == 1) {
+          break;
+        }
+        if (int (cat[b]) == 0 && int (cat[b+1]) == 0) {
+          break;
+        }
+        if (int (cat[b]) == 10) {//learn from internet trigger
+         KB = loadStrings("https://en.wikipedia.org/wiki/" + en[i]);//Learn
             for (int j = 0; j < KB.length; j++)
             {
               str += KB[j];
             }
             en = str.split(" ");
           }
-          output = "";
-        }
+        output += en[i] + " ";
         r = random(en.length);
         i = round(r);
         break;
       }
     }
   }
-  outputx.println(output2);//Save to file
+  outputx.println(output);
   outputx.flush();
   outputx.close();
   exit();
