@@ -11,8 +11,8 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 PrintWriter outputx;
-String resource = "uber.txt";
-String rules = "reason.txt";
+String resource = "n.txt";
+String rules = "n.txt";
 String output = "";
 String txt = "";
 void setup()
@@ -120,9 +120,6 @@ void setup()
           }
           en = str.split(" ");
         }
-
-        r = random(en.length);
-        i = round(r);
         break;
       }
     }
