@@ -11,7 +11,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 PrintWriter outputx;
-String resource = "n.txt";
+String resource = "uber.txt";
 String rules = "reason.txt";
 String output = "";
 String txt = "";
@@ -65,7 +65,7 @@ void setup()
   String[]cat = txt.split(",");
   int br = 0;
   outputx = createWriter("output.txt");
-  for (int b = 2; b != cat.length - 10; b++)
+  for (int b = 2; b != cat.length - 20; b++)
   {
     float r = random(en.length);
     for (int i = round(r); i < en.length; i++)
@@ -73,47 +73,45 @@ void setup()
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
       {
         //inference rules
-        while (true) {
-          if (int (cat[b]) == 4 && int (cat[b+1]) == 4) {
-            output += enx[b] + " ";
-            b++;
-            br++;
-          }
-          if (int (cat[b]) == 1 && int (cat[b+1]) == 4) {
-            output += enx[b] + " ";
-            b++;
-            br++;
-          }
-          if (int (cat[b]) == 4 && int (cat[b+1]) == 1) {
-            output += enx[b] + " ";
-            b++;
-            br++;
-          }
-          if (int (cat[b]) == 1 && int (cat[b+1]) == 1) {
-            output += enx[b] + " ";
-            b++;
-            br++;
-          }
-          if (int (cat[b]) == 0 && int (cat[b+1]) == 1) {
-            output += enx[b] + " ";
-            b++;
-            br++;
-          }
-          if (int (cat[b]) == 1 && int (cat[b+1]) == 0) {
-            output += enx[b] + " ";
-            b++;
-            br++;
-          }
-           if (int (cat[b]) == 1 && int (cat[b+1]) == 7) {
-            output += enx[b] + " ";
-            b++;
-            br++;
-          }
-          if (br == 0) {
-            break;
-          }
-          br = 0;
+
+        if (int (cat[b]) == 0) {
+          output += en[i] + " ";
+          break;
         }
+        if (int (cat[b]) == 1) {
+          output += enx[b] + " ";
+          break;
+        }
+        if (int (cat[b]) == 2) {
+          output += en[i] + " ";
+          break;
+        }
+        if (int (cat[b]) == 3) {
+          output += en[i] + " ";
+          break;
+        }
+        if (int (cat[b]) == 4) {
+          output += enx[b] + " ";
+          break;
+        }
+        if (int (cat[b]) == 5) {
+          output += en[i] + " ";
+          break;
+        }
+        if (int (cat[b]) == 6) {
+          output += en[i] + " ";
+          break;
+        }
+        if (int (cat[b]) == 7) {
+          output += en[i] + " ";
+          break;
+        }
+        if (int (cat[b]) == 8) {
+          output += en[i] + " ";
+          break;
+        }
+
+
         if (int (cat[b]) == 10) {//learn from internet trigger
           KB = loadStrings("https://en.wikipedia.org/wiki/" + en[i]);//Learn
           for (int j = 0; j < KB.length; j++)
@@ -122,7 +120,7 @@ void setup()
           }
           en = str.split(" ");
         }
-        output += en[i] + " ";
+
         r = random(en.length);
         i = round(r);
         break;
