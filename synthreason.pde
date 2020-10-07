@@ -65,7 +65,7 @@ void setup()
   String[]cat = txt.split(",");
   int go = 0;
   outputx = createWriter("output.txt");
-  for (int b = 2; b != cat.length - 20; b++)
+  for (int b = 0; b != cat.length; b++)
   {
     float r = random(en.length);
     for (int i = round(r); i < en.length-2; i++)
@@ -78,7 +78,7 @@ void setup()
           go++;
           break;
         }
-        if (int (cat[b]) == 1 && go > 1) {
+        if (int (cat[b]) == 1 && go > 0) {
           output += en[i] + " ";
           go = 0;
           break;
@@ -93,7 +93,7 @@ void setup()
           go++;
           break;
         }
-        if (int (cat[b]) == 4 && go > 1) {
+        if (int (cat[b]) == 4 && go > 0) {
           output += en[i] + " ";
           go = 0;
           break;
@@ -108,12 +108,12 @@ void setup()
           go++;
           break;
         }
-        if (int (cat[b]) == 7 && go > 1) {
+        if (int (cat[b]) == 7 && go > 0) {
           output += en[i] + " ";
           go = 0;
           break;
         }
-        if (int (cat[b]) == 8 && go > 1) {
+        if (int (cat[b]) == 8 && go > 0) {
           output += en[i] + " ";
           go = 0;
           break;
