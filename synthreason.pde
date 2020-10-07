@@ -11,8 +11,8 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 PrintWriter outputx;
-String resource = "n.txt";
-String rules = "n.txt";
+String resource = "uber.txt";
+String rules = "reason.txt";
 String output = "";
 String txt = "";
 void setup()
@@ -68,51 +68,57 @@ void setup()
   for (int b = 2; b != cat.length - 20; b++)
   {
     float r = random(en.length);
-    for (int i = round(r); i < en.length; i++)
+    for (int i = round(r); i < en.length-2; i++)
     {
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
       {
         //inference rules
 
-        if (int (cat[b]) == 0) {
-          output += en[i] + " ";
+       if (int (cat[b]) == 0) {
+          if(str.indexOf(en[i] + " " + en[i+1]) > -1 && vocabprep[int (cat[b+1])].indexOf(" "+en[i+1]+" ") > -1){
+          output += en[i] + cat[b] + " " + en[i+1] + " ";
+          }
           break;
         }
-        if (int (cat[b]) == 1) {
-          output += enx[b] + " ";
+         if (int (cat[b]) == 1) {
+          if(str.indexOf(en[i] + " " + en[i+1] + " " + en[i+2]) > -1 && vocabprep[int (cat[b+1])].indexOf(" "+en[i+1]+" ") > -1 && vocabprep[int (cat[b+2])].indexOf(" "+en[i+2]+" ") > -1){
+          output += en[i] + cat[b] + " " + en[i+1] + " " + en[i+2] + " ";
+          }
           break;
         }
         if (int (cat[b]) == 2) {
-          output += en[i] + " ";
+           output += en[i] + " ";
           break;
         }
         if (int (cat[b]) == 3) {
-          output += en[i] + " ";
+           output += en[i] + " ";
           break;
         }
-        if (int (cat[b]) == 4) {
-          output += enx[b] + " ";
+       if (int (cat[b]) == 4) {
+          if(str.indexOf(en[i] + " " + en[i+1]) > -1 && vocabprep[int (cat[b+1])].indexOf(" "+en[i+1]+" ") > -1){
+          output += en[i] + cat[b] + " " + en[i+1] + " ";
+          }
           break;
         }
         if (int (cat[b]) == 5) {
-          output += en[i] + " ";
+           output += en[i] + " ";
           break;
         }
         if (int (cat[b]) == 6) {
-          output += en[i] + " ";
+           output += en[i] + " ";
           break;
         }
         if (int (cat[b]) == 7) {
-          output += en[i] + " ";
+           output += en[i] + " ";
           break;
         }
         if (int (cat[b]) == 8) {
-          output += en[i] + " ";
+           output += en[i] + " ";
           break;
         }
 
 
-        if (int (cat[b]) == 10) {//learn from internet trigger
+        if (int (cat[b]) == 100) {//learn from internet trigger
           KB = loadStrings("https://en.wikipedia.org/wiki/" + en[i]);//Learn
           for (int j = 0; j < KB.length; j++)
           {
