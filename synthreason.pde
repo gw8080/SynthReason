@@ -63,7 +63,7 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
-  int br = 0;
+  int go = 0;
   outputx = createWriter("output.txt");
   for (int b = 2; b != cat.length - 20; b++)
   {
@@ -73,47 +73,49 @@ void setup()
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
       {
         //inference rules
-
-       if (int (cat[b]) == 0) {
-          if(str.indexOf(en[i] + " " + en[i+1]) > -1 && vocabprep[int (cat[b+1])].indexOf(" "+en[i+1]+" ") > -1){
-          output += en[i] + cat[b] + " " + en[i+1] + " ";
-          }
+        if (int (cat[b]) == 0) {
+          output += en[i] + " ";
+          go++;
           break;
         }
-         if (int (cat[b]) == 1) {
-          if(str.indexOf(en[i] + " " + en[i+1] + " " + en[i+2]) > -1 && vocabprep[int (cat[b+1])].indexOf(" "+en[i+1]+" ") > -1 && vocabprep[int (cat[b+2])].indexOf(" "+en[i+2]+" ") > -1){
-          output += en[i] + cat[b] + " " + en[i+1] + " " + en[i+2] + " ";
-          }
+        if (int (cat[b]) == 1 && go > 1) {
+          output += en[i] + " ";
+          go = 0;
           break;
         }
         if (int (cat[b]) == 2) {
-           output += en[i] + " ";
+          output += en[i] + " ";
+          go++;
           break;
         }
         if (int (cat[b]) == 3) {
-           output += en[i] + " ";
+          output += en[i] + " ";
+          go++;
           break;
         }
-       if (int (cat[b]) == 4) {
-          if(str.indexOf(en[i] + " " + en[i+1]) > -1 && vocabprep[int (cat[b+1])].indexOf(" "+en[i+1]+" ") > -1){
-          output += en[i] + cat[b] + " " + en[i+1] + " ";
-          }
+        if (int (cat[b]) == 4 && go > 1) {
+          output += en[i] + " ";
+          go = 0;
           break;
         }
         if (int (cat[b]) == 5) {
-           output += en[i] + " ";
+          output += en[i] + " ";
+          go++;
           break;
         }
         if (int (cat[b]) == 6) {
-           output += en[i] + " ";
+          output += en[i] + " ";
+          go++;
           break;
         }
-        if (int (cat[b]) == 7) {
-           output += en[i] + " ";
+        if (int (cat[b]) == 7 && go > 1) {
+          output += en[i] + " ";
+          go = 0;
           break;
         }
-        if (int (cat[b]) == 8) {
-           output += en[i] + " ";
+        if (int (cat[b]) == 8 && go > 1) {
+          output += en[i] + " ";
+          go = 0;
           break;
         }
 
