@@ -64,7 +64,7 @@ void setup()
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
   int go = 0;
-  outputx = createWriter("output.txt");
+
   for (int b = 0; b != cat.length; b++)
   {
     float r = random(en.length);
@@ -74,46 +74,52 @@ void setup()
       {
         //inference rules
         if (int (cat[b]) == 0) {
-          output += en[i] + " ";
-          go++;
+          if (vocabprep[int (cat[b+1])].indexOf("\n" + en[i+1]) > -1) {
+            output += en[i] + " " + en[i+1]+ " ";
+            b++;
+            go++;
+          }
           break;
         }
-        if (int (cat[b]) == 1 && go > 0) {
+        if (int (cat[b]) == 1 && go > 1) {
           output += en[i] + " ";
-          go = 0;
+          //go = 0;
           break;
         }
         if (int (cat[b]) == 2) {
-          output += en[i] + " ";
-          go++;
+          if (vocabprep[int (cat[b+1])].indexOf("\n" + en[i+1]) > -1) {
+            output += en[i] + " " + en[i+1] + " ";
+            b++;
+            go++;
+          }
           break;
         }
         if (int (cat[b]) == 3) {
           output += en[i] + " ";
-          go++;
+          //go++;
           break;
         }
-        if (int (cat[b]) == 4 && go > 0) {
+        if (int (cat[b]) == 4 && go > 1) {
           output += en[i] + " ";
           go = 0;
           break;
         }
         if (int (cat[b]) == 5) {
           output += en[i] + " ";
-          go++;
+          //go++;
           break;
         }
         if (int (cat[b]) == 6) {
           output += en[i] + " ";
-          go++;
+          //go++;
           break;
         }
-        if (int (cat[b]) == 7 && go > 0) {
+        if (int (cat[b]) == 7 && go > 1) {
           output += en[i] + " ";
           go = 0;
           break;
         }
-        if (int (cat[b]) == 8 && go > 0) {
+        if (int (cat[b]) == 8 && go > 1) {
           output += en[i] + " ";
           go = 0;
           break;
@@ -131,9 +137,11 @@ void setup()
         break;
       }
     }
+    outputx = createWriter("output.txt");
+    outputx.println(output);
+    outputx.flush();
+    outputx.close();
   }
-  outputx.println(output);
-  outputx.flush();
-  outputx.close();
+
   exit();
 }
