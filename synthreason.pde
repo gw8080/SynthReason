@@ -63,7 +63,7 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
-  int go = 0;
+  int go = 0,ax = 0;;
 
   for (int b = 0; b != cat.length; b++)
   {
@@ -74,24 +74,22 @@ void setup()
       {
         //inference rules
         if (int (cat[b]) == 0) {
-          if (vocabprep[int (cat[b+1])].indexOf("\n" + en[i+1]) > -1) {
-            output += en[i] + " " + en[i+1]+ " ";
-            b++;
-            go++;
+          if(KB[ax].indexOf(en[i]) > -1){
+          output += en[i] + " ";
+          go++;
           }
+
           break;
         }
         if (int (cat[b]) == 1 && go > 1) {
           output += en[i] + " ";
-          //go = 0;
+          go = 0;
           break;
         }
         if (int (cat[b]) == 2) {
-          if (vocabprep[int (cat[b+1])].indexOf("\n" + en[i+1]) > -1) {
-            output += en[i] + " " + en[i+1] + " ";
-            b++;
-            go++;
-          }
+          output += en[i] + " ";
+          ax++;
+          go++;
           break;
         }
         if (int (cat[b]) == 3) {
