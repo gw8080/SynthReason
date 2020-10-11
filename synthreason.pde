@@ -63,83 +63,56 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
-  int go = 0,ax = 0;;
-
-  for (int b = 0; b != cat.length; b++)
+  int go = 0;
+  for (int b = 0; b != cat.length-2; b++)
   {
     float r = random(en.length);
-    for (int i = round(r); i < en.length-2; i++)
-    {
-      if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
+
+
+    //inference rules
+
+    if (int (cat[b]) == 0) {
+      for (int i = round(r); i < en.length-2; i++)
       {
-        //inference rules
-        if (int (cat[b]) == 0) {
-          if(KB[ax].indexOf(en[i]) > -1){
-          output += en[i] + " ";
-          go++;
-          }
-
-          break;
-        }
-        if (int (cat[b]) == 1 && go > 1) {
-          output += en[i] + " ";
-          go = 0;
-          break;
-        }
-        if (int (cat[b]) == 2) {
-          output += en[i] + " ";
-          ax++;
+        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
+        {
+          output += en[i] + cat[b] + " ";
           go++;
           break;
         }
-        if (int (cat[b]) == 3) {
-          output += en[i] + " ";
-          //go++;
-          break;
-        }
-        if (int (cat[b]) == 4 && go > 1) {
-          output += en[i] + " ";
-          go = 0;
-          break;
-        }
-        if (int (cat[b]) == 5) {
-          output += en[i] + " ";
-          //go++;
-          break;
-        }
-        if (int (cat[b]) == 6) {
-          output += en[i] + " ";
-          //go++;
-          break;
-        }
-        if (int (cat[b]) == 7 && go > 1) {
-          output += en[i] + " ";
-          go = 0;
-          break;
-        }
-        if (int (cat[b]) == 8 && go > 1) {
-          output += en[i] + " ";
-          go = 0;
-          break;
-        }
-
-
-        if (int (cat[b]) == 100) {//learn from internet trigger
-          KB = loadStrings("https://en.wikipedia.org/wiki/" + en[i]);//Learn
-          for (int j = 0; j < KB.length; j++)
-          {
-            str += KB[j];
-          }
-          en = str.split(" ");
-        }
-        break;
       }
     }
-    outputx = createWriter("output.txt");
-    outputx.println(output);
-    outputx.flush();
-    outputx.close();
+
+    if (int (cat[b]) == 2) {
+      for (int i = round(r); i < en.length-2; i++)
+      {
+        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
+        {
+          output += en[i] + cat[b] + " ";
+          go++;
+          break;
+        }
+      }
+    }
+    if (go > 1) {
+      if (int (cat[b]) == 1 || int (cat[b]) == 3 ||int (cat[b]) == 4 || int (cat[b]) == 5||int (cat[b]) == 6 || int (cat[b]) == 7 || int (cat[b]) == 8) {
+        for (int i = round(r); i < en.length-2; i++)
+        {
+          if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
+          {
+            output += en[i] + cat[b] + " ";
+            go = 0;
+            b++;
+            break;
+          }
+        }
+      }
+    }
   }
 
+  outputx = createWriter("output.txt");
+  outputx.println(output);
+  outputx.flush();
+  outputx.close();
   exit();
 }
