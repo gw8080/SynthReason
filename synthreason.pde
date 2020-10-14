@@ -17,6 +17,7 @@ String output = "";
 String txt = "";
 void setup()
 {
+  //Load vocabulary
   int count = 0;
   String[]vocabproc;
   String vocabsyn = "";
@@ -36,6 +37,7 @@ void setup()
       }
     }
   }
+  //Load rules
   String str = "";
   String[]KB = loadStrings(rules);
   for (int i = 0; i < KB.length; i++)
@@ -55,6 +57,7 @@ void setup()
       }
     }
   }
+  //load resource
   str = "";
   KB = loadStrings(resource);
   for (int i = 0; i < KB.length; i++)
@@ -67,17 +70,22 @@ void setup()
   for (int b = 0; b != cat.length-2; b++)
   {
     float r = random(en.length);
-
-
     //inference rules
-
     if (int (cat[b]) == 0) {
       for (int i = round(r); i < en.length-2; i++)
       {
         if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
         {
-          output += en[i] + cat[b] + " ";
-          go++;
+          int prob = 0;
+          for (int x = 0; x != KB.length-1; x++) {
+            if (KB[x].indexOf(" " + en[i] + " ") > -1 && KB[x].indexOf(" " + en[i+1] + " ") > -1 ) {
+              prob++;
+            }
+          }
+          if (prob < 50) {
+            output += en[i] + " " + en[i+1] + " ";
+            go++;
+          }
           break;
         }
       }
@@ -88,8 +96,16 @@ void setup()
       {
         if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
         {
-          output += en[i] + cat[b] + " ";
-          go++;
+          int prob = 0;
+          for (int x = 0; x != KB.length-1; x++) {
+            if (KB[x].indexOf(" " + en[i] + " ") > -1 && KB[x].indexOf(" " + en[i+1] + " ") > -1 ) {
+              prob++;
+            }
+          }
+          if (prob < 50) {
+            output += en[i] + " " + en[i+1] + " ";
+            go++;
+          }
           break;
         }
       }
@@ -100,16 +116,15 @@ void setup()
         {
           if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
           {
-            output += en[i] + cat[b] + " ";
+            output += en[i] + " ";
             go = 0;
-            b++;
             break;
           }
         }
       }
     }
   }
-
+  //Save to file
   outputx = createWriter("output.txt");
   outputx.println(output);
   outputx.flush();
