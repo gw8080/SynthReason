@@ -21,22 +21,22 @@ void setup()
   int count = 0;
   String[]vocabproc;
   String vocabsyn = "";
-  for (count = 0; count < 20; count++)
+  for (count = 0; count < 4000; count++)
   {
     vocabproc = loadStrings(count + ".txt");
     if (vocabproc != null)
     {
-      String voc = join(vocabproc, '\n');
+      String voc = join(vocabproc, ' ');
       if (voc.length() > 0)
       {
         vocabsyn += voc + ":::::";
       }
-      if (voc.length() == 0)
-      {
-        break;
-      }
     }
   }
+  outputx = createWriter("vocab.txt");
+  outputx.println(vocabsyn);
+  outputx.flush();
+  outputx.close();
   //Load rules
   String str = "";
   String[]KB = loadStrings(rules);
@@ -50,13 +50,17 @@ void setup()
   {
     for (int y = 0; y < vocabprep.length; y++)
     {
-      if (vocabprep[y].indexOf("\n" + enx[x] + "\n") > -1)
+      if (vocabprep[y].indexOf(" " + enx[x] + " ") > -1)
       {
         txt += y + ",";
         break;
       }
     }
   }
+  outputx = createWriter("rules.txt");
+  outputx.println(txt);
+  outputx.flush();
+  outputx.close();
   //load resource
   str = "";
   KB = loadStrings(resource);
@@ -66,60 +70,17 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
-  int go = 0;
   for (int b = 0; b != cat.length-2; b++)
   {
     float r = random(en.length);
     //inference rules
-    if (int (cat[b]) == 0) {
+    if (int (cat[b]) >= 0) {
       for (int i = round(r); i < en.length-2; i++)
       {
-        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
+        if (vocabprep[int (cat[b])].indexOf(" " + en[i] + " ") > -1)
         {
-          int prob = 0;
-          for (int x = 0; x != KB.length-1; x++) {
-            if (KB[x].indexOf(" " + en[i] + " ") > -1 && KB[x].indexOf(" " + en[i+1] + " ") > -1 ) {
-              prob++;
-            }
-          }
-          if (prob < 50) {
-            output += en[i] + " " + en[i+1] + " ";
-            go++;
-          }
+          output += en[i] + " " + en[i+1] + " ";
           break;
-        }
-      }
-    }
-
-    if (int (cat[b]) == 2) {
-      for (int i = round(r); i < en.length-2; i++)
-      {
-        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
-        {
-          int prob = 0;
-          for (int x = 0; x != KB.length-1; x++) {
-            if (KB[x].indexOf(" " + en[i] + " ") > -1 && KB[x].indexOf(" " + en[i+1] + " ") > -1 ) {
-              prob++;
-            }
-          }
-          if (prob < 50) {
-            output += en[i] + " " + en[i+1] + " ";
-            go++;
-          }
-          break;
-        }
-      }
-    }
-    if (go > 1) {
-      if (int (cat[b]) == 1 || int (cat[b]) == 3 ||int (cat[b]) == 4 || int (cat[b]) == 5||int (cat[b]) == 6 || int (cat[b]) == 7 || int (cat[b]) == 8) {
-        for (int i = round(r); i < en.length-2; i++)
-        {
-          if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
-          {
-            output += en[i] + " ";
-            go = 0;
-            break;
-          }
         }
       }
     }
