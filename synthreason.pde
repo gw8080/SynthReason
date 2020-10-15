@@ -81,8 +81,8 @@ void setup()
       {
         if (vocabprep[int (cat[b])].indexOf(" " + en[i] + " ") > -1)
         {
-          output += en[i] + " " + en[i+1] + " ";
-          b++;
+          output += en[i] + " " + en[i+1] + " "+ en[i+2] + " ";
+          b+=2;
           break;
         }
       }
