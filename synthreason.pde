@@ -33,6 +33,7 @@ void setup()
       }
     }
   }
+   //debug output
   outputx = createWriter("vocab.txt");
   outputx.println(vocabsyn);
   outputx.flush();
@@ -57,6 +58,7 @@ void setup()
       }
     }
   }
+  //debug output
   outputx = createWriter("rules.txt");
   outputx.println(txt);
   outputx.flush();
@@ -70,16 +72,17 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
-  for (int b = 0; b != cat.length-2; b++)
+  for (int b = 0; b < cat.length-5; b++)
   {
     float r = random(en.length);
     //inference rules
     if (int (cat[b]) >= 0) {
-      for (int i = round(r); i < en.length-2; i++)
+      for (int i = round(r); i < en.length-5; i++)
       {
         if (vocabprep[int (cat[b])].indexOf(" " + en[i] + " ") > -1)
         {
           output += en[i] + " " + en[i+1] + " ";
+          b++;
           break;
         }
       }
