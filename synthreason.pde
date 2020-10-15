@@ -33,7 +33,7 @@ void setup()
       }
     }
   }
-   //debug output
+  //debug output
   outputx = createWriter("vocab.txt");
   outputx.println(vocabsyn);
   outputx.flush();
@@ -72,6 +72,7 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
+  int go = 0;
   for (int b = 0; b < cat.length-5; b++)
   {
     float r = random(en.length);
@@ -82,12 +83,26 @@ void setup()
         if (vocabprep[int (cat[b])].indexOf(" " + en[i] + " ") > -1)
         {
           output += en[i] + " " + en[i+1] + " "+ en[i+2] + " ";
-          b+=2;
+          b+=2;   
+          break;
+        }
+        if (vocabprep[int (cat[b+1])].indexOf(" " + en[i+1] + " ") > -1)
+        {
+          output += en[i-1] + " " + en[i] + " "+ en[i+1] + " ";
+          b+=2;   
           break;
         }
       }
     }
   }
+  output = output.replace("in are", "in");
+  output = output.replace("and and", "and");
+  output = output.replace("or the", "the");
+  output = output.replace("the the", "the");
+  output = output.replace("to as", "to");
+  output = output.replace("to and", "to");
+  output = output.replace("is and", "is");
+  output = output.replace("to are", "are");
   //Save to file
   outputx = createWriter("output.txt");
   outputx.println(output);
