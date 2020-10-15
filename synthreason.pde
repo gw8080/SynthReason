@@ -99,6 +99,7 @@ void setup()
   output = output.replace("to are", "are");
   output = output.replace("in or", "in");
   output = output.replace("the or", "the");
+  output = output.replace("for to", "to");
   //Save to file
   outputx = createWriter("output.txt");
   outputx.println(output);
