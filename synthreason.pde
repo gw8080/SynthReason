@@ -12,7 +12,7 @@
 
 PrintWriter outputx;
 String resource = "uber.txt";
-String rules = "reason.txt";
+String rules = "ethics.txt";
 String output = "";
 String txt = "";
 void setup()
@@ -86,12 +86,6 @@ void setup()
           b+=2;   
           break;
         }
-        if (vocabprep[int (cat[b+1])].indexOf(" " + en[i+1] + " ") > -1)
-        {
-          output += en[i-1] + " " + en[i] + " "+ en[i+1] + " ";
-          b+=2;   
-          break;
-        }
       }
     }
   }
@@ -103,6 +97,8 @@ void setup()
   output = output.replace("to and", "to");
   output = output.replace("is and", "is");
   output = output.replace("to are", "are");
+  output = output.replace("in or", "in");
+  output = output.replace("the or", "the");
   //Save to file
   outputx = createWriter("output.txt");
   outputx.println(output);
