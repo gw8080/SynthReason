@@ -12,7 +12,7 @@
 
 PrintWriter outputx;
 String resource = "uber.txt";
-String rules = "ethics.txt";
+String rules = "reason.txt";
 String output = "";
 String txt = "";
 void setup()
@@ -72,7 +72,6 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
-  int go = 0;
   for (int b = 0; b < cat.length-5; b++)
   {
     float r = random(en.length);
@@ -100,6 +99,20 @@ void setup()
   output = output.replace("in or", "in");
   output = output.replace("the or", "the");
   output = output.replace("for to", "to");
+  output = output.replace("of of", "of");
+  output = output.replace("to can", "can");
+  output = output.replace("the an", "the");
+  output = output.replace("The to", "to");
+  output = output.replace("for by", "for");
+  output = output.replace("a the", "a");
+  output = output.replace("to in", "in");
+  output = output.replace("in is", "is");
+  output = output.replace("the of", "the");
+  output = output.replace("of and", "of");
+  output = output.replace("in and", "in");
+  output = output.replace("of to", "of");
+  output = output.replace("by of", "of");
+  output = output.replace("a of", "of");
   //Save to file
   outputx = createWriter("output.txt");
   outputx.println(output);
