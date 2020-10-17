@@ -21,7 +21,7 @@ void setup()
   int count = 0;
   String[]vocabproc;
   String vocabsyn = "";
-  for (count = 0; count < 4000; count++)
+  for (count = 0; count < 8000; count++)
   {
     vocabproc = loadStrings(count + ".txt");
     if (vocabproc != null)
@@ -33,11 +33,7 @@ void setup()
       }
     }
   }
-  //debug output
-  outputx = createWriter("vocab.txt");
-  outputx.println(vocabsyn);
-  outputx.flush();
-  outputx.close();
+
   //Load rules
   String str = "";
   String[]KB = loadStrings(rules);
@@ -59,10 +55,7 @@ void setup()
     }
   }
   //debug output
-  outputx = createWriter("rules.txt");
-  outputx.println(txt);
-  outputx.flush();
-  outputx.close();
+
   //load resource
   str = "";
   KB = loadStrings(resource);
@@ -72,17 +65,25 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
+  int y = 0, go = 0;
   for (int b = 0; b < cat.length-5; b++)
   {
+        
     float r = random(en.length);
     //inference rules
     if (int (cat[b]) >= 0) {
       for (int i = round(r); i < en.length-5; i++)
       {
+
         if (vocabprep[int (cat[b])].indexOf(" " + en[i] + " ") > -1)
         {
           output += en[i] + " " + en[i+1] + " "+ en[i+2] + " ";
-          b+=2;   
+          if(KB[y].length() > 100){
+          en = KB[y].split(" ");
+          }
+          b+=2;  
+          go++;
+          y++;
           break;
         }
       }
