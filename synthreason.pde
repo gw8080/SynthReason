@@ -12,7 +12,7 @@
 
 PrintWriter outputx;
 String resource = "uber.txt";
-String rules = "reason.txt";
+String rules = "uber.txt";
 String output = "";
 String txt = "";
 void setup()
@@ -65,11 +65,12 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
-  int y = 0, go = 0;
+  int y = 0;
   for (int b = 0; b < cat.length-5; b++)
   {
-        
-    float r = random(en.length);
+
+    float r = random(en.length-5);
+
     //inference rules
     if (int (cat[b]) >= 0) {
       for (int i = round(r); i < en.length-5; i++)
@@ -77,13 +78,18 @@ void setup()
 
         if (vocabprep[int (cat[b])].indexOf(" " + en[i] + " ") > -1)
         {
-          output += en[i] + " " + en[i+1] + " "+ en[i+2] + " ";
-          if(KB[y].length() > 100){
-          en = KB[y].split(" ");
+          if (output.indexOf(en[i] + " " + en[i+1] + " "+ en[i+2] + " ") == -1) {
+
+            output +=  en[i] + " " + en[i+1] + " "+ en[i+2] + " ";
           }
-          b+=2;  
-          go++;
-          y++;
+
+          if (KB[y].length() > 100 && KB[y].indexOf(en[i]) > -1 && KB[y+1].indexOf(en[i]) > -1 && KB[y+2].indexOf(en[i]) > -1) {
+
+            en = KB[y].split(" ");
+          }
+          b+=2; 
+          float r2 = random(KB.length-5);
+          y = round(r2);
           break;
         }
       }
