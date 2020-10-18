@@ -12,7 +12,7 @@
 
 PrintWriter outputx;
 String resource = "uber.txt";
-String rules = "uber.txt";
+String rules = "reason.txt";
 String output = "";
 String txt = "";
 void setup()
@@ -75,21 +75,26 @@ void setup()
     if (int (cat[b]) >= 0) {
       for (int i = round(r); i < en.length-5; i++)
       {
-
         if (vocabprep[int (cat[b])].indexOf(" " + en[i] + " ") > -1)
         {
           if (output.indexOf(en[i] + " " + en[i+1] + " "+ en[i+2] + " ") == -1) {
 
             output +=  en[i] + " " + en[i+1] + " "+ en[i+2] + " ";
           }
-
-          if (KB[y].length() > 100 && KB[y].indexOf(en[i]) > -1 && KB[y+1].indexOf(en[i]) > -1 && KB[y+2].indexOf(en[i]) > -1) {
-
-            en = KB[y].split(" ");
+          for (int x = 0; x <1000; x++) {
+            float r2 = random(KB.length-5);
+            y = round(r2);
+            r2 = random(KB.length-5);
+            int y2 = round(r2);
+            r2 = random(KB.length-5);
+            int y3 = round(r2);
+            if (KB[y].indexOf(en[i]) > -1 && KB[y2].indexOf(en[i+1]) > -1 && KB[y3].indexOf(en[i+2]) > -1&&KB[y].indexOf(en[i+2]) > -1 && KB[y2].indexOf(en[i+1]) > -1 && KB[y3].indexOf(en[i]) > -1) {
+              str = KB[y] + KB[y2] + KB[y3];
+              en = str.split(" ");
+              break;
+            }
           }
           b+=2; 
-          float r2 = random(KB.length-5);
-          y = round(r2);
           break;
         }
       }
