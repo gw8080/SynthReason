@@ -11,30 +11,31 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 PrintWriter outputx;
-String resource = "uber.txt";
+String resource = "n.txt";
 String rules = "reason.txt";
 String output = "";
 String txt = "";
 void setup()
 {
-  //Load vocabulary
   int count = 0;
   String[]vocabproc;
   String vocabsyn = "";
-  for (count = 0; count < 8000; count++)
+  for (count = 0; count < 20; count++)
   {
     vocabproc = loadStrings(count + ".txt");
     if (vocabproc != null)
     {
-      String voc = join(vocabproc, ' ');
+      String voc = join(vocabproc, '\n');
       if (voc.length() > 0)
       {
         vocabsyn += voc + ":::::";
       }
+      if (voc.length() == 0)
+      {
+        break;
+      }
     }
   }
-
-  //Load rules
   String str = "";
   String[]KB = loadStrings(rules);
   for (int i = 0; i < KB.length; i++)
@@ -47,16 +48,13 @@ void setup()
   {
     for (int y = 0; y < vocabprep.length; y++)
     {
-      if (vocabprep[y].indexOf(" " + enx[x] + " ") > -1)
+      if (vocabprep[y].indexOf("\n" + enx[x] + "\n") > -1)
       {
         txt += y + ",";
         break;
       }
     }
   }
-  //debug output
-
-  //load resource
   str = "";
   KB = loadStrings(resource);
   for (int i = 0; i < KB.length; i++)
@@ -65,68 +63,26 @@ void setup()
   }
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
-  int y = 0;
-  for (int b = 0; b < cat.length-5; b++)
+  int br = 0;
+  outputx = createWriter("output.txt");
+  for (int b = 0; b != cat.length - 10; b++)
   {
-
     float r = random(en.length-5);
-
-    //inference rules
-    if (int (cat[b]) >= 0) {
-      for (int i = round(r); i < en.length-5; i++)
+    for (int i = round(r); i < en.length; i++)
+    {
+      if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
       {
-        if (vocabprep[int (cat[b])].indexOf(" " + en[i] + " ") > -1)
-        {
-          if (output.indexOf(en[i] + " " + en[i+1] + " "+ en[i+2] + " ") == -1) {
-
-            output +=  en[i] + " " + en[i+1] + " "+ en[i+2] + " ";
+        //inference rules
+          if (int (cat[b]) >= 0) {
+            output += en[i] + " ";
+            b++;
           }
-          for (int x = 0; x <1000; x++) {
-            float r2 = random(KB.length-5);
-            y = round(r2);
-            r2 = random(KB.length-5);
-            int y2 = round(r2);
-            r2 = random(KB.length-5);
-            int y3 = round(r2);
-            if (KB[y].indexOf(en[i]) > -1 && KB[y2].indexOf(en[i+1]) > -1 && KB[y3].indexOf(en[i+2]) > -1&&KB[y].indexOf(en[i+2]) > -1 && KB[y2].indexOf(en[i+1]) > -1 && KB[y3].indexOf(en[i]) > -1) {
-              str = KB[y] + KB[y2] + KB[y3];
-              en = str.split(" ");
-              break;
-            }
-          }
-          b+=2; 
-          break;
-        }
+        r = random(en.length-5);
+        i = round(r);
+        break;
       }
     }
   }
-  output = output.replace("in are", "in");
-  output = output.replace("and and", "and");
-  output = output.replace("or the", "the");
-  output = output.replace("the the", "the");
-  output = output.replace("to as", "to");
-  output = output.replace("to and", "to");
-  output = output.replace("is and", "is");
-  output = output.replace("to are", "are");
-  output = output.replace("in or", "in");
-  output = output.replace("the or", "the");
-  output = output.replace("for to", "to");
-  output = output.replace("of of", "of");
-  output = output.replace("to can", "can");
-  output = output.replace("the an", "the");
-  output = output.replace("The to", "to");
-  output = output.replace("for by", "for");
-  output = output.replace("a the", "a");
-  output = output.replace("to in", "in");
-  output = output.replace("in is", "is");
-  output = output.replace("the of", "the");
-  output = output.replace("of and", "of");
-  output = output.replace("in and", "in");
-  output = output.replace("of to", "of");
-  output = output.replace("by of", "of");
-  output = output.replace("a of", "of");
-  //Save to file
-  outputx = createWriter("output.txt");
   outputx.println(output);
   outputx.flush();
   outputx.close();
