@@ -73,16 +73,46 @@ void setup()
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
       {
         //inference rules
-          if (int (cat[b]) >= 0) {
-            output += en[i] + " ";
-            b++;
-          }
+        if (int (cat[b]) >= 0) {
+          output += en[i] + " ";
+          b++;
+        }
         r = random(en.length-5);
         i = round(r);
         break;
       }
     }
   }
+
+  output = output.replace("in are", "in");
+  output = output.replace("and and", "and");
+  output = output.replace("or the", "the");
+  output = output.replace("the the", "the");
+  output = output.replace("to as", "to");
+  output = output.replace("to and", "to");
+  output = output.replace("is and", "is");
+  output = output.replace("to are", "are");
+  output = output.replace("in or", "in");
+  output = output.replace("the or", "the");
+  output = output.replace("for to", "to");
+  output = output.replace("of of", "of");
+  output = output.replace("to can", "can");
+  output = output.replace("the an", "the");
+  output = output.replace("The to", "to");
+  output = output.replace("for by", "for");
+  output = output.replace("a the", "a");
+  output = output.replace("to in", "in");
+  output = output.replace("in is", "is");
+  output = output.replace("the of", "the");
+  output = output.replace("of and", "of");
+  output = output.replace("in and", "in");
+  output = output.replace("of to", "of");
+  output = output.replace("by of", "of");
+  output = output.replace("a of", "of");
+  output = output.replace("in at", "in");
+  output = output.replace("it in", "in");
+  output = output.replace("on for", "in");
+  output = output.replace("in in", "in");
   outputx.println(output);
   outputx.flush();
   outputx.close();
