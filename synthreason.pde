@@ -75,34 +75,43 @@ void setup()
       {
         //inference rules
         if (step == 0) {
-          output += en[i] + " ";
+          output += "the ";
         }
         if (step == 1) {
-          output += "of ";
+          output += en[i] + " ";
         }
         if (step == 2) {
-          output += en[i] + " "+ en[i+1] + " ";
+          output += "of ";
         }
         if (step == 3) {
-          output += "is ";
+          output += en[i] + " "+ en[i+1] + " ";
         }
         if (step == 4) {
+          output += "is ";
+        }
+        if (step == 5) {
           output += en[i] + " "+ en[i+1] + " ";
         }
 
-        if (step == 5) {
+        if (step == 6) {
           output += "because ";
         }
-        if (step == 6) {
+        if (step == 7) {
           output += en[i] + " " + en[i+1] + " " + en[i+2] + " " + en[i+3] + " ";
         }
-        if (step == 7) {
+        if (step == 9) {
+          output += "is ";
+        }
+        if (step == 10) {
+          output += en[i] + " "+ en[i+1] + " " + en[i+2] + " ";
+        }
+        if (step == 11) {
           output += ". ";
         }
         r = random(en.length-5);
         i = round(r);
         step++;
-        if (step > 7) {
+        if (step > 11) {
           step = 0;
         }
         break;
