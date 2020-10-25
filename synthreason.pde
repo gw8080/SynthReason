@@ -13,7 +13,7 @@
 PrintWriter outputx;
 String resource = "n.txt";
 String rules = "reason.txt";
-String output = "";
+String output = "mind ";
 String txt = "";
 void setup()
 {
@@ -46,7 +46,7 @@ void setup()
   String[]vocabprep = vocabsyn.split(":::::");
   for (int x = 0; x < enx.length; x++)
   {
-    for (int y = 0; y < vocabprep.length; y++)
+    for (int y = 0; y != vocabprep.length; y++)
     {
       if (vocabprep[y].indexOf("\n" + enx[x] + "\n") > -1)
       {
@@ -61,58 +61,67 @@ void setup()
   {
     str += KB[i];
   }
+  int step = 0;
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
-  int br = 0;
   outputx = createWriter("output.txt");
   for (int b = 0; b != cat.length - 10; b++)
   {
     float r = random(en.length-5);
     for (int i = round(r); i < en.length; i++)
     {
-      if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
+      String[] outputl = split(output, " ");
+      if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str.indexOf(outputl[outputl.length-1] + " " + en[i]) > -1 )
       {
         //inference rules
-        if (int (cat[b]) >= 0) {
+        if (step == 0) {
           output += en[i] + " ";
-          b++;
+        }
+        if (step == 1) {
+          output += "of ";
+        }
+        if (step == 2) {
+          output += en[i] + " "+ en[i+1] + " ";
+        }
+        if (step == 3) {
+          output += "is ";
+        }
+        if (step == 4) {
+          output += en[i] + " "+ en[i+1] + " ";
+        }
+
+        if (step == 5) {
+          output += "because ";
+        }
+        if (step == 6) {
+          output += en[i] + " " + en[i+1] + " " + en[i+2] + " " + en[i+3] + " ";
+        }
+        if (step == 7) {
+          output += ". ";
         }
         r = random(en.length-5);
         i = round(r);
+        step++;
+        if (step > 7) {
+          step = 0;
+        }
         break;
       }
     }
   }
 
-  output = output.replace("in are", "in");
-  output = output.replace("and and", "and");
-  output = output.replace("or the", "the");
-  output = output.replace("the the", "the");
-  output = output.replace("to as", "to");
-  output = output.replace("to and", "to");
-  output = output.replace("is and", "is");
-  output = output.replace("to are", "are");
-  output = output.replace("in or", "in");
-  output = output.replace("the or", "the");
-  output = output.replace("for to", "to");
-  output = output.replace("of of", "of");
-  output = output.replace("to can", "can");
-  output = output.replace("the an", "the");
-  output = output.replace("The to", "to");
-  output = output.replace("for by", "for");
-  output = output.replace("a the", "a");
-  output = output.replace("to in", "in");
-  output = output.replace("in is", "is");
-  output = output.replace("the of", "the");
-  output = output.replace("of and", "of");
-  output = output.replace("in and", "in");
-  output = output.replace("of to", "of");
-  output = output.replace("by of", "of");
-  output = output.replace("a of", "of");
-  output = output.replace("in at", "in");
-  output = output.replace("it in", "in");
-  output = output.replace("on for", "in");
-  output = output.replace("in in", "in");
+  output = output.replace(" and .", ".");
+  output = output.replace(" than .", ".");
+  output = output.replace(" any .", ".");
+  output = output.replace(" the .", ".");
+  output = output.replace(" has .", ".");
+  output = output.replace(" a .", ".");
+  output = output.replace(" to .", ".");
+  output = output.replace(" only .", ".");
+  output = output.replace(" they .", ".");
+  output = output.replace(" of .", ".");
+  output = output.replace(" is .", ".");
+  output = output.replace(" which .", ".");
   outputx.println(output);
   outputx.flush();
   outputx.close();
