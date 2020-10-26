@@ -11,7 +11,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 PrintWriter outputx;
-String resource = "n.txt";
+String resource = "uber.txt";
 String rules = "reason.txt";
 String output = "mind ";
 String txt = "";
@@ -61,7 +61,7 @@ void setup()
   {
     str += KB[i];
   }
-  int step = 0;
+  int step = 0, go = 1;
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
   outputx = createWriter("output.txt");
@@ -71,54 +71,100 @@ void setup()
     for (int i = round(r); i < en.length; i++)
     {
       String[] outputl = split(output, " ");
+      String[]searchparam = outputl;
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str.indexOf(outputl[outputl.length-1] + " " + en[i]) > -1 )
       {
+        float r2 = random(searchparam.length-1);
+        int x = round(r2);
         //inference rules
-        if (step == 0) {
-          output += "the ";
+        if (go == 1 && step == 0) {
+          output += searchparam[x] + " ";
+          go = 0;
+          step++;
         }
-        if (step == 1) {
+        if (go == 1 && step == 1 && en[i+1].indexOf(searchparam[x]) > -1) {
           output += en[i] + " ";
+          go = 0;
+          step++;
         }
-        if (step == 2) {
-          output += "of ";
+        if (go == 1 && step == 2) {
+          output += searchparam[x] + " ";
+          go = 0;
+          step++;
         }
-        if (step == 3) {
+        if (go == 1 && step == 3 && en[i+1].indexOf(searchparam[x]) > -1) {
           output += en[i] + " "+ en[i+1] + " ";
+          go = 0;
+          b++;
+          step++;
         }
-        if (step == 4) {
-          output += "is ";
+        if (go == 1 && step == 4) {
+
+          output += searchparam[x] + " ";
+          go = 0;
+          step++;
         }
-        if (step == 5) {
+        if (go == 1 && step == 5 && en[i+1].indexOf(searchparam[x]) > -1) {
           output += en[i] + " "+ en[i+1] + " ";
+          go = 0;
+          b++;
+          step++;
         }
 
-        if (step == 6) {
-          output += "because ";
+        if (go == 1 && step == 6) {
+          output += searchparam[x] + " ";
+          go = 0;
+          step++;
         }
-        if (step == 7) {
+        if (go == 1 && step == 7 && en[i+1].indexOf(searchparam[x]) > -1) {
           output += en[i] + " " + en[i+1] + " " + en[i+2] + " " + en[i+3] + " ";
+          go = 0;
+          b+=3;
+          step++;
         }
-        if (step == 9) {
-          output += "is ";
+        if (go == 1 && step == 8) {
+          output += searchparam[x] + " ";
+          go = 0;
+          step++;
         }
-        if (step == 10) {
+        if (go == 1 && step == 9) {
           output += en[i] + " "+ en[i+1] + " " + en[i+2] + " ";
+          go = 0;
+          b+=2;
+          step++;
         }
-        if (step == 11) {
+        if (go == 1 && step == 10 && en[i+1].indexOf(searchparam[x]) > -1) {
+          output += en[i] + " " + en[i+1] + " " + en[i+2] + " " + en[i+3] + " ";
+          go = 0;
+          b+=3;
+          step++;
+        }
+        if (go == 1 && step == 11) {
+          output += searchparam[x] + " ";
+          go = 0;
+          step++;
+        }
+        if (go == 1 && step == 12) {
+          output += en[i] + " "+ en[i+1] + " " + en[i+2] + " ";
+          go = 0;
+          b+=2;
+          step++;
+        }
+        if (go == 1 && step == 13) {
           output += ". ";
+          go = 0;
+          step++;
         }
         r = random(en.length-5);
         i = round(r);
-        step++;
-        if (step > 11) {
+        go = 1;
+        if (step > 13) {
           step = 0;
         }
         break;
       }
     }
   }
-
   output = output.replace(" and .", ".");
   output = output.replace(" than .", ".");
   output = output.replace(" any .", ".");
@@ -131,6 +177,7 @@ void setup()
   output = output.replace(" of .", ".");
   output = output.replace(" is .", ".");
   output = output.replace(" which .", ".");
+  output = output.replace(" in .", ".");
   outputx.println(output);
   outputx.flush();
   outputx.close();
