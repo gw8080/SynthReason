@@ -13,7 +13,7 @@
 PrintWriter outputx;
 String resource = "uber.txt";
 String rules = "reason.txt";
-String output = "mind ";
+String output = "the ";
 String txt = "";
 void setup()
 {
@@ -65,19 +65,25 @@ void setup()
   String[]en = str.split(" ");
   String[]cat = txt.split(",");
   outputx = createWriter("output.txt");
+  float r2 = 0;
+  int x = round(r2);
   for (int b = 0; b != cat.length - 10; b++)
   {
     float r = random(en.length-5);
     for (int i = round(r); i < en.length; i++)
     {
       String[] outputl = split(output, " ");
+
+
       String[]searchparam = outputl;
+
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str.indexOf(outputl[outputl.length-1] + " " + en[i]) > -1 )
       {
-        float r2 = random(searchparam.length-1);
-        int x = round(r2);
         //inference rules
+        r2 = random(searchparam.length-1);
+        x = round(r2);
         if (go == 1 && step == 0) {
+
           output += searchparam[x] + " ";
           go = 0;
           step++;
@@ -150,15 +156,10 @@ void setup()
           b+=2;
           step++;
         }
-        if (go == 1 && step == 13) {
-          output += ". ";
-          go = 0;
-          step++;
-        }
         r = random(en.length-5);
         i = round(r);
         go = 1;
-        if (step > 13) {
+        if (step > 12) {
           step = 0;
         }
         break;
