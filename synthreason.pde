@@ -67,15 +67,17 @@ void setup()
   outputx = createWriter("output.txt");
   float r2 = 0;
   int x = round(r2);
+  String[] outputl = split(output, " ");
+   String[] searchparam = outputl;
   for (int b = 0; b != cat.length - 10; b++)
   {
     float r = random(en.length-5);
+    outputl = split(output, " ");
+    searchparam = outputl;
+
     for (int i = round(r); i < en.length; i++)
     {
-      String[] outputl = split(output, " ");
 
-
-      String[]searchparam = outputl;
 
       if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str.indexOf(outputl[outputl.length-1] + " " + en[i]) > -1 )
       {
@@ -83,83 +85,26 @@ void setup()
         r2 = random(searchparam.length-1);
         x = round(r2);
         if (go == 1 && step == 0) {
-
           output += searchparam[x] + " ";
           go = 0;
           step++;
-        }
-        if (go == 1 && step == 1 && en[i+1].indexOf(searchparam[x]) > -1) {
-          output += en[i] + " ";
-          go = 0;
-          step++;
-        }
-        if (go == 1 && step == 2) {
-          output += searchparam[x] + " ";
-          go = 0;
-          step++;
-        }
-        if (go == 1 && step == 3 && en[i+1].indexOf(searchparam[x]) > -1) {
-          output += en[i] + " "+ en[i+1] + " ";
-          go = 0;
-          b++;
-          step++;
-        }
-        if (go == 1 && step == 4) {
-
-          output += searchparam[x] + " ";
-          go = 0;
-          step++;
-        }
-        if (go == 1 && step == 5 && en[i+1].indexOf(searchparam[x]) > -1) {
-          output += en[i] + " "+ en[i+1] + " ";
-          go = 0;
-          b++;
-          step++;
-        }
-
-        if (go == 1 && step == 6) {
-          output += searchparam[x] + " ";
-          go = 0;
-          step++;
-        }
-        if (go == 1 && step == 7 && en[i+1].indexOf(searchparam[x]) > -1) {
-          output += en[i] + " " + en[i+1] + " " + en[i+2] + " " + en[i+3] + " ";
+        }   
+        if (go == 1 && step == 1 && en[i-1].indexOf(searchparam[x]) > -1) {
+          output += en[i] + " " + en[i+1] + " ";
           go = 0;
           b+=3;
           step++;
         }
-        if (go == 1 && step == 8) {
-          output += searchparam[x] + " ";
-          go = 0;
-          step++;
-        }
-        if (go == 1 && step == 9) {
-          output += en[i] + " "+ en[i+1] + " " + en[i+2] + " ";
-          go = 0;
-          b+=2;
-          step++;
-        }
-        if (go == 1 && step == 10 && en[i+1].indexOf(searchparam[x]) > -1) {
+        if (go == 1 && step == 2 && en[i-1].indexOf(searchparam[x]) > -1) {
           output += en[i] + " " + en[i+1] + " " + en[i+2] + " " + en[i+3] + " ";
           go = 0;
           b+=3;
-          step++;
-        }
-        if (go == 1 && step == 11) {
-          output += searchparam[x] + " ";
-          go = 0;
-          step++;
-        }
-        if (go == 1 && step == 12) {
-          output += en[i] + " "+ en[i+1] + " " + en[i+2] + " ";
-          go = 0;
-          b+=2;
           step++;
         }
         r = random(en.length-5);
         i = round(r);
         go = 1;
-        if (step > 12) {
+        if (step > 2) {
           step = 0;
         }
         break;
