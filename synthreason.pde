@@ -5,7 +5,6 @@ void setup()
   String resource = "int.txt";
   String rules = "reason.txt";
   for (int loop = 0; loop < num; loop++) {
-
     String output = "";
     String txt = "";
     int count = 0;
@@ -54,14 +53,12 @@ void setup()
     }
     String[]en = str.split(" ");
     String[]cat = txt.split(",");
-
     float r2 = 0;
     int x = round(r2);
     String[] outputl = split(output, " ");
     String[] searchparam = outputl;
     for (int b = 0; b < cat.length - 10; b++)
     {
-
       outputl = split(output, " ");
       searchparam = outputl;
       float r = random(en.length-10);
@@ -69,7 +66,6 @@ void setup()
       {
         if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str.indexOf(outputl[outputl.length-1] + " " + en[i] + " ") > -1)
         {
-          //inference rules
           r2 = random(searchparam.length-1);
           x = round(r2);
           if (en[i-1].indexOf(searchparam[x]) > -1) {
