@@ -33,7 +33,7 @@ void setup()
       str += KB[i];
     }
     String[]enx = split(str, " ");
-    String[]vocabprep = vocabsyn.split(":::::");
+    String[]vocabprep = split(vocabsyn, ":::::");
     for (int x = 0; x < enx.length; x++)
     {
       for (int y = 0; y != vocabprep.length; y++)
@@ -45,37 +45,31 @@ void setup()
         }
       }
     }
-    str = "";
+    String str2 = "";
     KB = loadStrings(resource);
     for (int i = 0; i < KB.length; i++)
     {
-      str += KB[i];
+      str2 += KB[i];
     }
-    String[]en = str.split(" ");
-    String[]cat = txt.split(",");
+    String[]en = split(str2, " ");
+    String[]cat = split(txt, ",");
     float r2 = 0;
-    int x = round(r2);
     String[] outputl = split(output, " ");
-    String[] searchparam = outputl;
-    for (int b = 0; b < cat.length - 10; b++)
+    for (int b = 1; b < cat.length - 10; b++)
     {
       outputl = split(output, " ");
-      searchparam = outputl;
       float r = random(en.length-10);
       for (int i = round(r); i < en.length-10; i++)
       {
-        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str.indexOf(outputl[outputl.length-1] + " " + en[i] + " ") > -1)
+        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str2.indexOf(outputl[outputl.length-1] + " " + en[i] + " ") > -1)
         {
-          r2 = random(searchparam.length-1);
-          x = round(r2);
-          if (en[i-1].indexOf(searchparam[x]) > -1) {
+          if (vocabprep[int (cat[b-1])].indexOf(en[i-1]) > -1) {
             r2 = random(10);
             int a = round(r2);
             for (int f = 0; f < a; f++) {
-              outputl = split(output, " ");
-              searchparam = outputl;
               output += en[i+f] + " ";
-              if (vocabprep[4].indexOf("\n" + en[i+f] + "\n") > -1 ) {
+              if (vocabprep[1].indexOf("\n" + en[i+f] + "\n") > -1 ) {
+                a = f;
                 break;
               }
             }
@@ -87,19 +81,6 @@ void setup()
         }
       }
     }
-    output = output.replace(" and .", ".");
-    output = output.replace(" than .", ".");
-    output = output.replace(" any .", ".");
-    output = output.replace(" the .", ".");
-    output = output.replace(" has .", ".");
-    output = output.replace(" a .", ".");
-    output = output.replace(" to .", ".");
-    output = output.replace(" only .", ".");
-    output = output.replace(" they .", ".");
-    output = output.replace(" of .", ".");
-    output = output.replace(" is .", ".");
-    output = output.replace(" which .", ".");
-    output = output.replace(" in .", ".");
     outputx = createWriter("output/output#" + loop + ".txt");
     outputx.println(output);
     outputx.println();
