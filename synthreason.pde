@@ -67,7 +67,7 @@ void setup()
           int a = round(r2);
           for (int f = 0; f < a; f++) {
             output += en[i+f] + " ";
-            if (vocabprep[1].indexOf("\n" + en[i+f] + "\n") > -1 ) {
+            if (vocabprep[2].indexOf("\n" + en[i+f] + "\n") > -1 ) {
               a = f;
               break;
             }
