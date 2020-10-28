@@ -2,7 +2,7 @@ PrintWriter outputx;
 int num = 10; // number of files to generate
 void setup()
 {
-  String resource = "int.txt";
+  String resource = "n.txt";
   String rules = "reason.txt";
   for (int loop = 0; loop < num; loop++) {
     String output = "";
@@ -58,23 +58,21 @@ void setup()
     for (int b = 1; b < cat.length - 10; b++)
     {
       outputl = split(output, " ");
-      float r = random(en.length-10);
+      float r = random(en.length-20);
       for (int i = round(r); i < en.length-10; i++)
       {
-        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str2.indexOf(outputl[outputl.length-1] + " " + en[i] + " ") > -1)
+        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str2.indexOf(outputl[outputl.length-1] + " " + en[i] + " ") > -1 && vocabprep[int (cat[b])].indexOf(outputl[outputl.length-1]) > -1)
         {
-          if (vocabprep[int (cat[b-1])].indexOf(en[i-1]) > -1) {
-            r2 = random(10);
-            int a = round(r2);
-            for (int f = 0; f < a; f++) {
-              output += en[i+f] + " ";
-              if (vocabprep[1].indexOf("\n" + en[i+f] + "\n") > -1 ) {
-                a = f;
-                break;
-              }
+          r2 = random(15);
+          int a = round(r2);
+          for (int f = 0; f < a; f++) {
+            output += en[i+f] + " ";
+            if (vocabprep[1].indexOf("\n" + en[i+f] + "\n") > -1 ) {
+              a = f;
+              break;
             }
-            b+= a;
           }
+          b+= a;
           r = random(en.length-5);
           i = round(r);    
           break;
