@@ -1,8 +1,10 @@
 PrintWriter outputx;
 int num = 10; // number of files to generate
+int poss = 5;
+int chunksize = 15;
 void setup()
 {
-  String resource = "n.txt";
+  String resource = "int.txt";
   String rules = "reason.txt";
   for (int loop = 0; loop < num; loop++) {
     String output = "";
@@ -55,28 +57,39 @@ void setup()
     String[]cat = split(txt, ",");
     float r2 = 0;
     String[] outputl = split(output, " ");
-    for (int b = 1; b < cat.length - 10; b++)
+    for (int b = 1; b < cat.length - 20; b++)
     {
       outputl = split(output, " ");
       float r = random(en.length-20);
-      for (int i = round(r); i < en.length-10; i++)
+      String outputmulti = "";
+      for (int i = round(r); i < en.length-20; i++)
       {
         if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str2.indexOf(outputl[outputl.length-1] + " " + en[i] + " ") > -1 && vocabprep[int (cat[b])].indexOf(outputl[outputl.length-1]) > -1)
         {
-          r2 = random(15);
-          int a = round(r2);
-          for (int f = 0; f < a; f++) {
-            output += en[i+f] + " ";
-            if (vocabprep[2].indexOf("\n" + en[i+f] + "\n") > -1 ) {
-              a = f;
-              break;
+          for (int multi = 0; multi < poss; multi++) {
+            r2 = random(chunksize);
+            int a = round(r2);
+            for (int f = 0; f != a; f++) {
+              outputmulti += en[i+f] + " ";
+              if (vocabprep[5].indexOf("\n" + en[i+f] + "\n") > -1 ) {
+                a = f;
+                break;
+              }
             }
+            outputmulti += ":::::";
+            r = random(en.length-20);
+            i = round(r);
           }
-          b+= a;
-          r = random(en.length-5);
-          i = round(r);    
-          break;
         }
+        String[]outputarray = split(outputmulti, ":::::");
+        for (int n = 0; n != outputarray.length; n++) {
+          if (outputarray[n].length() > 5) {
+            output += outputarray[n];
+            b += outputarray[n].length();
+            break;
+          }
+        }   
+        break;
       }
     }
     outputx = createWriter("output/output#" + loop + ".txt");
