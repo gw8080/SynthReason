@@ -1,11 +1,11 @@
 PrintWriter outputx;
 int num = 10; // number of files to generate
-int poss = 5;
-int chunksize = 15;
+int poss = 15;
+int chunksize = 30;
 void setup()
 {
   String resource = "uber.txt";
-  String rules = "reason.txt";
+  String rules = "uber.txt";
   for (int loop = 0; loop < num; loop++) {
     String output = "";
     String txt = "";
