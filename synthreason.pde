@@ -56,14 +56,16 @@ void setup()
     String[]en = split(str2, " ");
     String[]cat = split(txt, ",");
     float r2 = 0;
-    String[] outputl = split(output, " ");
-    for (int b = 1; b < cat.length - 20; b++)
+
+    for (int b = 1; b < cat.length - chunksize; b++)
     {
-      outputl = split(output, " ");
-      float r = random(en.length-20);
+
+      float r = random(en.length);
       String outputmulti = "";
-      for (int i = round(r); i < en.length-20; i++)
+      for (int i = round(r); i < en.length-chunksize; i++)
       {
+        String[] outputl = split(output, " ");
+        outputl = split(output, " ");
         if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str2.indexOf(outputl[outputl.length-1] + " " + en[i] + " ") > -1 && vocabprep[int (cat[b])].indexOf(outputl[outputl.length-1]) > -1)
         {
           for (int multi = 0; multi < poss; multi++) {
@@ -77,19 +79,19 @@ void setup()
               }
             }
             outputmulti += ":::::";
-            r = random(en.length-20);
+            r = random(en.length-chunksize);
             i = round(r);
           }
-        }
-        String[]outputarray = split(outputmulti, ":::::");
-        for (int n = 0; n != outputarray.length; n++) {
-          if (outputarray[n].length() > 5) {
-            output += outputarray[n];
-            b += outputarray[n].length();
-            break;
+          String[]outputarray = split(outputmulti, ":::::");
+          for (int n = 0; n != outputarray.length; n++) {
+            if (outputarray[n].length() > 15) {
+              output += outputarray[n];
+              b += outputarray[n].length();
+              break;
+            }
           }
-        }   
-        break;
+          break;
+        }
       }
     }
     outputx = createWriter("output/output#" + loop + ".txt");
