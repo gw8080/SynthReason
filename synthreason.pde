@@ -5,7 +5,7 @@ int chunksize = 30;
 void setup()
 {
   String resource = "uber.txt";
-  String rules = "uber.txt";
+  String rules = "int.txt";
   for (int loop = 0; loop < num; loop++) {
     String output = "";
     String txt = "";
