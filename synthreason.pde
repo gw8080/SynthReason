@@ -59,7 +59,6 @@ void setup()
 
     for (int b = 1; b < cat.length - chunksize; b++)
     {
-
       float r = random(en.length);
       String outputmulti = "";
       for (int i = round(r); i < en.length-chunksize; i++)
@@ -74,7 +73,6 @@ void setup()
             for (int f = 0; f != a; f++) {
               outputmulti += en[i+f] + " ";
               if (vocabprep[5].indexOf("\n" + en[i+f] + "\n") > -1 ) {
-                a = f;
                 break;
               }
             }
@@ -84,7 +82,7 @@ void setup()
           }
           String[]outputarray = split(outputmulti, ":::::");
           for (int n = 0; n != outputarray.length; n++) {
-            if (outputarray[n].length() > 15) {
+            if (outputarray[n].length() > 25) {
               output += outputarray[n];
               b += outputarray[n].length();
               break;
