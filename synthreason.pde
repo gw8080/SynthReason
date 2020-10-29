@@ -4,7 +4,7 @@ int poss = 5;
 int chunksize = 15;
 void setup()
 {
-  String resource = "int.txt";
+  String resource = "uber.txt";
   String rules = "reason.txt";
   for (int loop = 0; loop < num; loop++) {
     String output = "";
@@ -72,7 +72,7 @@ void setup()
             int a = round(r2);
             for (int f = 0; f != a; f++) {
               outputmulti += en[i+f] + " ";
-              if (vocabprep[5].indexOf("\n" + en[i+f] + "\n") > -1 ) {
+              if (vocabprep[5].indexOf("\n" + en[i+f] + "\n") > -1) {
                 break;
               }
             }
@@ -83,7 +83,16 @@ void setup()
           String[]outputarray = split(outputmulti, ":::::");
           for (int n = 0; n != outputarray.length; n++) {
             if (outputarray[n].length() > 25) {
-              output += outputarray[n];
+
+
+              String[] coolwords = split(vocabprep[0], "\n");
+              for (int y = 0; y != coolwords.length; y++)
+              {
+                if (outputarray[n].indexOf(coolwords[y]) > -1 && output.indexOf(coolwords[y]) > -1 && output.indexOf(outputarray[n]) == -1) {
+                  output += outputarray[n];
+                }
+              }
+
               b += outputarray[n].length();
               break;
             }
