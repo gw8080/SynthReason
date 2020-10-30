@@ -27,7 +27,7 @@ void setup()
     }
   }
   String[]vocabprep = split(vocabsyn, ":::::");
-  int num = vocabprep[3].length()-1; 
+  int num = 10; 
   for (int loop = 0; loop < num; loop++) {
     String output = "";
     String txt = "";
@@ -61,6 +61,7 @@ void setup()
     String str2 = "";
     KB = loadStrings(resource);
     String[] coolwords = split(cool, "\n");
+    num = coolwords.length;
     for (int i = 0; i < KB.length; i++)
     {
       if (KB[i].indexOf(" " + coolwords[loop] + " ") > -1) {
