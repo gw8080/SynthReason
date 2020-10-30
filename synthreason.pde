@@ -1,33 +1,37 @@
 PrintWriter outputx;
-int num = 10; // number of files to generate
+
 int poss = 15;
 int chunksize = 30;
 void setup()
 {
   String resource = "uber.txt";
-  String rules = "int.txt";
+  String rules = "uber.txt";
+
+  int count = 0;
+  String[]vocabproc;
+  String vocabsyn = "";
+  for (count = 0; count < 20; count++)
+  {
+    vocabproc = loadStrings(count + ".txt");
+    if (vocabproc != null)
+    {
+      String voc = join(vocabproc, '\n');
+      if (voc.length() > 0)
+      {
+        vocabsyn += voc + ":::::";
+      }
+      if (voc.length() == 0)
+      {
+        break;
+      }
+    }
+  }
+   String[]vocabprep = split(vocabsyn, ":::::");
+  int num = vocabprep[3].length()-1; 
   for (int loop = 0; loop < num; loop++) {
     String output = "";
     String txt = "";
-    int count = 0;
-    String[]vocabproc;
-    String vocabsyn = "";
-    for (count = 0; count < 20; count++)
-    {
-      vocabproc = loadStrings(count + ".txt");
-      if (vocabproc != null)
-      {
-        String voc = join(vocabproc, '\n');
-        if (voc.length() > 0)
-        {
-          vocabsyn += voc + ":::::";
-        }
-        if (voc.length() == 0)
-        {
-          break;
-        }
-      }
-    }
+
     String str = "";
     String[]KB = loadStrings(rules);
     for (int i = 0; i < KB.length; i++)
@@ -35,7 +39,7 @@ void setup()
       str += KB[i];
     }
     String[]enx = split(str, " ");
-    String[]vocabprep = split(vocabsyn, ":::::");
+   
     for (int x = 0; x < enx.length; x++)
     {
       for (int y = 0; y != vocabprep.length; y++)
@@ -49,9 +53,12 @@ void setup()
     }
     String str2 = "";
     KB = loadStrings(resource);
+    String[] coolwords = split(vocabprep[3], "\n");
     for (int i = 0; i < KB.length; i++)
     {
-      str2 += KB[i];
+      if (KB[i].indexOf(coolwords[loop]) > -1) {
+        str2 += KB[i];
+      }
     }
     String[]en = split(str2, " ");
     String[]cat = split(txt, ",");
@@ -83,16 +90,7 @@ void setup()
           String[]outputarray = split(outputmulti, ":::::");
           for (int n = 0; n != outputarray.length; n++) {
             if (outputarray[n].length() > 25) {
-
-
-              String[] coolwords = split(vocabprep[0], "\n");
-              for (int y = 0; y != coolwords.length; y++)
-              {
-                if (outputarray[n].indexOf(coolwords[y]) > -1 && output.indexOf(coolwords[y]) > -1 && output.indexOf(outputarray[n]) == -1) {
-                  output += outputarray[n];
-                }
-              }
-
+              output += outputarray[n];   
               b += outputarray[n].length();
               break;
             }
@@ -101,7 +99,7 @@ void setup()
         }
       }
     }
-    outputx = createWriter("output/output#" + loop + ".txt");
+    outputx = createWriter("output/" + coolwords[loop] + ":" + loop + ".txt");
     outputx.println(output);
     outputx.println();
     outputx.println();
