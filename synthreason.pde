@@ -99,7 +99,7 @@ void setup()
         }
       }
     }
-    outputx = createWriter("output/" + coolwords[loop] + ":" + loop + ".txt");
+    outputx = createWriter("output/" + coolwords[loop] + ".txt");
     outputx.println(output);
     outputx.println();
     outputx.println();
