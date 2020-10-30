@@ -4,7 +4,7 @@ int poss = 15;
 int chunksize = 30;
 void setup()
 {
-  String resource = "uber.txt";
+  String resource = "n.txt";
   String rules = "uber.txt";
 
   int count = 0;
@@ -26,7 +26,7 @@ void setup()
       }
     }
   }
-   String[]vocabprep = split(vocabsyn, ":::::");
+  String[]vocabprep = split(vocabsyn, ":::::");
   int num = vocabprep[3].length()-1; 
   for (int loop = 0; loop < num; loop++) {
     String output = "";
@@ -39,7 +39,7 @@ void setup()
       str += KB[i];
     }
     String[]enx = split(str, " ");
-   
+    String cool = "";
     for (int x = 0; x < enx.length; x++)
     {
       for (int y = 0; y != vocabprep.length; y++)
@@ -50,13 +50,34 @@ void setup()
           break;
         }
       }
+      if (enx[x].length() > 5) {
+        cool += enx[x] + "\n";
+      }
     }
+    cool = cool.replace("[", "");
+    cool = cool.replace("]", "");
+    cool = cool.replace(",", "");
+    cool = cool.replace(".", "");
+    cool = cool.replace("\"", "");
+    cool = cool.replace("0", "");
+    cool = cool.replace("1", "");
+    cool = cool.replace("2", "");
+    cool = cool.replace("3", "");
+    cool = cool.replace("4", "");
+    cool = cool.replace("5", "");
+    cool = cool.replace("6", "");
+    cool = cool.replace("7", "");
+    cool = cool.replace("8", "");
+    cool = cool.replace("9", "");
+    cool = cool.replace("(", "");
+    cool = cool.replace(")", "");
+    cool = cool.replace("'", "");
     String str2 = "";
     KB = loadStrings(resource);
-    String[] coolwords = split(vocabprep[3], "\n");
+    String[] coolwords = split(cool, "\n");
     for (int i = 0; i < KB.length; i++)
     {
-      if (KB[i].indexOf(coolwords[loop]) > -1) {
+      if (KB[i].indexOf(" " + coolwords[loop] + " ") > -1) {
         str2 += KB[i];
       }
     }
