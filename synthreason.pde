@@ -4,7 +4,7 @@ int poss = 15;
 int chunksize = 30;
 void setup()
 {
-  String resource = "n.txt";
+  String resource = "uber.txt";
   String rules = "uber.txt";
 
   int count = 0;
@@ -54,24 +54,10 @@ void setup()
         cool += enx[x] + "\n";
       }
     }
-    cool = cool.replace("[", "");
-    cool = cool.replace("]", "");
-    cool = cool.replace(",", "");
-    cool = cool.replace(".", "");
-    cool = cool.replace("\"", "");
-    cool = cool.replace("0", "");
-    cool = cool.replace("1", "");
-    cool = cool.replace("2", "");
-    cool = cool.replace("3", "");
-    cool = cool.replace("4", "");
-    cool = cool.replace("5", "");
-    cool = cool.replace("6", "");
-    cool = cool.replace("7", "");
-    cool = cool.replace("8", "");
-    cool = cool.replace("9", "");
-    cool = cool.replace("(", "");
-    cool = cool.replace(")", "");
-    cool = cool.replace("'", "");
+    String[] eliminate = {"[", "]", ",", ".", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
+    for (int k = 0; k < eliminate.length; k++) {
+      cool = cool.replace(eliminate[k], "");
+    }
     String str2 = "";
     KB = loadStrings(resource);
     String[] coolwords = split(cool, "\n");
