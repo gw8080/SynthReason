@@ -1,12 +1,9 @@
 PrintWriter outputx;
-
-int poss = 150;
+String resource = "uber.txt";
+String rules = "reason.txt";
 int chunksize = 10;
 void setup()
 {
-  String resource = "n.txt";
-  String rules = "uber.txt";
-
   int count = 0;
   String[]vocabproc;
   String vocabsyn = "";
@@ -29,9 +26,8 @@ void setup()
   String[]vocabprep = split(vocabsyn, ":::::");
   int num = 10, e = 0; 
   for (int loop = 0; loop < num; loop++) {
-    String output = "";
+    String output = "";    
     String txt = "";
-
     String str = "";
     String[]KB = loadStrings(rules);
     for (int i = 0; i < KB.length; i++)
@@ -58,6 +54,7 @@ void setup()
     for (int k = 0; k < eliminate.length; k++) {
       cool = cool.replace(eliminate[k], "");
     }
+
     String str2 = "";
     KB = loadStrings(resource);
     String[] coolwords = split(cool, "\n");
@@ -68,64 +65,39 @@ void setup()
         str2 += KB[i];
       }
     }
-    String[]en = split(str2, " ");
-    String[]cat = split(txt, ",");
-    float r2 = 0;
-    float r = random(en.length-chunksize);
-    int i = round(r);
-    for (int b = 1; b < cat.length - chunksize; b++)
+    String[]en = str2.split(" ");
+    String[]cat = txt.split(",");
+    outputx = createWriter("output.txt");
+    for (int b = 0; b < cat.length - chunksize; b++)
     {
-
-      String outputmulti = "";
-      for (i = i; i < en.length-chunksize; i++)
+      float r = random(en.length);
+      for (int i = round(r); i < en.length-chunksize; i++)
       {
-        if (i > en.length-chunksize) {
-          r = random(en.length-chunksize);
-          i = round(r);
-        }
-        String[] outputl = split(output, " ");
-        outputl = split(output, " ");
-        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && vocabprep[int (cat[b])].indexOf(outputl[outputl.length-1]) > -1 && outputl[outputl.length-1].indexOf(en[i]) > -1);
+        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
         {
-          for (int multi = 0; multi < poss; multi++) {
-            r2 = random(chunksize);
-            int a = round(r2);
-            for (int f = 0; f != a; f++) {
-              outputmulti += en[i+f] + " ";
-              if (vocabprep[2].indexOf("\n" + en[i+f] + "\n") > -1) {
-                break;
-              }
-            }
-            outputmulti += ":::::";
-          }
-          String[]outputarray = split(outputmulti, ":::::");
-          for (int n = 0; n != outputarray.length; n++) {
-            if (e > coolwords.length-chunksize) {
-              e = 0;
-            }
-            if (n > outputarray.length-chunksize) {
-              e++;
-            }
-            if (output.indexOf(outputarray[n]) == -1 && outputarray[n].length() > 25 &&  outputarray[n].indexOf(coolwords[e]) > -1) {
-              output += outputarray[n];
-              i+=outputarray[n].length();
-              e++;
-              b += outputarray[n].length();
+          float r5 = random(chunksize);
+          int a = round(r5);
+          for (int f = 0; f != a; f++) {
+            output += en[i+f] + " ";
+            if (vocabprep[2].indexOf("\n" + en[i+f] + "\n") > -1) {
+              b+=f;
               break;
             }
           }
+          r = random(en.length);
+          i = round(r);
           break;
         }
       }
     }
-    for (int k = 0; k < eliminate.length; k++) {
-      output = output.replace(eliminate[k], "");
+    String[] eliminate2 = {"[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
+    for (int k = 0; k < eliminate2.length; k++) {
+      output= output.replace(eliminate2[k], "");
     }
+    output = output.replace(".", " is " + coolwords[loop] + ".");
     if (output.length() > 10) {
-      output = output.replace("the is", "is");
-      output = output.replace("and to", "and");
       outputx = createWriter("output/" + coolwords[loop] + ".txt");
-      outputx.println(output + "is " + coolwords[loop] + ".");
+      outputx.println(output);
       outputx.println();
       outputx.println();
       outputx.flush();
