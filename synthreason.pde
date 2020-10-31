@@ -24,7 +24,7 @@ void setup()
     }
   }
   String[]vocabprep = split(vocabsyn, ":::::");
-  int num = 10, e = 0; 
+  int num = 10; 
   for (int loop = 0; loop < num; loop++) {
     String output = "";    
     String txt = "";
