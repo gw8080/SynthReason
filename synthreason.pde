@@ -1,7 +1,7 @@
 PrintWriter outputx;
 
-int poss = 15;
-int chunksize = 30;
+int poss = 150;
+int chunksize = 10;
 void setup()
 {
   String resource = "uber.txt";
@@ -27,7 +27,7 @@ void setup()
     }
   }
   String[]vocabprep = split(vocabsyn, ":::::");
-  int num = 10; 
+  int num = 10, e = 0; 
   for (int loop = 0; loop < num; loop++) {
     String output = "";
     String txt = "";
@@ -71,34 +71,46 @@ void setup()
     String[]en = split(str2, " ");
     String[]cat = split(txt, ",");
     float r2 = 0;
-
+    float r = random(en.length-chunksize);
+    int i = round(r);
     for (int b = 1; b < cat.length - chunksize; b++)
     {
-      float r = random(en.length);
+
       String outputmulti = "";
-      for (int i = round(r); i < en.length-chunksize; i++)
+      for (i = i; i < en.length-chunksize; i++)
       {
+        if (i > en.length-chunksize) {
+          r = random(en.length-chunksize);
+          i = round(r);
+        }
         String[] outputl = split(output, " ");
         outputl = split(output, " ");
-        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && str2.indexOf(outputl[outputl.length-1] + " " + en[i] + " ") > -1 && vocabprep[int (cat[b])].indexOf(outputl[outputl.length-1]) > -1)
+        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && vocabprep[int (cat[b-1])].indexOf(outputl[outputl.length-1]) > -1)
         {
           for (int multi = 0; multi < poss; multi++) {
             r2 = random(chunksize);
             int a = round(r2);
             for (int f = 0; f != a; f++) {
               outputmulti += en[i+f] + " ";
-              if (vocabprep[5].indexOf("\n" + en[i+f] + "\n") > -1) {
+              if (vocabprep[2].indexOf("\n" + en[i+f] + "\n") > -1) {
+
                 break;
               }
             }
             outputmulti += ":::::";
-            r = random(en.length-chunksize);
-            i = round(r);
           }
           String[]outputarray = split(outputmulti, ":::::");
           for (int n = 0; n != outputarray.length; n++) {
-            if (outputarray[n].length() > 25) {
-              output += outputarray[n];   
+            if (e > coolwords.length-chunksize) {
+              e = 0;
+            }
+            if (n > outputarray.length-chunksize) {
+              e++;
+            }
+            if (output.indexOf(outputarray[n]) == -1 && outputarray[n].length() > 25 &&  outputarray[n].indexOf(coolwords[e]) > -1) {
+              output += outputarray[n];
+              i+=outputarray[n].length();
+              e++;
               b += outputarray[n].length();
               break;
             }
@@ -107,12 +119,19 @@ void setup()
         }
       }
     }
-    outputx = createWriter("output/" + coolwords[loop] + ".txt");
-    outputx.println(output);
-    outputx.println();
-    outputx.println();
-    outputx.flush();
-    outputx.close();
+    for (int k = 0; k < eliminate.length; k++) {
+      output = output.replace(eliminate[k], "");
+    }
+    if (output.length() > 10) {
+      output = output.replace("the is", "is");
+      output = output.replace("and to", "and");
+      outputx = createWriter("output/" + coolwords[loop] + ".txt");
+      outputx.println(output + "is " + coolwords[loop] + ".");
+      outputx.println();
+      outputx.println();
+      outputx.flush();
+      outputx.close();
+    }
   }
   exit();
 }
