@@ -106,8 +106,6 @@ void setup()
             if (n > outputarray.length-chunksize) {
               e++;
             }
-
-            String[] words = split(outputarray[n], " ");
             if (output.indexOf(outputarray[n]) == -1 && outputarray[n].length() > 25 &&  outputarray[n].indexOf(coolwords[e]) > -1) {
               output += outputarray[n];
               i+=outputarray[n].length();
