@@ -4,7 +4,7 @@ int poss = 150;
 int chunksize = 10;
 void setup()
 {
-  String resource = "uber.txt";
+  String resource = "n.txt";
   String rules = "uber.txt";
 
   int count = 0;
@@ -85,7 +85,7 @@ void setup()
         }
         String[] outputl = split(output, " ");
         outputl = split(output, " ");
-        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1 && vocabprep[int (cat[b-1])].indexOf(outputl[outputl.length-1]) > -1)
+        if (vocabprep[int (cat[b])].indexOf("\n" + en[i-1] + "\n") > -1 && vocabprep[int (cat[b])].indexOf(outputl[outputl.length-1]) > -1 && outputl[outputl.length-1].indexOf( en[i]) > -1);
         {
           for (int multi = 0; multi < poss; multi++) {
             r2 = random(chunksize);
@@ -93,7 +93,6 @@ void setup()
             for (int f = 0; f != a; f++) {
               outputmulti += en[i+f] + " ";
               if (vocabprep[2].indexOf("\n" + en[i+f] + "\n") > -1) {
-
                 break;
               }
             }
@@ -107,6 +106,8 @@ void setup()
             if (n > outputarray.length-chunksize) {
               e++;
             }
+
+            String[] words = split(outputarray[n], " ");
             if (output.indexOf(outputarray[n]) == -1 && outputarray[n].length() > 25 &&  outputarray[n].indexOf(coolwords[e]) > -1) {
               output += outputarray[n];
               i+=outputarray[n].length();
