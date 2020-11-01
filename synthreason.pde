@@ -94,7 +94,7 @@ void setup()
     for (int k = 0; k < eliminate2.length; k++) {
       output= output.replace(eliminate2[k], "");
     }
-    output = output.replace(".", " is " + coolwords[loop] + ".");
+    output = output.replace(".", " is " + coolwords[loop] + ".\n\n");
     if (output.length() > 10) {
       outputx = createWriter("output/" + coolwords[loop] + ".txt");
       outputx.println(output);
