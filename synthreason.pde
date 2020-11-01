@@ -75,8 +75,7 @@ void setup()
       {
         if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
         {
-          float r5 = random(chunksize);
-          int a = round(r5);
+          int a = chunksize;
           for (int f = 0; f != a; f++) {
             output += en[i+f] + " ";
             if (vocabprep[2].indexOf("\n" + en[i+f] + "\n") > -1) {
