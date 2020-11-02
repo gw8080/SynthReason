@@ -50,14 +50,14 @@ void setup()
         cool += enx[x] + "\n";
       }
     }
-    String[] eliminate = {"[", "]", ",", ".", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
+    String[] eliminate = {";", "[", "]", ",", ".", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
     for (int k = 0; k < eliminate.length; k++) {
       cool = cool.replace(eliminate[k], "");
     }
 
     String str2 = "";
     KB = loadStrings(resource);
-    String[] coolwords = split(cool, "\n");
+    String[] coolwords = split(vocabprep[7], "\n");
     num = coolwords.length;
     for (int i = 0; i < KB.length; i++)
     {
@@ -89,7 +89,7 @@ void setup()
         }
       }
     }
-    String[] eliminate2 = {"[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
+    String[] eliminate2 = {";", "[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
     for (int k = 0; k < eliminate2.length; k++) {
       output= output.replace(eliminate2[k], "");
     }
