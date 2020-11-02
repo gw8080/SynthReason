@@ -24,7 +24,7 @@ void setup()
     }
   }
   String[]vocabprep = split(vocabsyn, ":::::");
-  int num = 10; 
+  int num = 1; 
   for (int loop = 0; loop < num; loop++) {
     String output = "";    
     String txt = "";
@@ -35,7 +35,7 @@ void setup()
       str += KB[i];
     }
     String[]enx = split(str, " ");
-    String cool = "";
+
     for (int x = 0; x < enx.length; x++)
     {
       for (int y = 0; y != vocabprep.length; y++)
@@ -46,23 +46,33 @@ void setup()
           break;
         }
       }
-      if (enx[x].length() > 5) {
-        cool += enx[x] + "\n";
-      }
-    }
-    String[] eliminate = {";", "[", "]", ",", ".", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
-    for (int k = 0; k < eliminate.length; k++) {
-      cool = cool.replace(eliminate[k], "");
     }
 
+
+    String[] commandsproc = loadStrings("command.txt");
+    String cool = "";
+    for (int i = 0; i < commandsproc.length; i++)
+    {
+      cool += commandsproc[i];
+    }
+    String[] commands = split(cool, ".");
+    String[] coolwords = split(commands[loop], " ");
+    num = commands.length-1;
     String str2 = "";
+    String cool2 = "";
+    for (int i = 0; i < coolwords.length; i++)
+    {
+      cool2 += coolwords[i] + " ";
+    }
     KB = loadStrings(resource);
-    String[] coolwords = split(vocabprep[7], "\n");
-    num = coolwords.length;
     for (int i = 0; i < KB.length; i++)
     {
-      if (KB[i].indexOf(" " + coolwords[loop] + " ") > -1) {
-        str2 += KB[i];
+      for (int r = 0; r < coolwords.length; r++)
+      {
+        if (KB[i].indexOf(" " + coolwords[r] + " ") > -1) {
+          str2 += KB[i];
+          break;
+        }
       }
     }
     String[]en = str2.split(" ");
@@ -91,11 +101,12 @@ void setup()
     }
     String[] eliminate2 = {";", "[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
     for (int k = 0; k < eliminate2.length; k++) {
-      output= output.replace(eliminate2[k], "");
+      output = output.replace(eliminate2[k], "");
+      cool2 = cool2.replace(eliminate2[k], "");
     }
-    output = output.replace(".", " is " + coolwords[loop] + ".\n\n");
+    output = output.replace(".", ".\n\n");
     if (output.length() > 10) {
-      outputx = createWriter("output/" + coolwords[loop] + ".txt");
+      outputx = createWriter("output/output" + "#" + loop + ".txt");
       outputx.println(output);
       outputx.println();
       outputx.println();
