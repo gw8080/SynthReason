@@ -1,7 +1,7 @@
 PrintWriter outputx;
-String resource = "uber.txt";
+String resource = "int.txt";
 String rules = "reason.txt";
-int chunksize = 10;
+int chunksize = 15;
 void setup()
 {
   int count = 0;
@@ -80,31 +80,25 @@ void setup()
     outputx = createWriter("output.txt");
     for (int b = 0; b < cat.length - chunksize; b++)
     {
-      float r = random(en.length);
-      for (int i = round(r); i < en.length-chunksize; i++)
-      {
-        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
+      int a = chunksize;
+      for (int f = 0; f != a; f++) {
+        float r = random(en.length-1);
+        for (int i = round(r); i < en.length-chunksize; i++)
         {
-          int a = chunksize;
-          for (int f = 0; f != a; f++) {
+          if (vocabprep[int (cat[b+f])].indexOf("\n" + en[i+f] + "\n") > -1)
+          {
             output += en[i+f] + " ";
-            if (vocabprep[2].indexOf("\n" + en[i+f] + "\n") > -1) {
-              b+=f;
-              break;
-            }
+            break;
           }
-          r = random(en.length);
-          i = round(r);
-          break;
         }
       }
+      b+=a;
     }
     String[] eliminate2 = {";", "[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
     for (int k = 0; k < eliminate2.length; k++) {
       output = output.replace(eliminate2[k], "");
       cool2 = cool2.replace(eliminate2[k], "");
     }
-    output = output.replace(".", ".\n\n");
     if (output.length() > 10) {
       outputx = createWriter("output/output" + "#" + loop + ".txt");
       outputx.println(output);
