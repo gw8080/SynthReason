@@ -1,5 +1,5 @@
 PrintWriter outputx;
-String resource = "int.txt";
+String resource = "uber.txt";
 String rules = "reason.txt";
 int chunksize = 15;
 void setup()
@@ -78,27 +78,39 @@ void setup()
     String[]en = str2.split(" ");
     String[]cat = txt.split(",");
     outputx = createWriter("output.txt");
-    for (int b = 0; b < cat.length - chunksize; b++)
+    for (int b = 1; b < cat.length - chunksize - chunksize; b++)
     {
       int a = chunksize;
+      int a2 = chunksize;
       for (int f = 0; f != a; f++) {
         float r = random(en.length-1);
-        for (int i = round(r); i < en.length-chunksize; i++)
+        for (int i = round(r); i < en.length-chunksize - chunksize; i++)
         {
-          if (vocabprep[int (cat[b+f])].indexOf("\n" + en[i+f] + "\n") > -1)
+          String[] outputl = split(output, " ");
+          if (vocabprep[int (cat[b+f])].indexOf("\n" + en[i+f] + "\n") > -1 && vocabprep[int (cat[b+f])].indexOf( outputl[outputl.length-1]) > -1 )
           {
-            output += en[i+f] + " ";
+            if (int (cat[b+f]) >= 0)
+            {
+              for (int f2 = 0; f2 != a2; f2++) {
+                output += en[i+f2] + " ";
+                if (vocabprep[int (cat[b+f])].indexOf(en[i+f2]) >- 1)
+                {
+                  break;
+                }
+              }
+            }
             break;
           }
         }
       }
-      b+=a;
+      b+=a+a2;
     }
     String[] eliminate2 = {";", "[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
     for (int k = 0; k < eliminate2.length; k++) {
       output = output.replace(eliminate2[k], "");
       cool2 = cool2.replace(eliminate2[k], "");
     }
+    output = output.replace(".", ".\n\n");
     if (output.length() > 10) {
       outputx = createWriter("output/output" + "#" + loop + ".txt");
       outputx.println(output);
