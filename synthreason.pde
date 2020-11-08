@@ -57,7 +57,7 @@ void setup()
 
     String str2 = "";
     KB = loadStrings(resource);
-    String[] coolwords = split(vocabprep[6], "\n");
+    String[] coolwords = split(cool, "\n");
     num = coolwords.length;
     for (int i = 0; i < KB.length; i++)
     {
@@ -95,16 +95,19 @@ void setup()
     }
     output = output.replace(".", " is " + coolwords[loop] + "\n");
     String strfull = "";
+    String[] coolwords2 = split(vocabprep[6], "\n");
+    String[] coolwords3 = split(vocabprep[7], "\n");
     String[] outputl = split(output, "\n");
-    for (int xx = 0; xx < coolwords.length; xx++) {
-      for (int xxin = 0; xxin < outputl.length; xxin++) {
-        if (outputl[xxin].indexOf(coolwords[xx]) > -1) {
-          strfull += outputl[xxin] + " of " + coolwords[xx] + ".\n\n";
-          break;
+    for (int xxx = 0; xxx < coolwords3.length; xxx++) {
+      for (int xx = 0; xx < coolwords2.length; xx++) {
+        for (int xxin = 0; xxin < outputl.length; xxin++) {
+          if (outputl[xxin].indexOf(" " + coolwords2[xx] + " ") > -1 && outputl[xxin].indexOf(" " + coolwords3[xxx] + " ") > -1) {
+            strfull += outputl[xxin] + " of " + coolwords2[xx] + " " + coolwords3[xxx] + ".\n\n";
+            break;
+          }
         }
       }
     }
-
     if (output.length() > 10) {
       outputx = createWriter("output/" + coolwords[loop] + ".txt");
       outputx.println(strfull);
