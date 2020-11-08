@@ -102,7 +102,7 @@ void setup()
       for (int xx = 0; xx < coolwords2.length; xx++) {
         for (int xxin = 0; xxin < outputl.length; xxin++) {
           if (outputl[xxin].indexOf(" " + coolwords2[xx] + " ") > -1 && outputl[xxin].indexOf(" " + coolwords3[xxx] + " ") > -1) {
-            strfull += outputl[xxin] + " of " + coolwords2[xx] + " " + coolwords3[xxx] + ".\n\n";
+            strfull += outputl[xxin] + " and " + coolwords2[xx] + " " + coolwords3[xxx] + ".\n\n";
             break;
           }
         }
