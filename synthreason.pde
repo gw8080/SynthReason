@@ -1,7 +1,7 @@
 PrintWriter outputx;
 String resource = "uber.txt";
 String rules = "reason.txt";
-int chunksize = 15;
+int chunksize = 10;
 void setup()
 {
   int count = 0;
@@ -24,7 +24,7 @@ void setup()
     }
   }
   String[]vocabprep = split(vocabsyn, ":::::");
-  int num = 1; 
+  int num = 10; 
   for (int loop = 0; loop < num; loop++) {
     String output = "";    
     String txt = "";
@@ -35,7 +35,7 @@ void setup()
       str += KB[i];
     }
     String[]enx = split(str, " ");
-
+    String cool = "";
     for (int x = 0; x < enx.length; x++)
     {
       for (int y = 0; y != vocabprep.length; y++)
@@ -46,74 +46,68 @@ void setup()
           break;
         }
       }
+      if (enx[x].length() > 5) {
+        cool += enx[x] + "\n";
+      }
+    }
+    String[] eliminate = {"[", "]", ",", ".", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
+    for (int k = 0; k < eliminate.length; k++) {
+      cool = cool.replace(eliminate[k], "");
     }
 
-
-    String[] commandsproc = loadStrings("command.txt");
-    String cool = "";
-    for (int i = 0; i < commandsproc.length; i++)
-    {
-      cool += commandsproc[i];
-    }
-    String[] commands = split(cool, ".");
-    String[] coolwords = split(commands[loop], " ");
-    num = commands.length-1;
     String str2 = "";
-    String cool2 = "";
-    for (int i = 0; i < coolwords.length; i++)
-    {
-      cool2 += coolwords[i] + " ";
-    }
     KB = loadStrings(resource);
+    String[] coolwords = split(vocabprep[6], "\n");
+    num = coolwords.length;
     for (int i = 0; i < KB.length; i++)
     {
-      for (int r = 0; r < coolwords.length; r++)
-      {
-        if (KB[i].indexOf(" " + coolwords[r] + " ") > -1) {
-          str2 += KB[i];
-          break;
-        }
+      if (KB[i].indexOf(" " + coolwords[loop] + " ") > -1) {
+        str2 += KB[i];
       }
     }
     String[]en = str2.split(" ");
     String[]cat = txt.split(",");
     outputx = createWriter("output.txt");
-    for (int b = 1; b < cat.length - chunksize - chunksize; b++)
+    for (int b = 0; b < cat.length - chunksize; b++)
     {
-      int a = chunksize;
-      int a2 = chunksize;
-      for (int f = 0; f != a; f++) {
-        float r = random(en.length-1);
-        for (int i = round(r); i < en.length-chunksize - chunksize; i++)
+      float r = random(en.length);
+      for (int i = round(r); i < en.length-chunksize; i++)
+      {
+        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
         {
-          String[] outputl = split(output, " ");
-          if (vocabprep[int (cat[b+f])].indexOf("\n" + en[i+f] + "\n") > -1 && vocabprep[int (cat[b+f])].indexOf( outputl[outputl.length-1]) > -1 )
-          {
-            if (int (cat[b+f]) >= 0)
-            {
-              for (int f2 = 0; f2 != a2; f2++) {
-                output += en[i+f2] + " ";
-                if (vocabprep[int (cat[b+f])].indexOf(en[i+f2]) >- 1)
-                {
-                  break;
-                }
-              }
+          int a = chunksize;
+          for (int f = 0; f != a; f++) {
+            output += en[i+f] + " ";
+            if (vocabprep[2].indexOf("\n" + en[i+f] + "\n") > -1) {
+              b+=f;
+              break;
             }
-            break;
           }
+          r = random(en.length);
+          i = round(r);
+          break;
         }
       }
-      b+=a+a2;
     }
-    String[] eliminate2 = {";", "[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
+    String[] eliminate2 = {"[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
     for (int k = 0; k < eliminate2.length; k++) {
-      output = output.replace(eliminate2[k], "");
-      cool2 = cool2.replace(eliminate2[k], "");
+      output= output.replace(eliminate2[k], "");
     }
-    output = output.replace(".", ".\n\n");
+    output = output.replace(".", " is " + coolwords[loop] + "\n");
+    String strfull = "";
+    String[] outputl = split(output, "\n");
+    for (int xx = 0; xx < coolwords.length; xx++) {
+      for (int xxin = 0; xxin < outputl.length; xxin++) {
+        if (outputl[xxin].indexOf(coolwords[xx]) > -1) {
+          strfull += outputl[xxin] + " of " + coolwords[xx] + ".\n\n";
+          break;
+        }
+      }
+    }
+
     if (output.length() > 10) {
-      outputx = createWriter("output/output" + "#" + loop + ".txt");
-      outputx.println(output);
+      outputx = createWriter("output/" + coolwords[loop] + ".txt");
+      outputx.println(strfull);
       outputx.println();
       outputx.println();
       outputx.flush();
