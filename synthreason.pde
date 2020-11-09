@@ -1,13 +1,14 @@
 PrintWriter outputx;
 String resource = "uber.txt";
 String rules = "reason.txt";
-int chunksize = 10;
+int chunksize = 5;
+int learnMode = 0;
 void setup()
 {
   int count = 0;
   String[]vocabproc;
   String vocabsyn = "";
-  for (count = 0; count < 20; count++)
+  for (count = 0; count < 2000; count++)
   {
     vocabproc = loadStrings(count + ".txt");
     if (vocabproc != null)
@@ -77,7 +78,12 @@ void setup()
         {
           int a = chunksize;
           for (int f = 0; f != a; f++) {
-            output += en[i+f] + " ";
+            if (en[i+f].length() > 4 && learnMode == 1 && output.indexOf(en[i+f]) == -1) {
+              output += en[i+f] + " ";
+            }
+            if (learnMode == 0) {
+              output += en[i+f] + " ";
+            }
             if (vocabprep[2].indexOf("\n" + en[i+f] + "\n") > -1) {
               b+=f;
               break;
@@ -93,28 +99,27 @@ void setup()
     for (int k = 0; k < eliminate2.length; k++) {
       output= output.replace(eliminate2[k], "");
     }
-    output = output.replace(".", " is " + coolwords[loop] + "\n");
-    String strfull = "";
-    String[] coolwords2 = split(vocabprep[6], "\n");
-    String[] coolwords3 = split(vocabprep[7], "\n");
-    String[] outputl = split(output, "\n");
-    for (int xxx = 0; xxx < coolwords3.length; xxx++) {
-      for (int xx = 0; xx < coolwords2.length; xx++) {
-        for (int xxin = 0; xxin < outputl.length; xxin++) {
-          if (outputl[xxin].indexOf(" " + coolwords2[xx] + " ") > -1 && outputl[xxin].indexOf(" " + coolwords3[xxx] + " ") > -1) {
-            strfull += outputl[xxin] + " and " + coolwords2[xx] + " " + coolwords3[xxx] + ".\n\n";
-            break;
-          }
-        }
-      }
-    }
+    output = output.replace(".", "\n");
+
     if (output.length() > 10) {
-      outputx = createWriter("output/" + coolwords[loop] + ".txt");
-      outputx.println(strfull);
-      outputx.println();
-      outputx.println();
-      outputx.flush();
-      outputx.close();
+      if (learnMode == 0) {
+        output = output.replace("\n", "\n\n");
+        outputx = createWriter("output/" + coolwords[loop] + ".txt");
+        outputx.println(output);
+        outputx.println();
+        outputx.println();
+        outputx.flush();
+        outputx.close();
+      }
+      if (learnMode == 1) {
+        output = output.replace(" ", "\n");
+        outputx = createWriter("output/" + loop + ".txt");
+        outputx.println(output);
+        outputx.println();
+        outputx.println();
+        outputx.flush();
+        outputx.close();
+      }
     }
   }
   exit();
