@@ -58,8 +58,7 @@ void setup()
 
     String str2 = "";
     KB = loadStrings(resource);
-    String[] coolwords = split(cool, "\n");
-    num = coolwords.length;
+    String[] coolwords = split(vocabprep[0], "\n");
     for (int i = 0; i < KB.length; i++)
     {
       if (KB[i].indexOf(" " + coolwords[loop] + " ") > -1) {
@@ -69,30 +68,30 @@ void setup()
     String[]en = str2.split(" ");
     String[]cat = txt.split(",");
     outputx = createWriter("output.txt");
+    String search = "";
     for (int b = 0; b < cat.length - chunksize; b++)
     {
       float r = random(en.length);
       for (int i = round(r); i < en.length-chunksize; i++)
       {
-        if (vocabprep[int (cat[b])].indexOf("\n" + en[i] + "\n") > -1)
+        if (vocabprep[int (cat[b])].indexOf("\n" + search + "\n") > -1)
         {
           int a = chunksize;
           for (int f = 0; f != a; f++) {
-            if (en[i+f].length() > 4 && learnMode == 1 && output.indexOf(en[i+f]) == -1) {
+            if (en[i+f].length() > 4 && learnMode == 1) {
               output += en[i+f] + " ";
+              search = en[i+f];
             }
             if (learnMode == 0) {
+              search = en[i+f];
               output += en[i+f] + " ";
-            }
-            if (vocabprep[2].indexOf("\n" + en[i+f] + "\n") > -1) {
-              b+=f;
-              break;
             }
           }
           r = random(en.length);
           i = round(r);
           break;
         }
+        search = en[i];
       }
     }
     String[] eliminate2 = {"[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
@@ -103,8 +102,8 @@ void setup()
 
     if (output.length() > 10) {
       if (learnMode == 0) {
-        output = output.replace("\n", "\n\n");
-        outputx = createWriter("output/" + coolwords[loop] + ".txt");
+        output = output.replace("\n", ".\n\n");
+        outputx = createWriter("output/" + loop + ".txt");
         outputx.println(output);
         outputx.println();
         outputx.println();
@@ -121,6 +120,48 @@ void setup()
         outputx.close();
       }
     }
+  }
+
+
+  int count2 = 0;
+  String[]memory;
+  String memorysyn = "";
+  for (count = 0; count2 < num; count2++)
+  {
+    memory = loadStrings("output/" + count2 + ".txt");
+    if (memory != null)
+    {
+      String voc = join(memory, '\n');
+      if (voc.length() > 0)
+      {
+        memorysyn += voc + ":::::";
+      }
+      if (voc.length() == 0)
+      {
+        break;
+      }
+    }
+  }
+  String[]memoryarray = split(memorysyn, ":::::");
+
+
+  for (int outcount = 0; outcount < num; outcount++) {
+    String out = "";
+    for (int e = 0; e != memoryarray.length; e++) {
+      String[] sentence = split(memoryarray[e], ".");
+      for (int f = 0; f != sentence.length; f++) {
+        float r = random(sentence.length-1);
+        f = round(r);
+        if (sentence[f].length() < 128 && sentence[f].length() > 64) {
+          out += sentence[f] + ".\n";
+          break;
+        }
+      }
+    }
+    outputx = createWriter("outputR/" + outcount + ".txt");
+    outputx.println(out);
+    outputx.flush();
+    outputx.close();
   }
   exit();
 }
