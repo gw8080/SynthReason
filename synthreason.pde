@@ -1,7 +1,7 @@
 PrintWriter outputx;
-String resource = "uber.txt";
+String resource = "n.txt";
 String rules = "reason.txt";
-int chunksize = 1;
+int chunksize = 5;
 int num = 100; 
 void setup()
 {
@@ -24,8 +24,15 @@ void setup()
       }
     }
   }
+  String[] coolw = loadStrings("problem.txt");
+  String coolstr = "";
+  for (int i = 0; i < coolw.length; i++)
+  {
+    coolstr += coolw[i] + "\n";
+  }
+  String[] coolwords = split(coolstr, "\n");
   String[]vocabprep = split(vocabsyn, ":::::");
-  for (int loop = 0; loop < num; loop++) {
+  for (int loop = 0; loop < coolwords.length-1; loop++) {
     String output = "";    
     String txt = "";
     String str = "";
@@ -46,13 +53,6 @@ void setup()
           break;
         }
       }
-      if (enx[x].length() > 5) {
-        cool += enx[x] + "\n";
-      }
-    }
-    String[] eliminate = {"[", "]", ",", ".", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
-    for (int k = 0; k < eliminate.length; k++) {
-      cool = cool.replace(eliminate[k], "");
     }
 
     String str2 = "";
@@ -64,11 +64,20 @@ void setup()
 
     String[] KB2 = split(str2, ".");
     str2 = "";
-    String[] coolwords = split(cool, "\n");
-    for (int i = 0; i < KB2.length-1; i++)
+    String stre = "";
+    String[] solve = loadStrings("solve.txt");
+    for (int i = 0; i < solve.length; i++)
     {
-      if (KB2[i].indexOf(" " + coolwords[loop] + " ") > -1) {
-        str2 += KB2[i] + ".";
+      stre += solve[i] + "\n";
+    }
+    String[]sol = stre.split("\n");
+    for (int a = 0; a < sol.length-1; a++)
+    {
+      for (int i = 0; i < KB2.length-1; i++)
+      {
+        if (KB2[i].indexOf(" " + coolwords[loop] + " ") > -1 && KB2[i].indexOf(" " + sol[a] + " ") > -1) {
+          str2 += KB2[i] + ".";
+        }
       }
     }
     String[]en = str2.split(" ");
@@ -84,7 +93,7 @@ void setup()
         {
           int a = chunksize;
           for (int f = 0; f != a; f++) {
-            search = en[i+f];
+            search = en[i+f+1];
             output += en[i+f] + " ";
           }
           b+=a;
@@ -103,7 +112,7 @@ void setup()
 
     if (output.length() > 10) {
       output = output.replace("\n", ".\n\n");
-      outputx = createWriter("output/" + loop + ".txt");
+      outputx = createWriter("output/" + coolwords[loop] + ".txt");
       outputx.println(output);
       outputx.println();
       outputx.println();

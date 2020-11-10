@@ -1,0 +1,26 @@
+vocabulary
+processing
+loop
+load
+rules
+resource
+database
+syntax
+knowledgebase
+check
+flow
+natural
+language
+food security
+inclusive
+growth
+unemployment
+climate
+change
+financial
+crisis
+internet
+industrial 
+revolution
+gender
+equality
