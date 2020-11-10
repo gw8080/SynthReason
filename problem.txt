@@ -550,7 +550,6 @@ type
 unity
 science
 unity
-
 proposition
 universal
 universality

@@ -45,4 +45,3 @@ interpret
 translate
 construe
 explain
-
