@@ -76,8 +76,6 @@ boredom
 brahman
 brahma
 brain
-in
-a
 vat
 brute
 fact
@@ -139,10 +137,7 @@ sensibility
 cuteness
 daimonic
 darshana
-de
 dicto
-de
-re
 definition
 descriptive
 knowledge
@@ -226,10 +221,6 @@ happiness
 harmony
 hate
 speech
-here
-is
-a
-h
 heteronomy
 history
 class
@@ -250,10 +241,8 @@ ignoramus
 et
 ignorabimus
 ignorance
-i
 know
 that
-i
 know
 nothing
 immanence
@@ -263,7 +252,6 @@ implicate
 explicate
 order
 according
-to
 david
 bohm
 infallibility
@@ -458,7 +446,6 @@ raja
 yoga
 ren
 right
-to
 exist
 righteousness
 rights
@@ -494,7 +481,6 @@ social
 contract
 society
 soku
-hi
 sortal
 speculative
 reason
@@ -519,7 +505,6 @@ telos
 golden
 rule
 saying
-
 said
 theorem
 theory
@@ -528,10 +513,8 @@ thought
 thrownness
 thumos
 tamas
-ti
 time
 trailokya
-(triloka)
 transcendent
 transcendental
 apperception
@@ -540,7 +523,6 @@ identity
 trika
 triratna
 trilok
-(jainism)
 trust
 truth
 truth
