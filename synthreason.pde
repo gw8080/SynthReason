@@ -1,7 +1,8 @@
 PrintWriter outputx;
 String resource = "uber.txt";
 String rules = "reason.txt";
-int chunksize = 5;
+int chunksize = 1;
+int chunksize2 = 10;
 int learnMode = 0;
 void setup()
 {
@@ -117,11 +118,11 @@ void setup()
     }
     String[] eny = split(str, " ");// guide
     String[] enz = split(str2, " ");// full
-    float r = random(eny.length-chunksize);
-    float r2 = random(enz.length-chunksize);
-    for (int j = round(r); j < eny.length - chunksize - 1; j++) {
-      for (int i = round(r2); i < enz.length - chunksize - 1; i++) {
-        int a = chunksize;
+    float r = random(eny.length-chunksize2);
+    float r2 = random(enz.length-chunksize2);
+    for (int j = round(r); j < eny.length - chunksize2 - 1; j++) {
+      for (int i = round(r2); i < enz.length - chunksize2 - 1; i++) {
+        int a = chunksize2;
         String outputr = "";
         for (int f = 0; f != a; f++) {
           outputr += enz[i+f] + " ";
@@ -130,8 +131,8 @@ void setup()
             break;
           }
         }
-        r = random(eny.length-chunksize);
-        r2 = random(enz.length-chunksize);
+        r = random(eny.length-chunksize2);
+        r2 = random(enz.length-chunksize2);
         j = round(r);
         i = round(r2);
       }
