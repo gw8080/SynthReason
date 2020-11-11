@@ -1,8 +1,8 @@
 PrintWriter outputx;
 String resource = "uber.txt";
 String rules = "reason.txt";
-int chunksize = 3;
-int num = 100; 
+int chunksize = 5;
+int learnMode = 0;
 void setup()
 {
   int count = 0;
@@ -24,15 +24,9 @@ void setup()
       }
     }
   }
-  String[] coolw = loadStrings("problem.txt");
-  String coolstr = "";
-  for (int i = 0; i < coolw.length; i++)
-  {
-    coolstr += coolw[i] + "\n";
-  }
-  String[] coolwords = split(coolstr, "\n");
   String[]vocabprep = split(vocabsyn, ":::::");
-  for (int loop = 0; loop < coolwords.length-1; loop++) {
+  int num = 10; 
+  for (int loop = 0; loop < num; loop++) {
     String output = "";    
     String txt = "";
     String str = "";
@@ -42,6 +36,7 @@ void setup()
       str += KB[i];
     }
     String[]enx = split(str, " ");
+    String cool = "";
     for (int x = 0; x < enx.length; x++)
     {
       for (int y = 0; y != vocabprep.length; y++)
@@ -52,29 +47,22 @@ void setup()
           break;
         }
       }
+      if (enx[x].length() > 5) {
+        cool += enx[x] + "\n";
+      }
     }
+    String[] eliminate = {"[", "]", ",", ".", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
+    for (int k = 0; k < eliminate.length; k++) {
+      cool = cool.replace(eliminate[k], "");
+    }
+
     String str2 = "";
     KB = loadStrings(resource);
+    String[] coolwords = split(vocabprep[0], "\n");
     for (int i = 0; i < KB.length; i++)
     {
-      str2 += KB[i];
-    }
-    String[] KB2 = split(str2, ".");
-    str2 = "";
-    String stre = "";
-    String[] solve = loadStrings("solve.txt");
-    for (int i = 0; i < solve.length; i++)
-    {
-      stre += solve[i] + "\n";
-    }
-    String[]sol = stre.split("\n");
-    for (int a = 0; a < sol.length-1; a++)
-    {
-      for (int i = 0; i < KB2.length-1; i++)
-      {
-        if (KB2[i].indexOf(" " + coolwords[loop] + " ") > -1 && KB2[i].indexOf(" " + sol[a] + " ") > -1) {
-          str2 += KB2[i] + ".";
-        }
+      if (KB[i].indexOf(" " + coolwords[loop] + " ") > -1) {
+        str2 += KB[i];
       }
     }
     String[]en = str2.split(" ");
@@ -86,43 +74,72 @@ void setup()
       float r = random(en.length);
       for (int i = round(r); i < en.length-chunksize; i++)
       {
-        if (vocabprep[int (cat[b])].indexOf("\n" + search + "\n") > -1 && search == en[i])
+        if (vocabprep[int (cat[b])].indexOf("\n" + search + "\n") > -1)
         {
           int a = chunksize;
           for (int f = 0; f != a; f++) {
-            search = en[i+f];
-            output += en[i+f] + " ";
+            if (en[i+f].length() > 4 && learnMode == 1) {
+              output += en[i+f] + " ";
+              search = en[i+f];
+            }
+            if (learnMode == 0) {
+              search = en[i+f];
+              output += en[i+f] + " ";
+            }
           }
-          b+=a;
-          r = random(en.length-chunksize);
+          r = random(en.length);
           i = round(r);
           break;
         }
-        search = en[i+1];
+        search = en[i];
       }
     }
     String[] eliminate2 = {"[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
     for (int k = 0; k < eliminate2.length; k++) {
       output= output.replace(eliminate2[k], "");
     }
-
-
-    String[] sentence = split(output, ".");
-    String string = "";
-    for (int u = 0; u < sentence.length; u++) {
-      for (int a = 0; a < sol.length; a++)
-      {
-
-        if (sentence[u].indexOf(" " + sol[a] + " ") > -1) {
-          string += sentence[u] + ".";
-          break;
+    output = output.replace(".", "\n");
+    String[] coolx = loadStrings(rules);
+    String coolstr = "";
+    for (int i = 0; i < coolx.length; i++)
+    {
+      coolstr += coolx[i];
+    }
+    enx = split(coolstr, " ");
+    str = "";
+    str2 = "";
+    for (int x = 0; x < enx.length; x++)
+    {
+      if (enx[x].length() > 4) {
+        str += enx[x] + " ";
+      }
+      str2 += enx[x] + " ";
+    }
+    String[] eny = split(str, " ");// guide
+    String[] enz = split(str2, " ");// full
+    float r = random(eny.length-chunksize);
+    float r2 = random(enz.length-chunksize);
+    for (int j = round(r); j < eny.length - chunksize - 1; j++) {
+      for (int i = round(r2); i < enz.length - chunksize - 1; i++) {
+        int a = chunksize;
+        String outputr = "";
+        for (int f = 0; f != a; f++) {
+          outputr += enz[i+f] + " ";
+          if (str.indexOf(enz[i+f]) > -1) {
+            str = str.replace( eny[j] + " " + eny[j+1], eny[j] + " " +  outputr + " " + eny[j+1]);
+            break;
+          }
         }
+        r = random(eny.length-chunksize);
+        r2 = random(enz.length-chunksize);
+        j = round(r);
+        i = round(r2);
       }
     }
     if (output.length() > 10) {
-      string = string.replace(".", ".\n\n");
-      outputx = createWriter("output/" + coolwords[loop] + ".txt");
-      outputx.println(string);
+      output = output.replace("\n", ".\n\n");
+      outputx = createWriter("output/" + loop + ".txt");
+      outputx.println(output);
       outputx.println();
       outputx.println();
       outputx.flush();
