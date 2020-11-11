@@ -1,7 +1,7 @@
 PrintWriter outputx;
-String resource = "n.txt";
+String resource = "uber.txt";
 String rules = "reason.txt";
-int chunksize = 5;
+int chunksize = 3;
 int num = 100; 
 void setup()
 {
@@ -42,7 +42,6 @@ void setup()
       str += KB[i];
     }
     String[]enx = split(str, " ");
-    String cool = "";
     for (int x = 0; x < enx.length; x++)
     {
       for (int y = 0; y != vocabprep.length; y++)
@@ -54,14 +53,12 @@ void setup()
         }
       }
     }
-
     String str2 = "";
     KB = loadStrings(resource);
     for (int i = 0; i < KB.length; i++)
     {
       str2 += KB[i];
     }
-
     String[] KB2 = split(str2, ".");
     str2 = "";
     String stre = "";
@@ -89,15 +86,15 @@ void setup()
       float r = random(en.length);
       for (int i = round(r); i < en.length-chunksize; i++)
       {
-        if (vocabprep[int (cat[b])].indexOf("\n" + search + "\n") > -1)
+        if (vocabprep[int (cat[b])].indexOf("\n" + search + "\n") > -1 && search == en[i])
         {
           int a = chunksize;
           for (int f = 0; f != a; f++) {
-            search = en[i+f+1];
+            search = en[i+f];
             output += en[i+f] + " ";
           }
           b+=a;
-          r = random(en.length);
+          r = random(en.length-chunksize);
           i = round(r);
           break;
         }
@@ -108,12 +105,24 @@ void setup()
     for (int k = 0; k < eliminate2.length; k++) {
       output= output.replace(eliminate2[k], "");
     }
-    output = output.replace(".", "\n");
 
+
+    String[] sentence = split(output, ".");
+    String string = "";
+    for (int u = 0; u < sentence.length; u++) {
+      for (int a = 0; a < sol.length; a++)
+      {
+
+        if (sentence[u].indexOf(" " + sol[a] + " ") > -1) {
+          string += sentence[u] + ".";
+          break;
+        }
+      }
+    }
     if (output.length() > 10) {
-      output = output.replace("\n", ".\n\n");
+      string = string.replace(".", ".\n\n");
       outputx = createWriter("output/" + coolwords[loop] + ".txt");
-      outputx.println(output);
+      outputx.println(string);
       outputx.println();
       outputx.println();
       outputx.flush();
