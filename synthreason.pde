@@ -127,7 +127,7 @@ void setup()
         String outputr = "";
         for (int f = 0; f != a; f++) {
           outputr += enz[i+f] + " ";
-          if (str.indexOf(enz[i+f]) > -1) {
+          if (str.indexOf(enz[i] + " " + enz[i+f]) > -1) {
             str = str.replace( eny[j] + " " + eny[j+1], eny[j] + " " +  outputr + " " + eny[j+1]);
             break;
           }
