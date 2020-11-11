@@ -99,11 +99,11 @@ void setup()
       output= output.replace(eliminate2[k], "");
     }
     output = output.replace(".", "\n");
-    String[] coolx = loadStrings(rules);
+    String[] coolx = split(output, " ");
     String coolstr = "";
     for (int i = 0; i < coolx.length; i++)
     {
-      coolstr += coolx[i];
+      coolstr += coolx[i] + " ";
     }
     enx = split(coolstr, " ");
     str = "";
@@ -137,9 +137,11 @@ void setup()
       }
     }
     if (output.length() > 10) {
-      output = output.replace("\n", ".\n\n");
+      str = str.replace("\n", ".\n\n");
+      str = str.replace("  ", " ");
+
       outputx = createWriter("output/" + loop + ".txt");
-      outputx.println(output);
+      outputx.println(str);
       outputx.println();
       outputx.println();
       outputx.flush();
