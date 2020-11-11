@@ -59,7 +59,8 @@ void setup()
 
     String str2 = "";
     KB = loadStrings(resource);
-    String[] coolwords = split(vocabprep[0], "\n");
+    String[] coolwords = split(cool, "\n");
+    num = coolwords.length;
     for (int i = 0; i < KB.length; i++)
     {
       if (KB[i].indexOf(" " + coolwords[loop] + " ") > -1) {
@@ -141,7 +142,7 @@ void setup()
       str = str.replace("\n", ".\n\n");
       str = str.replace("  ", " ");
 
-      outputx = createWriter("output/" + loop + ".txt");
+      outputx = createWriter("output/" + coolwords[loop]+ ".txt");
       outputx.println(str);
       outputx.println();
       outputx.println();
