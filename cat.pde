@@ -5,41 +5,60 @@ int chunksize = 30;
 void setup()
 {
   String resource = "uber.txt";
-
+  String[] coolw = loadStrings("problem.txt");
+  String coolstr = "";
+  for (int i = 0; i < coolw.length; i++)
+  {
+    coolstr += coolw[i] + "\n";
+  }
+  String[] coolwords = split(coolstr, "\n");
   String str = "";
   String[]KB = loadStrings(resource);
   for (int i = 0; i < KB.length; i++)
   {
     str += KB[i];
   }
+
+  String stre = "";
+  String[] solve = loadStrings("solve.txt");
+  for (int i = 0; i < solve.length; i++)
+  {
+    stre += solve[i] + "\n";
+  }
+  String[]sol = stre.split("\n");
   String[]enx = split(str, " ");
   String cool = "";
   for (int x = 0; x < enx.length; x++)
   {
+
     if (enx[x].length() > 5) {
       cool += enx[x] + "\n";
     }
   }
-  String[] eliminate = {"[", "]", ",", ".", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?",":"};
-  for (int k = 0; k < eliminate.length; k++) {
-    cool = cool.replace(eliminate[k], "");
-  }
-  
-  KB = loadStrings(resource);
-  String[] coolwords = split(cool, "\n");
+
+
+  String[] sentence = split(str, ".");
+
   for (int loop = 0; loop < coolwords.length; loop++) {
-    String str2 = "";
-    for (int i = 0; i < KB.length; i++)
-    {
-      if (KB[i].indexOf(" " + coolwords[loop] + " ") > -1) {
-        str2 += KB[i];
+    String string = "";
+    for (int u = 0; u < sentence.length; u++) {
+      for (int a = 0; a < sol.length; a++)
+      {
+
+
+        if (sentence[u].indexOf(" " + coolwords[loop] + " ") > -1 && sentence[u].indexOf(sol[a]) > -1) {
+          string += sentence[u] + ".\n\n";
+          break;
+        }
       }
     }
     outputx = createWriter("output/" + coolwords[loop] + ".txt");
-    outputx.println(str2);
+    outputx.println(string);
     outputx.println();
     outputx.println();
     outputx.flush();
     outputx.close();
   }
+
+  exit();
 }
