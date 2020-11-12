@@ -80,20 +80,14 @@ void setup()
         {
           int a = chunksize;
           for (int f = 0; f != a; f++) {
-            if (en[i+f].length() > 4 && learnMode == 1) {
-              output += en[i+f] + " ";
-              search = en[i+f];
-            }
-            if (learnMode == 0) {
-              search = en[i+f];
-              output += en[i+f] + " ";
-            }
+            search = en[i+f];
+            output += en[i+f] + " ";
           }
           r = random(en.length);
           i = round(r);
           break;
         }
-        search = en[i];
+        search = en[i+1];
       }
     }
     String[] eliminate2 = {"[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
@@ -127,8 +121,8 @@ void setup()
         String outputr = "";
         for (int f = 0; f != a; f++) {
           outputr += enz[i+f] + " ";
-          if (str.indexOf(enz[i] + " " + enz[i+f]) > -1) {
-            str = str.replace( eny[j] + " " + eny[j+1], eny[j] + " " +  outputr + " " + eny[j+1]);
+          if (str.indexOf(eny[j] + " " + enz[i+f]) > -1) {
+            str = str.replace(" " + eny[j] + " " + enz[i+f] + " ", " " + eny[j] + " " +  outputr + " " + eny[j+1] + " ");
             break;
           }
         }
