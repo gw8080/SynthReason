@@ -1,7 +1,7 @@
 PrintWriter outputx;
 String resource = "uber.txt";
 int chunksize = 10;
-int num = 100;
+int num = 1000;
 void setup()
 {
   String str2 = "";
@@ -42,8 +42,6 @@ void setup()
   spectrum = spectrum.replace("$^$", " ");
   outputx = createWriter("output/test.txt");
   outputx.println(spectrum);
-  outputx.println();
-  outputx.println();
   outputx.flush();
   outputx.close();
   exit();
