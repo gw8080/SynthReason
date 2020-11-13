@@ -1,7 +1,7 @@
 PrintWriter outputx;
 String resource = "uber.txt";
 int chunksize = 10;
-int num = 1000;
+int num = 100;
 void setup()
 {
   String str2 = "";
@@ -19,8 +19,8 @@ void setup()
   }
   String[] eny = split(spectrum, " ");// guide
   String[] enz = split(str2, " ");// full
-  float r = random(eny.length-chunksize);
-  float r2 = random(enz.length-chunksize);
+  float r = random(eny.length-chunksize-1);
+  float r2 = random(enz.length-chunksize-1);
   for (int j = round(r); j < eny.length - chunksize - 1; j++) {
     for (int i = round(r2); i < enz.length - chunksize - 1; i++) {
       int a = chunksize;
@@ -32,8 +32,8 @@ void setup()
           break;
         }
       }
-      r = random(eny.length-chunksize);
-      r2 = random(enz.length-chunksize);
+      r = random(eny.length-chunksize-1);
+      r2 = random(enz.length-chunksize-1);
       j = round(r);
       i = round(r2);
     }
