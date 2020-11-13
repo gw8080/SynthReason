@@ -1,6 +1,6 @@
 PrintWriter outputx;
 String resource = "uber.txt";
-String rules = "reason.txt";
+String rules = "int.txt";
 int chunksize = 1;
 int chunksize2 = 10;
 int learnMode = 0;
@@ -83,7 +83,7 @@ void setup()
             search = en[i+f];
             output += en[i+f] + " ";
           }
-          r = random(en.length);
+          r = random(en.length-chunksize);
           i = round(r);
           break;
         }
@@ -120,7 +120,7 @@ void setup()
         int a = chunksize2;
         String outputr = "";
         for (int f = 0; f != a; f++) {
-          outputr += enz[i+f] + " ";
+          outputr += enz[i+f] + "$^$";
           if (str.indexOf(eny[j] + " " + enz[i+f]) > -1) {
             str = str.replace(" " + eny[j] + " " + enz[i+f] + " ", " " + eny[j] + " " +  outputr + " " + eny[j+1] + " ");
             break;
@@ -135,7 +135,7 @@ void setup()
     if (output.length() > 10) {
       str = str.replace("\n", ".\n\n");
       str = str.replace("  ", " ");
-
+      str = str.replace("$^$", " ");
       outputx = createWriter("output/" + coolwords[loop]+ ".txt");
       outputx.println(str);
       outputx.println();
