@@ -59,7 +59,7 @@ void setup()
 
     String str2 = "";
     KB = loadStrings(resource);
-    String[] coolwords = split(cool, "\n");
+    String[] coolwords = split(vocabprep[2], "\n");
     num = coolwords.length;
     for (int i = 0; i < KB.length; i++)
     {
@@ -111,6 +111,12 @@ void setup()
         str += enx[x] + " ";
       }
       str2 += enx[x] + " ";
+    }  
+    String spectrum = "";
+    String[]spec = loadStrings("spectrum.txt");
+    for (int i = 0; i < spec.length; i++)
+    {
+      spectrum += spec[i];
     }
     String[] eny = split(str, " ");// guide
     String[] enz = split(str2, " ");// full
@@ -122,7 +128,7 @@ void setup()
         String outputr = "";
         for (int f = 0; f != a; f++) {
           outputr += enz[i+f] + "$^$";
-          if (str.indexOf(eny[j] + " " + enz[i+f]) > -1) {
+          if (str.indexOf(eny[j] + " " + enz[i+f]) > -1 && enz[i+f] == eny[j+1]) {
             str = str.replace(" " + eny[j] + " " + enz[i+f] + " ", " " + eny[j] + " " +  outputr + " " + eny[j+1] + " ");
             break;
           }
