@@ -83,6 +83,7 @@ void setup()
             search = en[i+f];
             output += en[i+f] + " ";
           }
+          b+=a;
           r = random(en.length-chunksize);
           i = round(r);
           break;
