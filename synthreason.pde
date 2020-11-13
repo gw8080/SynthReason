@@ -1,5 +1,5 @@
 PrintWriter outputx;
-String resource = "uber.txt";
+String resource = "reason.txt";
 int chunksize = 10;
 int num = 100;
 void setup()
@@ -32,10 +32,6 @@ void setup()
           break;
         }
       }
-      r = random(eny.length-chunksize-1);
-      r2 = random(enz.length-chunksize-1);
-      j = round(r);
-      i = round(r2);
     }
   }
   spectrum = spectrum.replace("$^$", " ");
