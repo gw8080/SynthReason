@@ -38,8 +38,8 @@ void setup()
       i = round(r2);
     }
   }
-  spectrum = spectrum.replace("  ", " ");
   spectrum = spectrum.replace("$^$", " ");
+  spectrum = spectrum.replace("  ", " ");
   outputx = createWriter("output/test.txt");
   outputx.println(spectrum);
   outputx.flush();
