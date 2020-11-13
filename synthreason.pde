@@ -19,10 +19,8 @@ void setup()
   }
   String[] eny = split(spectrum, " ");// guide
   String[] enz = split(str2, " ");// full
-  float r = random(eny.length-chunksize-1);
-  float r2 = random(enz.length-chunksize-1);
-  for (int j = round(r); j < eny.length - chunksize - 1; j++) {
-    for (int i = round(r2); i < enz.length - chunksize - 1; i++) {
+  for (int j = 0; j < eny.length - chunksize - 1; j++) {
+    for (int i = 0; i < enz.length - chunksize - 1; i++) {
       int a = chunksize;
       String outputr = "";
       for (int f = 0; f != a; f++) {
