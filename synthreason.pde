@@ -20,8 +20,7 @@ void setup()
   String[] eny = split(spectrum, " ");// guide
   String[] enz = split(str2, " ");// full
   for (int j = 0; j < eny.length - chunksize - 1; j++) {
-    for (int i = 0; i < enz.length - chunksize - 1; i++) {
-      int a = chunksize;
+    for (int i = 0, a = chunksize; i < enz.length - chunksize - 1; i++) {
       String outputr = "";
       for (int f = 0; f != a; f++) {
         outputr += enz[i+f] + "$^$";
