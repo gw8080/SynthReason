@@ -1,8 +1,8 @@
 PrintWriter outputx;
-String resource = "reason.txt";
+String resource = "encyclopedia.txt";
 int chunksize = 5;
 int num = 100;
-int mode = 0;
+int mode = 3;
 void setup()
 {
   String str2 = "";
