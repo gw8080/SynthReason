@@ -2,7 +2,7 @@ PrintWriter outputx;
 String resource = "reason.txt";
 int chunksize = 5;
 int num = 100;
-int mode = 2;
+int mode = 0;
 void setup()
 {
   String str2 = "";
@@ -37,7 +37,7 @@ void setup()
   }
   if (mode == 2) {
     String str3 = "";
-    KB = loadStrings("1.txt");
+    KB = loadStrings("7.txt");
     for (int i = 0; i != KB.length; i++)
     {
       str3 += KB[i] + "\n";
@@ -46,6 +46,22 @@ void setup()
     for (int a = 0; a < hook.length; a++) {
       if (str2.indexOf(" " + hook[a] + " ") > -1) {
         spectrum += hook[a] + " ";
+      }
+    }
+  }
+  if (mode == 3) {
+    String str3 = "";
+    KB = loadStrings("3.txt");
+    for (int i = 0; i != KB.length; i++)
+    {
+      str3 += KB[i] + "\n";
+    }
+    String[] hook = split(str3, "\n");
+    for (int a = 0; a < num; a++) {
+      float r3 = random(hook.length-1);
+      int x = round(r3);
+      if (str2.indexOf(" " + hook[x] + " ") > -1) {
+        spectrum += hook[x] + " ";
       }
     }
   }
