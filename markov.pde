@@ -1,5 +1,5 @@
 PrintWriter outputx;
-String resource = "reason.txt";
+String resource = "uber.txt";
 void setup()
 {
   String str2 = "";
@@ -8,7 +8,7 @@ void setup()
   {
     str2 += KB[i];
   }
-  String[] knowledge = split(str2, " ");
+  String[] knowledge = split(str2, ".");
   String str3 = "";
   KB = loadStrings("mind.txt");
   for (int i = 0; i != KB.length; i++)
@@ -38,8 +38,8 @@ void setup()
   for (int a = 0; a < spectrumA.length-1; a++) {
     String[] spec = split(spectrumA[a], " ");
     for (int b = 0; b < knowledge.length; b++) {
-      if (knowledge[b].indexOf(spec[0]) < knowledge[b].indexOf(spec[1])) {
-        prob[a] = prob[a] + 1;
+      if (knowledge[b].indexOf(spec[0]) < knowledge[b].indexOf(spec[1]) && knowledge[b].indexOf(spec[0]) > -1 && knowledge[b].indexOf(spec[1]) > -1) {
+        prob[a] += 1;
       }
     }
   }
@@ -55,15 +55,5 @@ void setup()
   outputx.println(str4);
   outputx.flush();
   outputx.close();
- 
-  //spectrumout = spectrumout.replace("cognition ", "");
-  //spectrumout = spectrumout.replace("reason ", "");
-  //spectrumout = spectrumout.replace("  ", " ");
-
-  outputx = createWriter("output/modelout.txt");
-  outputx.println(spectrumout);
-  outputx.flush();
-  outputx.close();
-
   exit();
 }
