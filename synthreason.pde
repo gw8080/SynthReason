@@ -22,7 +22,6 @@ void setup()
   outputx.close();
   exit();
 }
-
 String returnstr(String[] KB)
 {
   String str2 = "";
@@ -35,7 +34,6 @@ String returnstr(String[] KB)
   outputx.close();
   return str2;
 }
-
 String[] loadResources()
 {
   String str2 = "";
@@ -69,7 +67,6 @@ String[] loadResources2(String know)
   outputx.close();
   return spectrumFeed;
 }
-
 String[] initTuring(String[] spectrumFeed) {
   String spectrumx = "";
   for (int i = 0; i != spectrumFeed.length-1; i++)
@@ -87,7 +84,6 @@ String[] initTuring(String[] spectrumFeed) {
   outputx.close();
   return spectrumA;
 }
-
 int[] probability(String[] spectrumA, String[] knowledge) {
   int[] prob;
   prob = new int[spectrumA.length];
@@ -113,10 +109,6 @@ int[] probability(String[] spectrumA, String[] knowledge) {
   outputx.close();
   return prob;
 }
-
-
-
-
 String decide(String[] spectrumA, int[] prob) {
   String spectrumout = "";
   int exit1 = 0;
@@ -157,9 +149,6 @@ String decide(String[] spectrumA, int[] prob) {
   outputx.close();
   return spectrumout;
 }
-
-
-
 String generate(String spectrum, String full) {
 
   String[] eny = split(spectrum, " ");// guide
