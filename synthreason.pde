@@ -1,10 +1,11 @@
 PrintWriter outputx;
 String resource = "n.txt";
-int chunksize = 5;
+String mind = "mind.txt";
+int chunksize = 15;
 int num = 100;
-int block = 64;
-int sens = 100;
-int vocabsize = 100;
+int block = 128;
+int sens = 50;
+int vocabsize = 200;
 int searchlength = 10000;
 void setup()
 {
@@ -51,7 +52,7 @@ String[] loadResources()
 String[] loadResources2(String know)
 {
   String str3 = "";
-  String[] KB = loadStrings("mind.txt");
+  String[] KB = loadStrings(mind);
   for (int i = 0; i != vocabsize; )
   {
     float r = random(KB.length-1);
