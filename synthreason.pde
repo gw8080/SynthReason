@@ -1,11 +1,9 @@
 PrintWriter outputx;
 String resource = "uber.txt";
 String mind = "mind.txt";
-int chunksize = 50;
-int num = 100;
-int block = 64;
+int block = 32;
 int sens = 50;
-int vocabsize = 200;
+int vocabsize = 100;
 int searchlength = 10000;
 void setup()
 {
@@ -16,8 +14,12 @@ void setup()
   int[] prob = probability(spectrumA, knowledge);//5
   String spectrum = decide(spectrumA, prob);//6
   String full = returnstr(knowledge);//1
-  String file = "f.txt";
+  String file = "mind.txt";
   spectrum = generate(spectrum, full, file);//7
+  file = "2.txt";
+  spectrum = generate(spectrum, full, file);//7
+  file = "f.txt";
+  spectrum = generatef(spectrum, full, file);//7
   outputx = createWriter("output/output.txt");
   outputx.println(spectrum);
   outputx.flush();
@@ -115,7 +117,7 @@ String decide(String[] spectrumA, int[] prob) {
   String spectrumout = "";
   int exit1 = 0;
   int rem = 0;
-  while (exit1 == 0) {
+  for (int count2 = 0; exit1 == 0 && count2 < searchlength; count2++) {
     String dis = "";
     for (int count = 0; count != spectrumA.length-1; count++) {
       String[] spec = split(spectrumA[rem], " ");
@@ -151,7 +153,7 @@ String decide(String[] spectrumA, int[] prob) {
   outputx.close();
   return spectrumout;
 }
-String generate(String spectrum, String full, String file) {
+String generatef(String spectrum, String full, String file) {
   String[] KB = loadStrings(file);
   String loop = "";
   for (int i = 0; i != KB.length; i++)
@@ -163,7 +165,29 @@ String generate(String spectrum, String full, String file) {
   for (int j = 0; j != eny.length - 1; j++) {
     for (int a = 0; a < loopA.length-1; a++) {
       if ( full.indexOf(eny[j] + " " + loopA[a]) > -1 && full.indexOf(loopA[a] + " " + eny[j+1]) > -1 && loopA[a] != null) {
-        spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " +   eny[j+1] + " ");
+        spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
+        break;
+      }
+    }
+  }
+  outputx = createWriter("output/7.txt");
+  outputx.println(spectrum);
+  outputx.close();
+  return spectrum;
+}
+String generate(String spectrum, String full, String file) {
+  String[] KB = loadStrings(file);
+  String loop = "";
+  for (int i = 0; i != KB.length; i++)
+  {
+    loop += KB[i] + "\n";
+  }
+  String[] loopA = split(loop, "\n");
+  String[] eny = split(spectrum, " ");// guide
+  for (int j = 0; j != eny.length - 1; j++) {
+    for (int a = 0; a < loopA.length-1; a++) {
+      if ( full.indexOf(eny[j] + " " + loopA[a]) > -1 && loopA[a] != null) {
+        spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
         break;
       }
     }
