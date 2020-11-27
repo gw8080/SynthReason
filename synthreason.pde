@@ -1,9 +1,9 @@
 PrintWriter outputx;
-String resource = "n.txt";
+String resource = "uber.txt";
 String mind = "mind.txt";
-int chunksize = 15;
+int chunksize = 50;
 int num = 100;
-int block = 128;
+int block = 64;
 int sens = 50;
 int vocabsize = 200;
 int searchlength = 10000;
@@ -16,7 +16,8 @@ void setup()
   int[] prob = probability(spectrumA, knowledge);//5
   String spectrum = decide(spectrumA, prob);//6
   String full = returnstr(knowledge);//1
-  spectrum = generate(spectrum, full);//7
+  String file = "f.txt";
+  spectrum = generate(spectrum, full, file);//7
   outputx = createWriter("output/output.txt");
   outputx.println(spectrum);
   outputx.flush();
@@ -150,27 +151,22 @@ String decide(String[] spectrumA, int[] prob) {
   outputx.close();
   return spectrumout;
 }
-String generate(String spectrum, String full) {
-
+String generate(String spectrum, String full, String file) {
+  String[] KB = loadStrings(file);
+  String loop = "";
+  for (int i = 0; i != KB.length; i++)
+  {
+    loop += KB[i] + "\n";
+  }
+  String[] loopA = split(loop, "\n");
   String[] eny = split(spectrum, " ");// guide
-  String[] enz = split(full, " ");// full
   for (int j = 0; j != eny.length - 1; j++) {
-    for (int i = 0, a = chunksize; i != enz.length - chunksize - 1; i++) {
-      String outputr = "";
-      for (int f = 0; f != a; f++) {
-        outputr += enz[i+f] + "$^$";
-        if (spectrum.indexOf(eny[j] + " " + enz[i+f]) > -1) {
-          spectrum = spectrum.replace(" " + eny[j] + " " + enz[i+f] + " ", " " + eny[j] + " " +  outputr + " " + eny[j+1] + " ");
-          break;
-        }
+    for (int a = 0; a < loopA.length-1; a++) {
+      if ( full.indexOf(eny[j] + " " + loopA[a]) > -1 && full.indexOf(loopA[a] + " " + eny[j+1]) > -1 && loopA[a] != null) {
+        spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " +   eny[j+1] + " ");
+        break;
       }
     }
-  }
-  spectrum = spectrum.replace("$^$", " ");
-  spectrum = spectrum.replace("  ", " ");
-  String[] spectrumcheck = split(spectrum, " ");
-  for (int count = 0; count < spectrumcheck.length; count++) {
-    spectrum = spectrum.replace(spectrumcheck[count] + " " + spectrumcheck[count] + " ", spectrumcheck[count] + " ");
   }
   outputx = createWriter("output/7.txt");
   outputx.println(spectrum);
