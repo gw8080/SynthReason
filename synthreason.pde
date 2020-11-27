@@ -1,10 +1,10 @@
 PrintWriter outputx;
 String resource = "uber.txt";
 String mind = "mind.txt";
-int block = 32;
+int block = 64;
 int sens = 50;
-int vocabsize = 100;
-int searchlength = 10000;
+int vocabsize = 200;
+int searchlength = 1000;
 void setup()
 {
 
@@ -185,13 +185,17 @@ String generate(String spectrum, String full, String file) {
   String[] loopA = split(loop, "\n");
   String[] eny = split(spectrum, " ");// guide
   for (int j = 0; j != eny.length - 1; j++) {
-    for (int a = 0; a < loopA.length-1; a++) {
-      if ( full.indexOf(eny[j] + " " + loopA[a]) > -1 && loopA[a] != null) {
-        spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
+    for (int a = 0; a < searchlength; a++) {
+      float r = random(sens);
+      int x = round(r);
+      if ( full.indexOf(eny[j] + " " + loopA[x]) > -1 && loopA[x] != null) {
+        spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
         break;
       }
     }
   }
+  spectrum += ".";
+  spectrum = spectrum.replace(" .", ".");
   outputx = createWriter("output/7.txt");
   outputx.println(spectrum);
   outputx.close();
