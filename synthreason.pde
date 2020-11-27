@@ -1,29 +1,35 @@
 PrintWriter outputx;
+PrintWriter outputz;
 String resource = "uber.txt";
 String mind = "mind.txt";
 int block = 64;
+int num = 100;
 int sens = 50;
 int vocabsize = 200;
 int searchlength = 1000;
 void setup()
 {
+  outputz = createWriter("output/output.txt");
 
-  String[] knowledge = loadResources();//2
-  String[] spectrumFeed = loadResources2(returnstr(knowledge));//3
-  String[] spectrumA = initTuring(spectrumFeed);//4
-  int[] prob = probability(spectrumA, knowledge);//5
-  String spectrum = decide(spectrumA, prob);//6
-  String full = returnstr(knowledge);//1
-  String file = "mind.txt";
-  spectrum = generate(spectrum, full, file);//7
-  file = "2.txt";
-  spectrum = generate(spectrum, full, file);//7
-  file = "f.txt";
-  spectrum = generatef(spectrum, full, file);//7
-  outputx = createWriter("output/output.txt");
-  outputx.println(spectrum);
-  outputx.flush();
-  outputx.close();
+  for (int loop = 0; loop < num; loop++) {
+    String[] knowledge = loadResources();//2
+    String[] spectrumFeed = loadResources2(returnstr(knowledge));//3
+    String[] spectrumA = initTuring(spectrumFeed);//4
+    int[] prob = probability(spectrumA, knowledge);//5
+    String spectrum = decide(spectrumA, prob);//6
+    String full = returnstr(knowledge);//1
+    String file = "mind.txt";
+    spectrum = generate(spectrum, full, file);//7
+    file = "2.txt";
+    spectrum = generate(spectrum, full, file);//7
+    file = "f.txt";
+    spectrum = generatef(spectrum, full, file);//7
+
+    outputz.println(spectrum);
+    outputz.println();
+    outputz.flush();
+  }
+  outputz.close();
   exit();
 }
 String returnstr(String[] KB)
