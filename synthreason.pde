@@ -5,7 +5,7 @@ String mind = "mind.txt";
 int block = 64;
 int num = 1000;
 int sens = 50;
-int vocabsize = 200;
+int vocabsize = 100;
 int searchlength = 1000;
 void setup()
 {
@@ -20,6 +20,8 @@ void setup()
     String full = returnstr(knowledge);//1
     String file = "3.txt";
     spectrum = generate(spectrum, full, file, 1);//7
+    file = "mind.txt";
+    spectrum = generate(spectrum, full, file, 2);//7
     file = "f.txt";
     spectrum = generate(spectrum, full, file, 0);//7
     outputz.println(spectrum);
