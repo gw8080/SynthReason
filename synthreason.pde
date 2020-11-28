@@ -5,7 +5,7 @@ String mind = "mind.txt";
 int block = 64;
 int num = 1000;
 int sens = 50;
-int vocabsize = 50;
+int vocabsize = 200;
 int searchlength = 1000;
 void setup()
 {
