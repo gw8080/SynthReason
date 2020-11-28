@@ -170,17 +170,17 @@ String generate(String spectrum, String full, String file, int mode) {
       float r = random(loopA.length-1);
       int x = round(r);
       if (loopA[x] != null ) {
-        if (full.indexOf(eny[j] + " " + loopA[x]) > -1 && full.indexOf(loopA[x] + " " + eny[j+1]) > -1 && mode == 0) {
+        if (full.indexOf(eny[j] + " " + loopA[x]) > -1 && full.indexOf(loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 0) {
           spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
           break;
         }
       }
       if (loopA[a] != null ) {
-        if (full.indexOf(eny[j] + " " + loopA[a]) > -1 && mode == 1) {
+        if (full.indexOf(eny[j] + " " + loopA[a]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 1) {
           spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
           break;
         }
-        if (full.indexOf(loopA[a] + " " + eny[j+1]) > -1 && mode == 2) {
+        if (full.indexOf(loopA[a] + " " + eny[j+1]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 2) {
           spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
           break;
         }
