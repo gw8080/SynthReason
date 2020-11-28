@@ -1,11 +1,11 @@
 PrintWriter outputx;
 PrintWriter outputz;
-String resource = "uber.txt";
+String resource = "n.txt";
 String mind = "mind.txt";
 int block = 64;
-int num = 100;
+int num = 1000;
 int sens = 50;
-int vocabsize = 200;
+int vocabsize = 50;
 int searchlength = 1000;
 void setup()
 {
@@ -18,13 +18,10 @@ void setup()
     int[] prob = probability(spectrumA, knowledge);//5
     String spectrum = decide(spectrumA, prob);//6
     String full = returnstr(knowledge);//1
-    String file = "mind.txt";
-    spectrum = generate(spectrum, full, file);//7
-    file = "2.txt";
-    spectrum = generate(spectrum, full, file);//7
+    String file = "3.txt";
+    spectrum = generate(spectrum, full, file, 1);//7
     file = "f.txt";
-    spectrum = generatef(spectrum, full, file);//7
-
+    spectrum = generate(spectrum, full, file, 0);//7
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -159,7 +156,7 @@ String decide(String[] spectrumA, int[] prob) {
   outputx.close();
   return spectrumout;
 }
-String generatef(String spectrum, String full, String file) {
+String generate(String spectrum, String full, String file, int mode) {
   String[] KB = loadStrings(file);
   String loop = "";
   for (int i = 0; i != KB.length; i++)
@@ -169,34 +166,24 @@ String generatef(String spectrum, String full, String file) {
   String[] loopA = split(loop, "\n");
   String[] eny = split(spectrum, " ");// guide
   for (int j = 0; j != eny.length - 1; j++) {
-    for (int a = 0; a < loopA.length-1; a++) {
-      if ( full.indexOf(eny[j] + " " + loopA[a]) > -1 && full.indexOf(loopA[a] + " " + eny[j+1]) > -1 && loopA[a] != null) {
-        spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
-        break;
-      }
-    }
-  }
-  outputx = createWriter("output/7.txt");
-  outputx.println(spectrum);
-  outputx.close();
-  return spectrum;
-}
-String generate(String spectrum, String full, String file) {
-  String[] KB = loadStrings(file);
-  String loop = "";
-  for (int i = 0; i != KB.length; i++)
-  {
-    loop += KB[i] + "\n";
-  }
-  String[] loopA = split(loop, "\n");
-  String[] eny = split(spectrum, " ");// guide
-  for (int j = 0; j != eny.length - 1; j++) {
-    for (int a = 0; a < searchlength; a++) {
-      float r = random(sens);
+    for (int a = 0; a != loopA.length-1; a++) {
+      float r = random(loopA.length-1);
       int x = round(r);
-      if ( full.indexOf(eny[j] + " " + loopA[x]) > -1 && loopA[x] != null) {
-        spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
-        break;
+      if (loopA[x] != null ) {
+        if (full.indexOf(eny[j] + " " + loopA[x]) > -1 && full.indexOf(loopA[x] + " " + eny[j+1]) > -1 && mode == 0) {
+          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
+          break;
+        }
+      }
+      if (loopA[a] != null ) {
+        if (full.indexOf(eny[j] + " " + loopA[a]) > -1 && mode == 1) {
+          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
+          break;
+        }
+        if (full.indexOf(loopA[a] + " " + eny[j+1]) > -1 && mode == 2) {
+          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
+          break;
+        }
       }
     }
   }
