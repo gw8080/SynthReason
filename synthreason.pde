@@ -13,16 +13,11 @@ void setup()
 
   for (int loop = 0; loop < num; loop++) {
     String[] knowledge = loadResources();//2
-    String[] spectrumFeed = loadResources2(returnstr(knowledge));//3
-    String[] spectrumA = initTuring(spectrumFeed);//4
-    int[] prob = probability(spectrumA, knowledge);//5
+    String[] spectrumA = initTuring();//4
+    String[] prob = probability();//5
     String spectrum = decide(spectrumA, prob);//6
     String full = returnstr(knowledge);//1
-    String file = "3.txt";
-    spectrum = generate(spectrum, full, file, 1);//7
-    file = "mind.txt";
-    spectrum = generate(spectrum, full, file, 2);//7
-    file = "f.txt";
+    String file = "f.txt";
     spectrum = generate(spectrum, full, file, 0);//7
     outputz.println(spectrum);
     outputz.println();
@@ -38,9 +33,6 @@ String returnstr(String[] KB)
   {
     str2 += KB[i];
   }
-  outputx = createWriter("output/1.txt");
-  outputx.println(str2);
-  outputx.close();
   return str2;
 }
 String[] loadResources()
@@ -52,76 +44,33 @@ String[] loadResources()
     str2 += KB[i];
   }
   String[] knowledge = split(str2, ".");
-  outputx = createWriter("output/2.txt");
-  outputx.println(str2);
-  outputx.close();
   return knowledge;
 }
-String[] loadResources2(String know)
-{
-  String str3 = "";
-  String[] KB = loadStrings(mind);
-  for (int i = 0; i != vocabsize; )
-  {
-    float r = random(KB.length-1);
-    int y = round(r);
-    if (know.indexOf(KB[y]) > -1 && str3.indexOf(KB[y]) == -1) {
-      str3 += KB[y] + "\n";
-      i++;
-    }
-  }
-  String[] spectrumFeed = split(str3, "\n");
-  outputx = createWriter("output/3.txt");
-  outputx.println(str3);
-  outputx.close();
-  return spectrumFeed;
-}
-String[] initTuring(String[] spectrumFeed) {
+String[] initTuring() {
   String spectrumx = "";
-  for (int i = 0; i != spectrumFeed.length-1; i++)
+  String[] KB = loadStrings("turing.txt");
+  for (int i = 0; i != KB.length; i++)
   {
-    for (int i2 = 0; i2 != spectrumFeed.length-1; i2++)
-    {
-      if (spectrumFeed[i] != spectrumFeed[i2]) {
-        spectrumx += spectrumFeed[i] + " " + spectrumFeed[i2] + ",";
-      }
-    }
+    spectrumx += KB[i];
   }
   String[] spectrumA = split(spectrumx, ",");
-  outputx = createWriter("output/4.txt");
-  outputx.println(spectrumx);
-  outputx.close();
   return spectrumA;
 }
-int[] probability(String[] spectrumA, String[] knowledge) {
-  int[] prob;
-  prob = new int[spectrumA.length];
-  for (int i = 0; i != spectrumA.length; i++)
+String[] probability() {
+  String list = "";
+  String[] KB = loadStrings("prob.txt");
+  for (int i = 0; i != KB.length; i++)
   {
-    prob[i] = 0;
+    list += KB[i];
   }
-  for (int a = 0; a < spectrumA.length-1; a++) {
-    String[] spec = split(spectrumA[a], " ");
-    for (int b = 0; b < knowledge.length-1; b++) {
-      if (knowledge[b].indexOf(spec[0]) < knowledge[b].indexOf(spec[1]) && knowledge[b].indexOf(spec[0]) > -1 && knowledge[b].indexOf(spec[1]) > -1) {
-        prob[a] += 1;
-      }
-    }
-  }
-  String str4 = "";
-  for (int x = 0; x != prob.length; x++)
-  {
-    str4 += prob[x] + ",";
-  }
-  outputx = createWriter("output/5.txt");
-  outputx.println(str4);
-  outputx.close();
+  String[] prob = split(list, ",");
   return prob;
 }
-String decide(String[] spectrumA, int[] prob) {
+String decide(String[] spectrumA, String[] prob) {
   String spectrumout = "";
   int exit1 = 0;
-  int rem = 0;
+  float r2 = random(spectrumA.length-1);
+  int rem = round(r2);
   for (int count2 = 0; exit1 == 0 && count2 < searchlength; count2++) {
     String dis = "";
     for (int count = 0; count != spectrumA.length-1; count++) {
@@ -137,7 +86,7 @@ String decide(String[] spectrumA, int[] prob) {
       for (int x = 0; x < disA.length && exit == 0; x++ ) {
         float r = random(sens);
         int y = round(r);
-        if (y < prob[int(disA[x])]) {
+        if (y < int(prob[int(disA[x])])) {
           spectrumout += spectrumA[int(disA[x])] + " ";
           rem = int(disA[x]);
           if (spectrumout.length() > block) {
@@ -153,9 +102,6 @@ String decide(String[] spectrumA, int[] prob) {
   for (int z = 0; z < check.length; z++) {
     spectrumout = spectrumout.replace(check[z] + " " + check[z] + " ", check[z] + " ");
   }
-  outputx = createWriter("output/6.txt");
-  outputx.println(spectrumout);
-  outputx.close();
   return spectrumout;
 }
 String generate(String spectrum, String full, String file, int mode) {
@@ -191,8 +137,5 @@ String generate(String spectrum, String full, String file, int mode) {
   }
   spectrum += ".";
   spectrum = spectrum.replace(" .", ".");
-  outputx = createWriter("output/7.txt");
-  outputx.println(spectrum);
-  outputx.close();
   return spectrum;
 }
