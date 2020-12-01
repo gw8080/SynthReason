@@ -30,7 +30,6 @@ verb
 decode
 decrypt
 break
-work out
 solve
 interpret
 translate
