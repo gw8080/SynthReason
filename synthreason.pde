@@ -14,8 +14,8 @@ void setup()
     String[] prob = probability("prob.txt");
     String spectrum = decide(spectrumA, prob);
     //String[] knowledge = loadResources("uber.txt");
-   // String full = returnstr(knowledge);
-   // String file = "f.txt";
+    // String full = returnstr(knowledge);
+    // String file = "f.txt";
     //spectrum = generate(spectrum, full, file, 1);
     outputz.println(spectrum);
     outputz.println();
@@ -45,22 +45,14 @@ String[] loadResources(String resource)
   return knowledge;
 }
 String[] initTuring(String file) {
-  String spectrumx = "";
   String[] KB = loadStrings(file);
-  for (int i = 0; i != KB.length; i++)
-  {
-    spectrumx += KB[i];
-  }
+  String spectrumx = join(KB, "");
   String[] spectrumA = split(spectrumx, ",");
   return spectrumA;
 }
 String[] probability(String file) {
-  String list = "";
   String[] KB = loadStrings(file);
-  for (int i = 0; i != KB.length; i++)
-  {
-    list += KB[i];
-  }
+  String list = join(KB, "");
   String[] prob = split(list, ",");
   return prob;
 }
@@ -104,11 +96,7 @@ String decide(String[] spectrumA, String[] prob) {
 }
 String generate(String spectrum, String full, String file, int mode) {
   String[] KB = loadStrings(file);
-  String loop = "";
-  for (int i = 0; i != KB.length; i++)
-  {
-    loop += KB[i] + "\n";
-  }
+  String loop = join(KB, "");
   String[] loopA = split(loop, "\n");
   String[] eny = split(spectrum, " ");// guide
   for (int j = 0; j != eny.length - 1; j++) {
