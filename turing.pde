@@ -1,6 +1,6 @@
 PrintWriter outputx;
 PrintWriter outputz;
-String mind = "2.txt";
+String mind = "vocab.txt";
 
 void setup()
 {

@@ -1,6 +1,6 @@
 PrintWriter outputx;
 PrintWriter outputz;
-String resource = "n.txt";
+String resource = "text.txt";
 void setup()
 {
   String[] knowledge = loadResources();//2
@@ -27,9 +27,6 @@ String[] initTuring() {
     spectrumx += KB[i];
   }
   String[] spectrumA = split(spectrumx, ",");
-  outputx = createWriter("output/4.txt");
-  outputx.println(spectrumx);
-  outputx.close();
   return spectrumA;
 }
 int[] probability(String[] spectrumA, String[] knowledge) {

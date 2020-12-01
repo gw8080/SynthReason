@@ -1,5 +1,5 @@
 PrintWriter outputx;
-String resource = "text.txt";
+String resource = "reason.txt";
 void setup()
 {
   String str2 = "", voc = "";
