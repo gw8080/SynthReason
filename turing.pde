@@ -15,6 +15,9 @@ void setup()
   String spectrumx = "";
   for (int i = 0; i != spectrumFeed.length-1; i++)
   {
+    outputx = createWriter("output/progress.txt");
+    outputx.println(i + "/" + spectrumFeed.length);
+    outputx.close();
     for (int i2 = 0; i2 != spectrumFeed.length-1; i2++)
     {
       spectrumx += spectrumFeed[i] + " " + spectrumFeed[i2] + ",";
