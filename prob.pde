@@ -37,6 +37,9 @@ int[] probability(String[] spectrumA, String[] knowledge) {
     prob[i] = 0;
   }
   for (int a = 0; a < spectrumA.length-1; a++) {
+    outputx = createWriter("output/progress.txt");
+    outputx.println(a + "/" + spectrumA.length);
+    outputx.close();
     String[] spec = split(spectrumA[a], " ");
     for (int b = 0; b < knowledge.length-1; b++) {
       if (knowledge[b].indexOf(spec[0]) < knowledge[b].indexOf(spec[1]) && knowledge[b].indexOf(spec[0]) > -1 && knowledge[b].indexOf(spec[1]) > -1) {
