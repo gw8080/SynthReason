@@ -1,24 +1,22 @@
 PrintWriter outputx;
 PrintWriter outputz;
-String resource = "n.txt";
-String mind = "mind.txt";
-int block = 64;
-int num = 1000;
-int sens = 50;
-int vocabsize = 100;
-int searchlength = 1000;
+int block = 128;
+int num = 100;
+int sens = 100;
+int searchlength = 10000;
 void setup()
 {
   outputz = createWriter("output/output.txt");
 
   for (int loop = 0; loop < num; loop++) {
-    String[] knowledge = loadResources();//2
-    String[] spectrumA = initTuring();//4
-    String[] prob = probability();//5
-    String spectrum = decide(spectrumA, prob);//6
-    String full = returnstr(knowledge);//1
-    String file = "f.txt";
-    spectrum = generate(spectrum, full, file, 0);//7
+
+    String[] spectrumA = initTuring("turing.txt");
+    String[] prob = probability("prob.txt");
+    String spectrum = decide(spectrumA, prob);
+    //String[] knowledge = loadResources("uber.txt");
+   // String full = returnstr(knowledge);
+   // String file = "f.txt";
+    //spectrum = generate(spectrum, full, file, 1);
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -35,7 +33,7 @@ String returnstr(String[] KB)
   }
   return str2;
 }
-String[] loadResources()
+String[] loadResources(String resource)
 {
   String str2 = "";
   String[] KB = loadStrings(resource);
@@ -46,9 +44,9 @@ String[] loadResources()
   String[] knowledge = split(str2, ".");
   return knowledge;
 }
-String[] initTuring() {
+String[] initTuring(String file) {
   String spectrumx = "";
-  String[] KB = loadStrings("turing.txt");
+  String[] KB = loadStrings(file);
   for (int i = 0; i != KB.length; i++)
   {
     spectrumx += KB[i];
@@ -56,9 +54,9 @@ String[] initTuring() {
   String[] spectrumA = split(spectrumx, ",");
   return spectrumA;
 }
-String[] probability() {
+String[] probability(String file) {
   String list = "";
-  String[] KB = loadStrings("prob.txt");
+  String[] KB = loadStrings(file);
   for (int i = 0; i != KB.length; i++)
   {
     list += KB[i];
@@ -118,18 +116,8 @@ String generate(String spectrum, String full, String file, int mode) {
       float r = random(loopA.length-1);
       int x = round(r);
       if (loopA[x] != null ) {
-        if (full.indexOf(eny[j] + " " + loopA[x]) > -1 && full.indexOf(loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 0) {
+        if (full.indexOf(eny[j] + " " + loopA[x] + " " + eny[j+1]) > -1 && mode == 0) {
           spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
-          break;
-        }
-      }
-      if (loopA[a] != null ) {
-        if (full.indexOf(eny[j] + " " + loopA[a]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 1) {
-          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
-          break;
-        }
-        if (full.indexOf(loopA[a] + " " + eny[j+1]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 2) {
-          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
           break;
         }
       }
