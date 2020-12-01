@@ -1,11 +1,29 @@
 PrintWriter outputx;
 PrintWriter outputz;
 String resource = "text.txt";
+int buffer = 1024;
 void setup()
 {
   String[] knowledge = loadResources();//2
   String[] spectrumA = initTuring();//4
-  int[] prob = probability(spectrumA, knowledge);//5
+  String full = "";
+  outputx = createWriter("output/prob.txt");
+  for (int a = 0; a < spectrumA.length-1; a++) {
+    int count = 0;
+    String[] spec = split(spectrumA[a], " ");
+    for (int b = 0; b < knowledge.length-1; b++) {
+      if (knowledge[b].indexOf(spec[0]) < knowledge[b].indexOf(spec[1]) && knowledge[b].indexOf(spec[0]) > -1 && knowledge[b].indexOf(spec[1]) > -1) {
+        count += 1;
+      }
+    }
+    full += count + ",";
+    if (full.length() >= buffer) {
+      outputx.print(full);
+      full = "";
+    }
+  }
+  outputx.print(full);
+  outputx.close();
   exit();
 }
 String[] loadResources()
@@ -28,32 +46,4 @@ String[] initTuring() {
   }
   String[] spectrumA = split(spectrumx, ",");
   return spectrumA;
-}
-int[] probability(String[] spectrumA, String[] knowledge) {
-  int[] prob;
-  prob = new int[spectrumA.length];
-  for (int i = 0; i != spectrumA.length; i++)
-  {
-    prob[i] = 0;
-  }
-  for (int a = 0; a < spectrumA.length-1; a++) {
-    outputx = createWriter("output/progress.txt");
-    outputx.println(a + "/" + spectrumA.length);
-    outputx.close();
-    String[] spec = split(spectrumA[a], " ");
-    for (int b = 0; b < knowledge.length-1; b++) {
-      if (knowledge[b].indexOf(spec[0]) < knowledge[b].indexOf(spec[1]) && knowledge[b].indexOf(spec[0]) > -1 && knowledge[b].indexOf(spec[1]) > -1) {
-        prob[a] += 1;
-      }
-    }
-  }
-  String str4 = "";
-  for (int x = 0; x != prob.length; x++)
-  {
-    str4 += prob[x] + ",";
-  }
-  outputx = createWriter("output/prob.txt");
-  outputx.println(str4);
-  outputx.close();
-  return prob;
 }
