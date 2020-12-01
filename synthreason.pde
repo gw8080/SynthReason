@@ -59,11 +59,11 @@ String[] probability(String file) {
 String decide(String[] spectrumA, String[] prob) {
   String spectrumout = "";
   int exit1 = 0;
-  float r2 = random(spectrumA.length-1);
+  float r2 = random(prob.length-1);
   int rem = round(r2);
   for (int count2 = 0; exit1 == 0 && count2 < searchlength; count2++) {
     String dis = "";
-    for (int count = 0; count != spectrumA.length-1; count++) {
+    for (int count = 0; count != prob.length-1; count++) {
       String[] spec = split(spectrumA[rem], " ");
       String[] spec2 = split(spectrumA[count], " ");
       if (spec[1].equals(spec2[0]) == true) {
@@ -77,8 +77,10 @@ String decide(String[] spectrumA, String[] prob) {
         float r = random(sens);
         int y = round(r);
         if (y < int(prob[int(disA[x])])) {
-          spectrumout += spectrumA[int(disA[x])] + " ";
-          rem = int(disA[x]);
+          if (spectrumout.indexOf(" " + spectrumA[int(disA[x])] + " ") == -1) {
+            spectrumout += spectrumA[int(disA[x])] + " ";
+            rem = int(disA[x]);
+          }
           if (spectrumout.length() > block) {
             exit1 = 1;
           }
