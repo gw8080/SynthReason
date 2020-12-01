@@ -13,10 +13,10 @@ void setup()
     String[] spectrumA = initTuring("turing.txt");
     String[] prob = probability("prob.txt");
     String spectrum = decide(spectrumA, prob);
-    //String[] knowledge = loadResources("uber.txt");
-    // String full = returnstr(knowledge);
-    // String file = "f.txt";
-    //spectrum = generate(spectrum, full, file, 1);
+    //String[] knowledge = loadResources("text.txt");
+    //String full = returnstr(knowledge);
+    //String file = "f.txt";
+    // spectrum = generate(spectrum, full, file, 0);
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -76,6 +76,8 @@ String decide(String[] spectrumA, String[] prob) {
       for (int x = 0; x < disA.length && exit == 0; x++ ) {
         float r = random(sens);
         int y = round(r);
+        float r3 = random(disA.length-1);
+        x = round(r3);
         if (y < int(prob[int(disA[x])])) {
           spectrumout += spectrumA[int(disA[x])] + " ";
           rem = int(disA[x]);
