@@ -77,10 +77,8 @@ String decide(String[] spectrumA, String[] prob) {
         float r = random(sens);
         int y = round(r);
         if (y < int(prob[int(disA[x])])) {
-          if (spectrumout.indexOf(" " + spectrumA[int(disA[x])] + " ") == -1) {
-            spectrumout += spectrumA[int(disA[x])] + " ";
-            rem = int(disA[x]);
-          }
+          spectrumout += spectrumA[int(disA[x])] + " ";
+          rem = int(disA[x]);
           if (spectrumout.length() > block) {
             exit1 = 1;
           }
