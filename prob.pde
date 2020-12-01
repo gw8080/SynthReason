@@ -1,7 +1,7 @@
 PrintWriter outputx;
 PrintWriter outputz;
 String resource = "text.txt";
-int buffer = 1024;
+int buffer = 102400;
 void setup()
 {
   String[] knowledge = loadResources();//2
@@ -19,6 +19,10 @@ void setup()
     full += count + ",";
     if (full.length() >= buffer) {
       outputx.print(full);
+      outputx.flush();
+      outputz = createWriter("output/progress.txt");
+      outputz.println(a + "/" + spectrumA.length);
+      outputz.close();
       full = "";
     }
   }
