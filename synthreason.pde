@@ -12,7 +12,7 @@ void setup()
 
     String[] spectrumA = initTuring("turing.txt");
     String[] prob = probability("prob.txt");
-    String spectrum = decide(spectrumA, prob, loadResources("problem.txt"), loadResources("solve.txt"), loadResources("3.txt"));
+    String spectrum = decide(spectrumA, prob);
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
