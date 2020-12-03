@@ -1,8 +1,8 @@
 PrintWriter outputx;
 PrintWriter outputz;
-int block = 512;
+int block = 256;
 int num = 100;
-int sens = 100;
+int sens = 10;
 int searchlength = 10000;
 void setup()
 {
@@ -38,30 +38,21 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
-String decide(String[] spectrumA, String[] prob, String problem, String solve, String info) {
+String decide(String[] spectrumA, String[] prob) {
   String spectrumout = "";
   int exit1 = 0;
   float r2 = random(prob.length-1);
   int rem = round(r2);
-  int step = 0;
   for (int count2 = 0; exit1 == 0 && count2 < searchlength; count2++) {
     String dis = "";
     for (int count = 0; count != prob.length-1; count++) {
       String[] spec = split(spectrumA[rem], " ");
       String[] spec2 = split(spectrumA[count], " ");
-      if (spec[1].equals(spec2[0]) == true && spectrumout.indexOf(spec2[1]) == -1) {
-        if (step == 0 && problem.indexOf("\n" + spec2[1] + "\n") > -1) {
-          dis += str(count) + ",";
-        }
-        if (step == 1 && solve.indexOf("\n" + spec2[1] + "\n") > -1) {
-          dis += str(count) + ",";
-        }
-        if (step == 2 && info.indexOf("\n" + spec2[1] + "\n") > -1) {
-          dis += str(count) + ",";
-          step = 0;
-        }
+      if (spec[1].equals(spec2[0]) == true) {
+        dis += str(count) + ",";
       }
     }
+
     int exit = 0;
     for (int e = 0; e < searchlength && exit == 0; e++) {
       String[] disA = split(dis, ","); 
@@ -70,17 +61,17 @@ String decide(String[] spectrumA, String[] prob, String problem, String solve, S
         int y = round(r);
         float r3 = random(disA.length-1);
         x = round(r3);
-        if (y < int(prob[int(disA[x])])) {
+        if (y < int(prob[int(disA[x])]) && int(prob[int(disA[x])]) < sens) {
           spectrumout += spectrumA[int(disA[x])] + " ";
           rem = int(disA[x]);
           if (spectrumout.length() > block) {
             exit1 = 1;
           }
           exit = 1;
+          break;
         }
       }
     }
-    step++;
   }
   String[] check = split(spectrumout, " ");
 
