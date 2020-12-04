@@ -11,7 +11,7 @@ void setup()
     String[] spectrumA = initTuring("turing.txt");
     String[] prob = probability("prob.txt");
     String spectrum = decide(spectrumA, prob, loadResources("f.txt"));
-    spectrum = generate(spectrum, loadResources("f.txt"), loadResources2("text.txt"));//7
+    spectrum = generate(spectrum, loadResources("f.txt"), loadResources2("text.txt"), loadResources2("x.txt"));//7
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -86,7 +86,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
   }
   return spectrumout;
 }
-String generate(String spectrum, String[] loopA, String full) {
+String generate(String spectrum, String[] loopA, String full, String tr) {
   String loop = join(loopA, "");
   String[] eny = split(spectrum, " ");// guide
   for (int j = 0; j != eny.length - 1; j++) {
@@ -94,7 +94,7 @@ String generate(String spectrum, String[] loopA, String full) {
       float r = random(loopA.length-1);
       int x = round(r);
       if (loopA[x] != null ) {
-        if (full.indexOf(eny[j] + " " + loopA[x]) > -1 && full.indexOf(loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1) {
+        if (full.indexOf(eny[j] + " " + loopA[x]) > -1 && full.indexOf(loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && tr.indexOf(eny[j]) == -1) {
           spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
           break;
         }
