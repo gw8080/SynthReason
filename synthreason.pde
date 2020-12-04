@@ -7,13 +7,11 @@ int searchlength = 10000;
 void setup()
 {
   outputz = createWriter("output/output.txt");
-
   for (int loop = 0; loop < num; loop++) {
-
     String[] spectrumA = initTuring("turing.txt");
     String[] prob = probability("prob.txt");
     String spectrum = decide(spectrumA, prob, loadResources("f.txt"));
-    spectrum = generate(spectrum, loadResources("f.txt"), loadResources2("text.txt"), 0);//7
+    spectrum = generate(spectrum, loadResources("f.txt"), loadResources2("text.txt"));//7
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -21,7 +19,6 @@ void setup()
   outputz.close();
   exit();
 }
-
 String[] loadResources(String resource)
 {
   String[] KB = loadStrings(resource);
@@ -62,7 +59,6 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
         dis += str(count) + ",";
       }
     }
-
     int exit = 0;
     for (int e = 0; e < searchlength && exit == 0; e++) {
       String[] disA = split(dis, ","); 
@@ -85,13 +81,12 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
     }
   }
   String[] check = split(spectrumout, " ");
-
   for (int z = 0; z < check.length; z++) {
     spectrumout = spectrumout.replace(check[z] + " " + check[z] + " ", check[z] + " ");
   }
   return spectrumout;
 }
-String generate(String spectrum, String[] loopA, String full, int mode) {
+String generate(String spectrum, String[] loopA, String full) {
   String loop = join(loopA, "");
   String[] eny = split(spectrum, " ");// guide
   for (int j = 0; j != eny.length - 1; j++) {
@@ -99,18 +94,8 @@ String generate(String spectrum, String[] loopA, String full, int mode) {
       float r = random(loopA.length-1);
       int x = round(r);
       if (loopA[x] != null ) {
-        if (full.indexOf(eny[j] + " " + loopA[x]) > -1 && full.indexOf(loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 0) {
+        if (full.indexOf(eny[j] + " " + loopA[x]) > -1 && full.indexOf(loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1) {
           spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
-          break;
-        }
-      }
-      if (loopA[a] != null ) {
-        if (full.indexOf(eny[j] + " " + loopA[a]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 1) {
-          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
-          break;
-        }
-        if (full.indexOf(loopA[a] + " " + eny[j+1]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 2) {
-          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
           break;
         }
       }
