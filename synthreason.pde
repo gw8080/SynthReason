@@ -12,7 +12,8 @@ void setup()
 
     String[] spectrumA = initTuring("turing.txt");
     String[] prob = probability("prob.txt");
-    String spectrum = decide(spectrumA, prob);
+    String spectrum = decide(spectrumA, prob, loadResources("f.txt"));
+    //spectrum = generate(spectrum, loadResources("f.txt"), loadResources2("text.txt"), 0);//7
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -20,10 +21,18 @@ void setup()
   outputz.close();
   exit();
 }
-String loadResources(String resource)
+
+String[] loadResources(String resource)
 {
   String[] KB = loadStrings(resource);
   String str2 = join(KB, "\n");
+  String[] str3 = split(str2, "\n");
+  return str3;
+}
+String loadResources2(String resource)
+{
+  String[] KB = loadStrings(resource);
+  String str2 = join(KB, "");
   return str2;
 }
 String[] initTuring(String file) {
@@ -38,7 +47,8 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
-String decide(String[] spectrumA, String[] prob) {
+String decide(String[] spectrumA, String[] prob, String[] check2) {
+  String loop = join(check2, "");
   String spectrumout = "";
   int exit1 = 0;
   float r2 = random(prob.length-1);
@@ -61,7 +71,7 @@ String decide(String[] spectrumA, String[] prob) {
         int y = round(r);
         float r3 = random(disA.length-1);
         x = round(r3);
-        if (y < int(prob[int(disA[x])]) && int(prob[int(disA[x])]) < sens) {
+        if (y < int(prob[int(disA[x])]) && int(prob[int(disA[x])]) < sens && loop.indexOf(spectrumA[int(disA[x])]) == -1) {
           spectrumout += spectrumA[int(disA[x])] + " ";
           rem = int(disA[x]);
           if (spectrumout.length() > block) {
@@ -79,4 +89,33 @@ String decide(String[] spectrumA, String[] prob) {
     spectrumout = spectrumout.replace(check[z] + " " + check[z] + " ", check[z] + " ");
   }
   return spectrumout;
+}
+String generate(String spectrum, String[] loopA, String full, int mode) {
+  String loop = join(loopA, "");
+  String[] eny = split(spectrum, " ");// guide
+  for (int j = 0; j != eny.length - 1; j++) {
+    for (int a = 0; a != loopA.length-1; a++) {
+      float r = random(loopA.length-1);
+      int x = round(r);
+      if (loopA[x] != null ) {
+        if (full.indexOf(eny[j] + " " + loopA[x]) > -1 && full.indexOf(loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 0) {
+          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
+          break;
+        }
+      }
+      if (loopA[a] != null ) {
+        if (full.indexOf(eny[j] + " " + loopA[a]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 1) {
+          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
+          break;
+        }
+        if (full.indexOf(loopA[a] + " " + eny[j+1]) > -1 && loop.indexOf(eny[j]) == -1 && loop.indexOf(eny[j+1]) == -1 && mode == 2) {
+          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[a] + " " + eny[j+1] + " ");
+          break;
+        }
+      }
+    }
+  }
+  spectrum += ".";
+  spectrum = spectrum.replace(" .", ".");
+  return spectrum;
 }
