@@ -8,10 +8,8 @@ void setup()
 {
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {
-    String[] spectrumA = initTuring("turing.txt");
-    String[] prob = probability("prob.txt");
-    String spectrum = decide(spectrumA, prob, loadResources("f.txt"));
-    spectrum = generate(spectrum, loadResources("f.txt"), loadResources2("total.txt"));//7
+    String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadResources("filter.txt"));
+    spectrum = generate(spectrum, loadResources("filter.txt"), loadResources2("text.txt"));//7
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
