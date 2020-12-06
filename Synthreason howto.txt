@@ -1,0 +1,7 @@
+SynthReason setup is in four stages.
+Stage one: Strip a common words list using a Wikipedia article or something small, acquire necessary connectives and preposition filtering file.
+Stage Two: Use common words list to create the word matrix using the Turing algorithm.
+Stage Three: Use the output of the Turing algorithm for the probability distribution algorithm.
+Stage four. Transfer all files(Turing file & probability distribution) to SynthReason and run the algorithm against a large bigram detection file.
+
+Wait for result
