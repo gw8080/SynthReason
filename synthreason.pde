@@ -7,9 +7,8 @@ int searchlength = 10000;
 void setup()
 {
   outputz = createWriter("output/output.txt");
-  for (int loop = 0; loop < num; loop++) {
-    String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadResources("filter.txt"));
-    spectrum = generate(spectrum, loadResources("filter.txt"), loadResources2("text.txt"));//7
+  for (int loop = 0; loop < num; loop++) {  
+    String spectrum = generate(decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt")), loadFilter("filter.txt"), loadResources("text.txt"));
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -17,14 +16,14 @@ void setup()
   outputz.close();
   exit();
 }
-String[] loadResources(String resource)
+String[] loadFilter(String resource)
 {
   String[] KB = loadStrings(resource);
   String str2 = join(KB, "\n");
   String[] str3 = split(str2, "\n");
   return str3;
 }
-String loadResources2(String resource)
+String loadResources(String resource)
 {
   String[] KB = loadStrings(resource);
   String str2 = join(KB, "");
