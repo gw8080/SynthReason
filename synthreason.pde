@@ -102,19 +102,3 @@ String generate(String spectrum, String[] loopA, String full, String[] spectrumA
   spectrum = spectrum.replace(" .", ".");
   return spectrum;
 }
-
-String searching(String spectrum, String know) {
-  String[] spectrumA = split(spectrum, " ");
-  for (int a = 0; a < spectrumA.length-1; a++) {
-    if (know.indexOf(spectrumA[a] + " " + spectrumA[a+1]) > -1) {
-      int b = know.indexOf(spectrumA[a] + " " + spectrumA[a+1]);
-      String c = spectrumA[a] + " " + spectrumA[a+1];
-      String str = know.substring(b, know.indexOf(" ", b+c.length()));
-      spectrum = spectrum.replace(spectrumA[a] + " " + spectrumA[a+1] + " ", str + " ");
-
-      break;
-    }
-  }
-
-  return spectrum;
-}
