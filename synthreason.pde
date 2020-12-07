@@ -8,7 +8,7 @@ void setup()
 {
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
-    String spectrum = generate(decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt")), loadFilter("filter.txt"), loadResources("text.txt"));
+    String spectrum = generate(decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"), loadResources("encyclopedia.txt")), loadFilter("filter.txt"), loadResources("encyclopedia.txt"), initTuring("turing.txt"), probability("prob.txt"));
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -41,7 +41,7 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
-String decide(String[] spectrumA, String[] prob, String[] check2) {
+String decide(String[] spectrumA, String[] prob, String[] check2, String know) {
   String loop = join(check2, "");
   String spectrumout = "";
   int exit1 = 0;
@@ -65,7 +65,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
         float r3 = random(disA.length-1);
         x = round(r3);
         String[] spec = split(spectrumA[int(disA[x])], " ");
-        if (y < int(prob[int(disA[x])]) && int(prob[int(disA[x])]) < sens && loop.indexOf(spec[1]) == -1) {
+        if (y <= int(prob[int(disA[x])]) && int(prob[int(disA[x])]) < sens && loop.indexOf(spec[1]) == -1) {
           spectrumout += spectrumA[int(disA[x])] + " ";
           rem = int(disA[x]);
           if (spectrumout.length() > block) {
@@ -83,7 +83,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
   }
   return spectrumout;
 }
-String generate(String spectrum, String[] loopA, String full) {
+String generate(String spectrum, String[] loopA, String full, String[] spectrumA, String[] prob) {
   String loop = join(loopA, "\n");
   String[] eny = split(spectrum, " ");// guide
   for (int j = 0; j != eny.length - 1; j++) {
@@ -100,5 +100,21 @@ String generate(String spectrum, String[] loopA, String full) {
   }
   spectrum += ".";
   spectrum = spectrum.replace(" .", ".");
+  return spectrum;
+}
+
+String searching(String spectrum, String know) {
+  String[] spectrumA = split(spectrum, " ");
+  for (int a = 0; a < spectrumA.length-1; a++) {
+    if (know.indexOf(spectrumA[a] + " " + spectrumA[a+1]) > -1) {
+      int b = know.indexOf(spectrumA[a] + " " + spectrumA[a+1]);
+      String c = spectrumA[a] + " " + spectrumA[a+1];
+      String str = know.substring(b, know.indexOf(" ", b+c.length()));
+      spectrum = spectrum.replace(spectrumA[a] + " " + spectrumA[a+1] + " ", str + " ");
+
+      break;
+    }
+  }
+
   return spectrum;
 }
