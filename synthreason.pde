@@ -1,6 +1,6 @@
 PrintWriter outputx;
 PrintWriter outputz;
-int block = 256;
+int block = 1024;
 int num = 100;
 int sens = 10;
 int searchlength = 10000;
@@ -8,7 +8,7 @@ void setup()
 {
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
-    String spectrum = generate(decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"), loadResources("encyclopedia.txt")), loadFilter("filter.txt"), loadResources("encyclopedia.txt"), initTuring("turing.txt"), probability("prob.txt"));
+    String spectrum = generate(decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"), loadResources("text.txt")), loadFilter("filter.txt"), loadResources("text.txt"), initTuring("turing.txt"), probability("prob.txt"));
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
