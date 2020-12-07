@@ -8,7 +8,7 @@ void setup()
 {
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
-    String spectrum = generate(decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"), loadResources("text.txt")), loadFilter("filter.txt"), loadResources("text.txt"), initTuring("turing.txt"), probability("prob.txt"));
+    String spectrum = generate(decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt")), loadFilter("filter.txt"), loadResources("text.txt"));
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -41,7 +41,7 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
-String decide(String[] spectrumA, String[] prob, String[] check2, String know) {
+String decide(String[] spectrumA, String[] prob, String[] check2) {
   String loop = join(check2, "");
   String spectrumout = "";
   int exit1 = 0;
@@ -83,7 +83,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2, String know) {
   }
   return spectrumout;
 }
-String generate(String spectrum, String[] loopA, String full, String[] spectrumA, String[] prob) {
+String generate(String spectrum, String[] loopA, String full) {
   String loop = join(loopA, "\n");
   String[] eny = split(spectrum, " ");// guide
   for (int j = 0; j != eny.length - 1; j++) {
