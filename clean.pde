@@ -8,8 +8,8 @@ void setup()
   String[] spectrumA = initTuring();//4
   String[] prob = initProb();//4
   String full = "", full2 = "";
-  outputz = createWriter("output/probclean.txt");
-  outputx = createWriter("output/turingclean.txt");
+  outputz = createWriter("output/turinglean.txt");
+  outputx = createWriter("output/probclean.txt");
 
   for (int a = 0; a < spectrumA.length-1; a++) {
     if (int(prob[a]) > 0) {
