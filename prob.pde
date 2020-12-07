@@ -32,22 +32,14 @@ void setup()
 }
 String[] loadResources()
 {
-  String str2 = "";
   String[] KB = loadStrings(resource);
-  for (int i = 0; i != KB.length; i++)
-  {
-    str2 += KB[i];
-  }
+  String str2 = join(KB, "");
   String[] knowledge = split(str2, ".");
   return knowledge;
 }
 String[] initTuring() {
-  String spectrumx = "";
   String[] KB = loadStrings("turing.txt");
-  for (int i = 0; i != KB.length; i++)
-  {
-    spectrumx += KB[i];
-  }
+  String spectrumx = join(KB, "");
   String[] spectrumA = split(spectrumx, ",");
   return spectrumA;
 }
