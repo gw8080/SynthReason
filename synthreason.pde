@@ -52,7 +52,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2, String know) {
     for (int count = 0; count != prob.length-1; count++) {
       String[] spec = split(spectrumA[rem], " ");
       String[] spec2 = split(spectrumA[count], " ");
-      if (spec[1].equals(spec2[0]) == true) {
+      if (spec[1].equals(spec2[0]) == true && int(prob[count]) > 0) {
         dis += str(count) + ",";
       }
     }
