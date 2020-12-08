@@ -2,7 +2,7 @@ PrintWriter outputx;
 PrintWriter outputz;
 int block = 1024;
 int num = 100;
-int sens = 10;
+int sens = 500;
 int searchlength = 10000;
 void setup()
 {
@@ -45,14 +45,10 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
   String loop = join(check2, "");
   String spectrumout = "";
   int exit1 = 0;
-  float r2 = random(prob.length-1);
-  int rem = round(r2);
   for (int count2 = 0; exit1 == 0 && count2 < searchlength; count2++) {
     String dis = "";
     for (int count = 0; count != prob.length-1; count++) {
-      String[] spec = split(spectrumA[rem], " ");
-      String[] spec2 = split(spectrumA[count], " ");
-      if (spec[1].equals(spec2[0]) == true && int(prob[count]) > 0) {
+      if (int(prob[count]) > 0) {
         dis += str(count) + ",";
       }
     }
@@ -65,9 +61,8 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
         float r3 = random(disA.length-1);
         x = round(r3);
         String[] spec = split(spectrumA[int(disA[x])], " ");
-        if (y <= int(prob[int(disA[x])]) && int(prob[int(disA[x])]) < sens && loop.indexOf(spec[1]) == -1) {
+        if (y <= int(prob[int(disA[x])])+1 && int(prob[int(disA[x])]) < sens && loop.indexOf(spec[1]) == -1) {
           spectrumout += spectrumA[int(disA[x])] + " ";
-          rem = int(disA[x]);
           if (spectrumout.length() > block) {
             exit1 = 1;
           }
