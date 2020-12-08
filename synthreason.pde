@@ -5,7 +5,7 @@ PrintWriter outputx;
 PrintWriter outputz;
 int block = 1024;
 int num = 100;
-int sens = 500;
+int sens = 50;
 int searchlength = 10000;
 void setup()
 {
@@ -19,6 +19,7 @@ void setup()
   outputz.close();
   exit();
 }
+
 String bigram(String spectrum, String[] filter) {
   String[] proc = split(spectrum, " ");
   String filterstr = join(filter, "\n");
