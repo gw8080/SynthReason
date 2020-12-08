@@ -1,3 +1,6 @@
+
+
+
 PrintWriter outputx;
 PrintWriter outputz;
 int block = 1024;
@@ -9,13 +12,35 @@ void setup()
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
     String spectrum = generate(decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt")), loadFilter("filter.txt"), loadResources("text.txt"));
-    outputz.println(spectrum);
-    outputz.println();
+    spectrum = bigram(spectrum, loadFilter("filter.txt"));
+    outputz.print(spectrum);
     outputz.flush();
   }
   outputz.close();
   exit();
 }
+String bigram(String spectrum, String[] filter) {
+  String[] proc = split(spectrum, " ");
+  String filterstr = join(filter, "\n");
+  String output = "";
+  int count = 0;
+  for (int a = 0; a < proc.length; a++) {
+    if (filterstr.indexOf("\n" + proc[a] + "\n") > -1) {
+      if (count == 0) {
+        output += proc[a] + " ";
+      }
+      count++;
+      if (count > 1) {
+        count = 0;
+      }
+    }
+    if (filterstr.indexOf("\n" + proc[a] + "\n") == -1) {
+      output += proc[a] + " ";
+    }
+  }
+  return output;
+}
+
 String[] loadFilter(String resource)
 {
   String[] KB = loadStrings(resource);
@@ -42,6 +67,9 @@ String[] probability(String file) {
   return prob;
 }
 String decide(String[] spectrumA, String[] prob, String[] check2) {
+  float r6 = random(256) + 32;
+  int z2 = round(r6);
+  block = z2;
   String loop = join(check2, "");
   String spectrumout = "";
   int exit1 = 0;
@@ -65,9 +93,9 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
           spectrumout += spectrumA[int(disA[x])] + " ";
           if (spectrumout.length() > block) {
             exit1 = 1;
+            exit = 1;
+            break;
           }
-          exit = 1;
-          break;
         }
       }
     }
