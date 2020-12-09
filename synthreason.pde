@@ -75,11 +75,11 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
   String loop = join(check2, "");
   String spectrumout = "";
   int exit1 = 0;
-
+  float r7 = random(spectrumA.length);
+  int rem = round(r7);
   for (int count2 = 0; exit1 == 0 && count2 < searchlength; count2++) {
     String dis = "";
-    float r7 = random(spectrumA.length);
-    int rem = round(r7);
+
     for (int count = 0; count != prob.length-1; count++) {
       String[] spec = split(spectrumA[rem], " ");
       String[] spec2 = split(spectrumA[count], " ");
