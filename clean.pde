@@ -17,9 +17,9 @@ void setup()
       full2 += spectrumA[a] + ",";
       String[] x = split(full, ",");
       if (x.length >= buffer) {  
-        outputx.print(prob[a] + ",");
+        outputx.print(full);
         outputx.flush();
-        outputz.print(spectrumA[a] + ",");
+        outputz.print(full2);
         outputz.flush();        
         full = "";
         full2 = "";
