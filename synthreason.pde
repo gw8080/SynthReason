@@ -3,9 +3,9 @@
 
 PrintWriter outputx;
 PrintWriter outputz;
-int block = 1024;
+int block = 256;
 int num = 100;
-int sens = 50;
+int sens = 250;
 int searchlength = 10000;
 void setup()
 {
@@ -13,7 +13,8 @@ void setup()
   for (int loop = 0; loop < num; loop++) {  
     String spectrum = generate(decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt")), loadFilter("filter.txt"), loadResources("text.txt"));
     spectrum = bigram(spectrum, loadFilter("filter.txt"));
-    outputz.print(spectrum);
+    outputz.println(spectrum);
+    outputz.println();
     outputz.flush();
   }
   outputz.close();
@@ -74,26 +75,38 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
   String loop = join(check2, "");
   String spectrumout = "";
   int exit1 = 0;
+
   for (int count2 = 0; exit1 == 0 && count2 < searchlength; count2++) {
     String dis = "";
+    float r7 = random(spectrumA.length);
+    int rem = round(r7);
     for (int count = 0; count != prob.length-1; count++) {
-      if (int(prob[count]) > 0) {
+      String[] spec = split(spectrumA[rem], " ");
+      String[] spec2 = split(spectrumA[count], " ");
+      if (spec[1].equals(spec2[0]) == true) {
         dis += str(count) + ",";
       }
     }
     int exit = 0;
     for (int e = 0; e < searchlength && exit == 0; e++) {
       String[] disA = split(dis, ","); 
+      String string = "";
       for (int x = 0; x < disA.length && exit == 0; x++ ) {
-        float r = random(sens);
+        float r = random(int(prob[int(disA[x])]));
         int y = round(r);
-        float r3 = random(disA.length-1);
-        x = round(r3);
-        String[] spec = split(spectrumA[int(disA[x])], " ");
-        if (y <= int(prob[int(disA[x])])+1 && int(prob[int(disA[x])]) < sens && loop.indexOf(spec[1]) == -1) {
-          spectrumout += spectrumA[int(disA[x])] + " ";
-          if (spectrumout.length() > block) {
-            exit1 = 1;
+        string += y + ",";
+      }
+      String[] array = split(string, ",");
+      for (int f = sens; f > 0 && exit == 0; f--) {
+        for (int r = 0; r < array.length-1 && exit == 0; r++) {
+          String[] spec = split(spectrumA[int(disA[r])], " ");
+          if (int(array[r]) >= f && loop.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[1]) == -1)
+          {
+            spectrumout += spectrumA[int(disA[r])] + " ";
+            rem = int(disA[r]);
+            if (spectrumout.length() > block) {
+              exit1 = 1;
+            }
             exit = 1;
             break;
           }
@@ -115,7 +128,8 @@ String generate(String spectrum, String[] loopA, String full) {
       float r = random(loopA.length-1);
       int x = round(r);
       if (loopA[x] != null ) {
-        if (full.indexOf(eny[j] + " " + loopA[x]) > -1 && full.indexOf(loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf("\n" + eny[j] + "\n") == -1 && loop.indexOf("\n" + eny[j+1] + "\n") == -1 && full.indexOf(eny[j] + " " + eny[j+1]) == -1) {
+        if (full.indexOf(eny[j] + " " + loopA[x]) > -1 && full.indexOf(loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf("\n" + eny[j] + "\n") == -1 && loop.indexOf("\n" + eny[j+1] + "\n") == -1 && full.indexOf(eny[j] + " " + eny[j+1]) == -1
+          && full.indexOf(eny[j+1]) - full.indexOf(eny[j]) > 32) {
           spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
           break;
         }
