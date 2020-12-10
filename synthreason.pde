@@ -7,14 +7,14 @@ int block = 128;
 int num = 100;
 int sens = 50;
 int searchlength = 10000;
-int selectionSize = 1024;
+int selectionSize = 128;
 void setup()
 {
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
     String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"), loadResources("text.txt"));
-    //spectrum = generate(spectrum ,loadFilter("filter.txt"), loadResources("text.txt"));
-    //spectrum = bigram(spectrum, loadFilter("filter.txt"));
+    spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
+    spectrum = bigram(spectrum, loadFilter("filter.txt"));
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -110,7 +110,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2, String know) {
       for (int f = sens; f > 0 && exit == 0; f--) {
         for (int r = 0; r < array.length-1 && exit == 0; r++) {
           String[] spec = split(spectrumA[int(disA[r])], " ");
-          if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1)
+          if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1)
           {
             spectrumout += spectrumA[int(disA[r])] + " ";
             rem = int(disA[r]);
@@ -129,8 +129,8 @@ String decide(String[] spectrumA, String[] prob, String[] check2, String know) {
     spectrumout = spectrumout.replace(check[z] + " " + check[z] + " ", check[z] + " ");
   }
   String[] check3 = loadFilter("filter.txt");
-  for (int z = 0; z < check3.length; z++) {
-    spectrumout = spectrumout.replace(" " + check[z] + " ", " ");
+  for (int z = 0; z < check3.length-1; z++) {
+    spectrumout = spectrumout.replace(" " + check3[z] + " ", " ");
   }
   return spectrumout;
 }
