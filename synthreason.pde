@@ -3,7 +3,7 @@
 
 PrintWriter outputx;
 PrintWriter outputz;
-int block = 32;
+int block = 128;
 int num = 100;
 int sens = 50;
 int searchlength = 10000;
@@ -12,8 +12,9 @@ void setup()
 {
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
-    String spectrum = generate(decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt")), loadFilter("filter.txt"), loadResources("text.txt"));
-    spectrum = bigram(spectrum, loadFilter("filter.txt"));
+    String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"), loadResources("text.txt"));
+    //spectrum = generate(spectrum ,loadFilter("filter.txt"), loadResources("text.txt"));
+    //spectrum = bigram(spectrum, loadFilter("filter.txt"));
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -75,7 +76,7 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
-String decide(String[] spectrumA, String[] prob, String[] check2) {
+String decide(String[] spectrumA, String[] prob, String[] check2, String know) {
   String loop = join(check2, "");
   String spectrumout = "";
   int exit1 = 0;
@@ -109,7 +110,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
       for (int f = sens; f > 0 && exit == 0; f--) {
         for (int r = 0; r < array.length-1 && exit == 0; r++) {
           String[] spec = split(spectrumA[int(disA[r])], " ");
-          if (int(array[r]) < sens && int(array[r]) >= f && loop.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[1]) == -1)
+          if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1)
           {
             spectrumout += spectrumA[int(disA[r])] + " ";
             rem = int(disA[r]);
@@ -126,6 +127,10 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
   String[] check = split(spectrumout, " ");
   for (int z = 0; z < check.length; z++) {
     spectrumout = spectrumout.replace(check[z] + " " + check[z] + " ", check[z] + " ");
+  }
+  String[] check3 = loadFilter("filter.txt");
+  for (int z = 0; z < check3.length; z++) {
+    spectrumout = spectrumout.replace(" " + check[z] + " ", " ");
   }
   return spectrumout;
 }
