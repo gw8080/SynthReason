@@ -12,7 +12,7 @@ void setup()
 {
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
-    String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"), loadResources("text.txt"));
+    String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"));
     spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
     spectrum = bigram(spectrum, loadFilter("filter.txt"));
     outputz.println(spectrum);
@@ -76,7 +76,7 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
-String decide(String[] spectrumA, String[] prob, String[] check2, String know) {
+String decide(String[] spectrumA, String[] prob, String[] check2) {
   String loop = join(check2, "");
   String spectrumout = "";
   int exit1 = 0;
@@ -110,7 +110,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2, String know) {
       for (int f = sens; f > 0 && exit == 0; f--) {
         for (int r = 0; r < array.length-1 && exit == 0; r++) {
           String[] spec = split(spectrumA[int(disA[r])], " ");
-          if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1)
+          if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
           {
             spectrumout += spectrumA[int(disA[r])] + " ";
             rem = int(disA[r]);
@@ -142,7 +142,7 @@ String generate(String spectrum, String[] loopA, String full) {
       float r = random(loopA.length-1);
       int x = round(r);
       if (loopA[x] != null ) {
-        if (full.indexOf(eny[j] + " " + loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf("\n" + eny[j] + "\n") == -1 && loop.indexOf("\n" + eny[j+1] + "\n") == -1 && full.indexOf(eny[j] + " " + eny[j+1]) == -1) {
+        if (full.indexOf(eny[j] + " " + loopA[x] + " ") > -1 && full.indexOf(" " + loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf("\n" + eny[j] + "\n") == -1 && loop.indexOf("\n" + eny[j+1] + "\n") == -1 && full.indexOf(eny[j] + " " + eny[j+1]) == -1) {
           spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
           break;
         }
