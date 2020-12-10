@@ -11,8 +11,8 @@ void setup()
   for (int a = 0; a < spectrumA.length-1; a++) {
     int count = 0;
     String[] spec = split(spectrumA[a], " ");
-    for (int b = 0; b < knowledge.length-1; b++) {
-      if (knowledge[b].indexOf(spec[0]) < knowledge[b].indexOf(spec[1]) && knowledge[b].indexOf(spec[0]) > -1 && knowledge[b].indexOf(spec[1]) > -1) {
+    for (int b = 0; b < knowledge.length-2; b++) {
+      if (knowledge[b].indexOf(" " + spec[0] + " ") < knowledge[b].indexOf(" " + spec[1] + " ") && knowledge[b].indexOf(" " + spec[0] + " ") > -1 && knowledge[b].indexOf(" " + spec[1] + " ") > -1) {
         count += 1;
       }
     }
