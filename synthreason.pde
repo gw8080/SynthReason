@@ -64,6 +64,13 @@ String loadResources(String resource)
   String str2 = join(KB, "");
   return str2;
 }
+String[] loadResourcesA(String resource)
+{
+  String[] KB = loadStrings(resource);
+  String str2 = join(KB, "");
+  String[] str3 = split(str2, ".");
+  return str3;
+}
 String[] initTuring(String file) {
   String[] KB = loadStrings(file);
   String spectrumx = join(KB, "");
@@ -76,6 +83,21 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
+
+boolean groupA(String[] spec) {
+  String[] knowledge = loadResourcesA("reason.txt");
+  String[] problem = loadFilter("problem.txt");
+  boolean state = false;
+  for (int o = 0; o < problem.length && state == false; o++) {
+    for (int i = 0; i < knowledge.length && state == false; i++) {
+      if (knowledge[i].indexOf(problem[o]) > -1 && knowledge[i].indexOf(spec[0]) > -1) {
+        state = true;
+      }
+    }
+  }
+  return state;
+}
+
 String decide(String[] spectrumA, String[] prob, String[] check2) {
   String loop = join(check2, "");
   String spectrumout = "";
@@ -89,6 +111,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
       float r8 = random(spectrumA.length-1);
       int xx = round(r8);
       String[] spec2 = split(spectrumA[xx], " ");
+
       if (spec[1].equals(spec2[0]) == true) {
         dis += str(count) + ",";
       }
@@ -110,7 +133,9 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
       for (int f = sens; f > 0 && exit == 0; f--) {
         for (int r = 0; r < array.length-1 && exit == 0; r++) {
           String[] spec = split(spectrumA[int(disA[r])], " ");
-          if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
+          boolean state = groupA(spec);
+
+          if (state == true && int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
           {
             spectrumout += spectrumA[int(disA[r])] + " ";
             rem = int(disA[r]);
