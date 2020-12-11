@@ -1,6 +1,6 @@
 PrintWriter outputx; //<>//
 PrintWriter outputz;
-int block = 32;
+int block = 128;
 int num = 100;
 int sens = 50;
 int searchlength = 10000;
@@ -79,7 +79,7 @@ String[] probability(String file) {
   return prob;
 }
 boolean groupA(String[] spec) {
-  String[] knowledge = loadResourcesA("reason.txt");
+  String[] knowledge = loadResourcesA("text.txt");
   String[] problem = loadFilter("problem.txt");
   boolean state = false;
   for (int o = 0; o < problem.length && state == false; o++) {
@@ -126,11 +126,14 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
       for (int f = sens; f > 0 && exit == 0; f--) {
         for (int r = 0; r < array.length-1 && exit == 0; r++) {
           String[] spec = split(spectrumA[int(disA[r])], " ");
-          boolean state = groupA(spec);
-          if (state == true && int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
+
+          if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
           {
-            spectrumout += spectrumA[int(disA[r])] + " ";
-            rem = int(disA[r]);
+            boolean state = groupA(spec);
+            if (state == true) {
+              spectrumout += spectrumA[int(disA[r])] + " ";
+              rem = int(disA[r]);
+            }
             if (spectrumout.length() > block) {
               exit1 = 1;
             }
