@@ -10,7 +10,7 @@ void setup()
 {
 
   String[] problem = loadFilter("problem.txt");
-  String[] vocab = loadFilter("problem.txt");
+  String[] vocab = loadFilter("vocab.txt");
   String[] knowledge = loadResourcesA("text.txt");
 
   outputx = createWriter("output/properties.txt");
@@ -29,8 +29,10 @@ void setup()
     }
     outputx.println(spectrum);
     outputx.flush();
+    spectrum = "";
   }
   outputx.close();
+  exit();
 }
 
 String[] loadFilter(String resource)
