@@ -4,7 +4,7 @@ int block = 128;
 int num = 100;
 int sens = 50;
 int searchlength = 10000;
-int selectionSize = 32;
+int selectionSize = 128;
 void setup()
 {
   outputz = createWriter("output/output.txt");
