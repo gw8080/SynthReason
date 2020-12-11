@@ -84,7 +84,7 @@ boolean groupA(String[] spec) {
   boolean state = false;
   for (int o = 0; o < problem.length && state == false; o++) {
     for (int i = 0; i < knowledge.length && state == false; i++) {
-      if (knowledge[i].indexOf(problem[o]) > -1 && knowledge[i].indexOf(spec[0]) > -1) {
+      if (knowledge[i].indexOf(problem[o]) > -1 && knowledge[i].indexOf(spec[0]) > -1 && knowledge[i].indexOf(spec[1]) > -1) {
         state = true;
       }
     }
