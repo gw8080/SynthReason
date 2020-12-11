@@ -1,13 +1,10 @@
- //<>//
-
-
-PrintWriter outputx;
+PrintWriter outputx; //<>//
 PrintWriter outputz;
-int block = 128;
+int block = 32;
 int num = 100;
 int sens = 50;
 int searchlength = 10000;
-int selectionSize = 128;
+int selectionSize = 32;
 void setup()
 {
   outputz = createWriter("output/output.txt");
@@ -22,7 +19,6 @@ void setup()
   outputz.close();
   exit();
 }
-
 String bigram(String spectrum, String[] filter) {
   String[] proc = split(spectrum, " ");
   String filterstr = join(filter, "\n");
@@ -44,7 +40,6 @@ String bigram(String spectrum, String[] filter) {
   }
   return output;
 }
-
 String[] loadFilter(String resource)
 {
   String[] KB = loadStrings(resource);
@@ -83,7 +78,6 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
-
 boolean groupA(String[] spec) {
   String[] knowledge = loadResourcesA("reason.txt");
   String[] problem = loadFilter("problem.txt");
@@ -97,7 +91,6 @@ boolean groupA(String[] spec) {
   }
   return state;
 }
-
 String decide(String[] spectrumA, String[] prob, String[] check2) {
   String loop = join(check2, "");
   String spectrumout = "";
@@ -134,7 +127,6 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
         for (int r = 0; r < array.length-1 && exit == 0; r++) {
           String[] spec = split(spectrumA[int(disA[r])], " ");
           boolean state = groupA(spec);
-
           if (state == true && int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
           {
             spectrumout += spectrumA[int(disA[r])] + " ";
