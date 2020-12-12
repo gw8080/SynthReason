@@ -1,9 +1,9 @@
 PrintWriter outputx; //<>//
 PrintWriter outputz;
-int block = 128;
+int block = 64;
 int num = 100;
 int sens = 50;
-int searchlength = 1000;
+int searchlength = 10000;
 int selectionSize = 128;
 void setup()
 {
@@ -113,7 +113,10 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
       int xx = round(r8);
       String[] spec2 = split(spectrumA[xx], " ");
       if (spec[1].equals(spec2[0]) == true) {
+        // boolean state = groupB(spec, "problem.txt");
+        //if (state == true) {
         dis += str(count) + ",";
+        // }
       }
       String[] disA = split(dis, ","); 
       if (disA.length > selectionSize) {
@@ -135,15 +138,17 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
           String[] spec = split(spectrumA[int(disA[r])], " ");
           if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
           {
-
-            spectrumout += spectrumA[int(disA[r])] + " ";
-            spectrumout += spec[1] + " ";
-            rem = int(disA[r]);
             if (spectrumout.length() > block) {
               exit1 = 1;
             }
+            //boolean state = groupA(spec, "problem.txt");
+            //if (state == false) {
+            //spectrumout += spectrumA[int(disA[r])] + " ";
+            spectrumout += spec[1] + " ";
+            rem = int(disA[r]);
             exit = 1;
             break;
+            //}
           }
         }
       }
