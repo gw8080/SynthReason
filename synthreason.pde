@@ -91,6 +91,14 @@ boolean groupA(String[] spec, String file) {
   }
   return state;
 }
+boolean groupB(String[] spec, String file) {
+  String problem = loadFilterstr(file);
+  boolean state = false;
+  if (problem.indexOf(spec[1]) > -1) {
+    state = true;
+  }
+  return state;
+}
 String decide(String[] spectrumA, String[] prob, String[] check2) {
   String loop = join(check2, "");
   String spectrumout = "";
@@ -128,18 +136,19 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
       for (int f = sens; f > 0 && exit == 0; f--) {
         for (int r = 0; r < array.length-1 && exit == 0; r++) {
           String[] spec = split(spectrumA[int(disA[r])], " ");
-
           if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
           {
             if (spectrumout.length() > block) {
               exit1 = 1;
             }
-
-            //spectrumout += spectrumA[int(disA[r])] + " ";
-            spectrumout += spec[1] + " ";
-            rem = int(disA[r]);
-            exit = 1;
-            break;
+            boolean state = groupB(spec, "problem.txt");
+            if (state == false) {
+              //spectrumout += spectrumA[int(disA[r])] + " ";
+              spectrumout += spec[1] + " ";
+              rem = int(disA[r]);
+              exit = 1;
+              break;
+            }
           }
         }
       }
