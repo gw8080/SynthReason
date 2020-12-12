@@ -78,9 +78,9 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
-boolean groupA(String[] spec) {
+boolean groupA(String[] spec, String file) {
   String[] knowledge = loadResourcesA("text.txt");
-  String[] problem = loadFilter("problem.txt");
+  String[] problem = loadFilter(file);
   boolean state = false;
   for (int o = 0; o < problem.length && state == false; o++) {
     for (int i = 0; i < knowledge.length && state == false; i++) {
@@ -129,16 +129,16 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
 
           if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
           {
-            boolean state = groupA(spec);
-            if (state == true) {
-              spectrumout += spectrumA[int(disA[r])] + " ";
-              rem = int(disA[r]);
-            }
             if (spectrumout.length() > block) {
               exit1 = 1;
             }
-            exit = 1;
-            break;
+            boolean state = groupA(spec, "problem.txt");
+            if (state == true) {
+              spectrumout += spectrumA[int(disA[r])] + " ";
+              rem = int(disA[r]);
+              exit = 1;
+              break;
+            }
           }
         }
       }
