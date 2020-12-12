@@ -10,8 +10,8 @@ void setup()
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
     String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"));
-    //spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
-    //spectrum = bigram(spectrum, loadFilter("filter.txt"));
+    spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
+    spectrum = bigram(spectrum, loadFilter("filter.txt"));
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
