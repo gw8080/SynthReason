@@ -79,27 +79,6 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
-boolean groupA(String[] spec, String file) {
-  String[] knowledge = loadResourcesA("text.txt");
-  String[] problem = loadFilter(file);
-  boolean state = false;
-  for (int o = 0; o < problem.length && state == false; o++) {
-    for (int i = 0; i < knowledge.length && state == false; i++) {
-      if (knowledge[i].indexOf(problem[o]) > -1 && knowledge[i].indexOf(spec[0]) > -1 && knowledge[i].indexOf(spec[1]) > -1) {
-        state = true;
-      }
-    }
-  }
-  return state;
-}
-boolean groupB(String[] spec, String file) {
-  String problem = loadFilterstr(file);
-  boolean state = false;
-  if (problem.indexOf(spec[1]) > -1) {
-    state = true;
-  }
-  return state;
-}
 String decide(String[] spectrumA, String[] prob, String[] check2) {
   String loop = join(check2, "");
   String spectrumout = "";
@@ -114,10 +93,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
       int xx = round(r8);
       String[] spec2 = split(spectrumA[xx], " ");
       if (spec[1].equals(spec2[0]) == true) {
-        // boolean state = groupB(spec, "problem.txt");
-        //if (state == true) {
         dis += str(count) + ",";
-        // }
       }
       String[] disA = split(dis, ","); 
       if (disA.length > selectionSize) {
@@ -142,14 +118,10 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
             if (spectrumout.length() > block) {
               exit1 = 1;
             }
-            //boolean state = groupA(spec, "problem.txt");
-            //if (state == false) {
-            //spectrumout += spectrumA[int(disA[r])] + " ";
             spectrumout += spec[1] + " ";
             rem = int(disA[r]);
             exit = 1;
             break;
-            //}
           }
         }
       }
