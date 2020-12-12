@@ -104,9 +104,11 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
       float r8 = random(spectrumA.length-1);
       int xx = round(r8);
       String[] spec2 = split(spectrumA[xx], " ");
-
       if (spec[1].equals(spec2[0]) == true) {
-        dis += str(count) + ",";
+        boolean state = groupA(spec, "problem.txt");
+        if (state == true) {
+          dis += str(count) + ",";
+        }
       }
       String[] disA = split(dis, ","); 
       if (disA.length > selectionSize) {
@@ -132,13 +134,11 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
             if (spectrumout.length() > block) {
               exit1 = 1;
             }
-            boolean state = groupA(spec, "problem.txt");
-            if (state == true) {
-              spectrumout += spectrumA[int(disA[r])] + " ";
-              rem = int(disA[r]);
-              exit = 1;
-              break;
-            }
+
+            spectrumout += spectrumA[int(disA[r])] + " ";
+            rem = int(disA[r]);
+            exit = 1;
+            break;
           }
         }
       }
