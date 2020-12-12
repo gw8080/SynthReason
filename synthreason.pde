@@ -3,7 +3,8 @@ PrintWriter outputz;
 int block = 64;
 int num = 100;
 int sens = 50;
-int searchlength = 10000;
+int searchlength = 32;
+int searchlength2 = 32;
 int selectionSize = 128;
 void setup()
 {
@@ -105,7 +106,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
   int exit1 = 0;
   float r7 = random(spectrumA.length);
   int rem = round(r7);
-  for (int count2 = 0; exit1 == 0 && count2 < searchlength; count2++) {
+  for (int count2 = 0; exit1 == 0 && count2 < searchlength2; count2++) {
     String dis = "";
     for (int count = 0; count != prob.length-1; count++) {
       String[] spec = split(spectrumA[rem], " ");
