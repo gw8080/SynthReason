@@ -3,7 +3,7 @@ PrintWriter outputz;
 int block = 64;
 int num = 100;
 int sens = 50;
-int searchlength = 10000;
+int searchlength = 1000;
 int selectionSize = 128;
 void setup()
 {
@@ -138,14 +138,15 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
           String[] spec = split(spectrumA[int(disA[r])], " ");
           if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
           {
-            if (spectrumout.length() > block) {
-              exit1 = 1;
-            }
+
             boolean state = groupB(spec, "problem.txt");
             if (state == false) {
               //spectrumout += spectrumA[int(disA[r])] + " ";
               spectrumout += spec[1] + " ";
               rem = int(disA[r]);
+              if (spectrumout.length() > block) {
+                exit1 = 1;
+              }
               exit = 1;
               break;
             }
