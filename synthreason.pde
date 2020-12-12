@@ -10,8 +10,8 @@ void setup()
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
     String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"));
-    spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
-    spectrum = bigram(spectrum, loadFilter("filter.txt"));
+    //spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
+    //spectrum = bigram(spectrum, loadFilter("filter.txt"));
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -147,10 +147,6 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
   String[] check = split(spectrumout, " ");
   for (int z = 0; z < check.length; z++) {
     spectrumout = spectrumout.replace(check[z] + " " + check[z] + " ", check[z] + " ");
-  }
-  String[] check3 = loadFilter("filter.txt");
-  for (int z = 0; z < check3.length-1; z++) {
-    spectrumout = spectrumout.replace(" " + check3[z] + " ", " ");
   }
   return spectrumout;
 }
