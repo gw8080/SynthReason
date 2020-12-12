@@ -135,7 +135,8 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
               exit1 = 1;
             }
 
-            spectrumout += spectrumA[int(disA[r])] + " ";
+            //spectrumout += spectrumA[int(disA[r])] + " ";
+            spectrumout += spec[1] + " ";
             rem = int(disA[r]);
             exit = 1;
             break;
