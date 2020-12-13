@@ -1,6 +1,6 @@
 PrintWriter outputx; //<>//
 PrintWriter outputz;
-int block = 64;
+int block = 256;
 int num = 100;
 int sens = 50;
 int searchlength = 32;
@@ -12,34 +12,13 @@ void setup()
   for (int loop = 0; loop < num; loop++) {  
     String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"));
     spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
-    spectrum = bigram(spectrum, loadFilter("filter.txt"));
+
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
   }
   outputz.close();
   exit();
-}
-String bigram(String spectrum, String[] filter) {
-  String[] proc = split(spectrum, " ");
-  String filterstr = join(filter, "\n");
-  String output = "";
-  int count = 0;
-  for (int a = 0; a < proc.length; a++) {
-    if (filterstr.indexOf("\n" + proc[a] + "\n") > -1) {
-      if (count == 0) {
-        output += proc[a] + " ";
-      }
-      count++;
-      if (count > 1) {
-        count = 0;
-      }
-    }
-    if (filterstr.indexOf("\n" + proc[a] + "\n") == -1) {
-      output += proc[a] + " ";
-    }
-  }
-  return output;
 }
 String[] loadFilter(String resource)
 {
@@ -136,13 +115,13 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
 String generate(String spectrum, String[] loopA, String full) {
   String loop = join(loopA, "\n");
   String[] eny = split(spectrum, " ");// guide
-  for (int j = 0; j != eny.length - 1; j++) {
+  for (int j = 0; j < eny.length - 2; j++) {
     for (int a = 0; a != loopA.length-1; a++) {
       float r = random(loopA.length-1);
       int x = round(r);
       if (loopA[x] != null ) {
         if (full.indexOf(eny[j] + " " + loopA[x] + " ") > -1 && full.indexOf(" " + loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf("\n" + eny[j] + "\n") == -1 && loop.indexOf("\n" + eny[j+1] + "\n") == -1 && full.indexOf(eny[j] + " " + eny[j+1]) == -1) {
-          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
+          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " " + eny[j+2] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + "^^" + eny[j+2] + " ");
           break;
         }
       }
@@ -150,5 +129,6 @@ String generate(String spectrum, String[] loopA, String full) {
   }
   spectrum += ".";
   spectrum = spectrum.replace(" .", ".");
+  spectrum = spectrum.replace("^^", " ");
   return spectrum;
 }
