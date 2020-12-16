@@ -1,17 +1,18 @@
 PrintWriter outputx; //<>//
 PrintWriter outputz;
-int block = 256;
+int block = 32;
 int num = 100;
 int sens = 50;
 int searchlength = 32;
 int searchlength2 = 32;
 int selectionSize = 128;
+int distanceParamA = 32;
 void setup()
 {
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
     String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"));
-    spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
+    // spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
 
     outputz.println(spectrum);
     outputz.println();
@@ -19,6 +20,21 @@ void setup()
   }
   outputz.close();
   exit();
+}
+int distanceSelect(String resource, int pos) {
+  String[] distanceA = loadResourcesB(resource);
+  String[] arr = split(distanceA[pos], ",");
+  int exit = 0;
+  int selection = 0;
+  for (int x = 0; x < distanceParamA && exit == 0; x++) {
+    for (int z = 0; z < arr.length - 1 && exit == 0; z++) {
+      if (int(arr[z]) == x) {
+        selection = x;
+        exit = 1;
+      }
+    }
+  }
+  return selection;
 }
 String[] loadFilter(String resource)
 {
@@ -44,6 +60,13 @@ String[] loadResourcesA(String resource)
   String[] KB = loadStrings(resource);
   String str2 = join(KB, "");
   String[] str3 = split(str2, ".");
+  return str3;
+}
+String[] loadResourcesB(String resource)
+{
+  String[] KB = loadStrings(resource);
+  String str2 = join(KB, "");
+  String[] str3 = split(str2, ":");
   return str3;
 }
 String[] initTuring(String file) {
@@ -92,15 +115,20 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
       for (int f = sens; f > 0 && exit == 0; f--) {
         for (int r = 0; r < array.length-1 && exit == 0; r++) {
           String[] spec = split(spectrumA[int(disA[r])], " ");
-          if (int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
+
+          if ( int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
           {
+
             if (spectrumout.length() > block) {
               exit1 = 1;
             }
-            spectrumout += spec[1] + " ";
-            rem = int(disA[r]);
-            exit = 1;
-            break;
+            int distance = distanceSelect("distance.txt", int(array[r]));
+            if (distance < 2) {
+              spectrumout += spec[1] + " ";
+              rem = int(disA[r]);
+              exit = 1;
+              break;
+            }
           }
         }
       }
