@@ -1,13 +1,13 @@
 PrintWriter outputx; //<>//
 PrintWriter outputz;
-int block = 128;
+int block = 64;
 int num = 32;
-int sens = 32;
-int searchlength = 32;
-int searchlength2 = 32;
-int selectionSize = 32;
-int distanceParamA = 32;
-int distanceParamB = 16;
+int sens = 64;
+int searchlength = 64;
+int searchlength2 = 64;
+int selectionSize = 64;
+int distanceParamA = 64;
+int distanceParamB = 12;
 void setup()
 {
   outputz = createWriter("output/output.txt");
@@ -124,7 +124,15 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
               exit1 = 1;
             }
             int distance = distanceSelect("distance.txt", int(array[r]));
-            if (distance < distanceParamB) {
+            float r1 = random(2);
+            int sel = round(r1);
+            if (distance <= distanceParamB && sel == 1) {
+              spectrumout += spec[1] + " ";
+              rem = int(disA[r]);
+              exit = 1;
+              break;
+            }
+            if (distance <= distanceParamB && sel == 2) {
               spectrumout += spec[1] + " ";
               rem = int(disA[r]);
               exit = 1;
