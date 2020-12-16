@@ -1,18 +1,19 @@
 PrintWriter outputx; //<>//
 PrintWriter outputz;
-int block = 32;
-int num = 100;
-int sens = 50;
+int block = 128;
+int num = 32;
+int sens = 32;
 int searchlength = 32;
 int searchlength2 = 32;
-int selectionSize = 128;
+int selectionSize = 32;
 int distanceParamA = 32;
+int distanceParamB = 16;
 void setup()
 {
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
     String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"));
-    // spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
+    spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
 
     outputz.println(spectrum);
     outputz.println();
@@ -123,7 +124,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
               exit1 = 1;
             }
             int distance = distanceSelect("distance.txt", int(array[r]));
-            if (distance < 2) {
+            if (distance < distanceParamB) {
               spectrumout += spec[1] + " ";
               rem = int(disA[r]);
               exit = 1;
