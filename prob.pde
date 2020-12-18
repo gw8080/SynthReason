@@ -2,7 +2,7 @@ PrintWriter outputx;
 PrintWriter outputz;
 PrintWriter outputy;
 String resource = "text.txt";
-int buffer = 102400;
+int buffer = 1024000;
 void setup()
 {
   String[] knowledge = loadResources();//2
