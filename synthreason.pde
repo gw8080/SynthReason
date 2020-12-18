@@ -118,7 +118,7 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
             }
             int distance = distanceSelect("distance.txt", int(array[r]));
             if (distance <= distanceParamB) {
-              spectrumout += spec[1] + " ";
+              spectrumout += spectrumA[int(disA[r])] + " ";
               rem = int(disA[r]);
               exit = 1;
               break;
