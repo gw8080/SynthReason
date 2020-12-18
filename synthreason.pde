@@ -1,20 +1,20 @@
 PrintWriter outputx; //<>//
 PrintWriter outputz;
-int block = 64;
+int block = 128;
 int num = 32;
 int sens = 64;
 int searchlength = 64;
 int searchlength2 = 64;
-int selectionSize = 64;
+int searchlengthInit = 64;
+int selectionSize = 128;
 int distanceParamA = 64;
-int distanceParamB = 12;
+int distanceParamB = 4;
 void setup()
 {
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
     String spectrum = decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"));
     spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
-
     outputz.println(spectrum);
     outputz.println();
     outputz.flush();
@@ -22,21 +22,7 @@ void setup()
   outputz.close();
   exit();
 }
-int distanceSelect(String resource, int pos) {
-  String[] distanceA = loadResourcesB(resource);
-  String[] arr = split(distanceA[pos], ",");
-  int exit = 0;
-  int selection = 0;
-  for (int x = 0; x < distanceParamA && exit == 0; x++) {
-    for (int z = 0; z < arr.length - 1 && exit == 0; z++) {
-      if (int(arr[z]) == x) {
-        selection = x;
-        exit = 1;
-      }
-    }
-  }
-  return selection;
-}
+
 String[] loadFilter(String resource)
 {
   String[] KB = loadStrings(resource);
@@ -86,8 +72,15 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
   String loop = join(check2, "");
   String spectrumout = "";
   int exit1 = 0;
-  float r7 = random(spectrumA.length);
-  int rem = round(r7);
+  float r7 = 0;
+  int rem = 0;
+  for (int z = 0; z < searchlengthInit; z++) {
+    r7 = random(spectrumA.length);
+    rem = round(r7);
+    if (int(prob[rem]) < sens) {
+      break;
+    }
+  }
   for (int count2 = 0; exit1 == 0 && count2 < searchlength2; count2++) {
     String dis = "";
     for (int count = 0; count != prob.length-1; count++) {
@@ -117,22 +110,14 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
         for (int r = 0; r < array.length-1 && exit == 0; r++) {
           String[] spec = split(spectrumA[int(disA[r])], " ");
 
-          if ( int(array[r]) < sens && int(array[r]) >= f && spectrumout.indexOf(spec[1]) == -1 && spectrumout.indexOf(spec[0]) == -1 && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
+          if ( int(array[r]) < sens && int(array[r]) >= f && loop.indexOf(spec[1]) == -1 && loop.indexOf(spec[0]) == -1)
           {
 
             if (spectrumout.length() > block) {
               exit1 = 1;
             }
             int distance = distanceSelect("distance.txt", int(array[r]));
-            float r1 = random(2);
-            int sel = round(r1);
-            if (distance <= distanceParamB && sel == 1) {
-              spectrumout += spec[1] + " ";
-              rem = int(disA[r]);
-              exit = 1;
-              break;
-            }
-            if (distance <= distanceParamB && sel == 2) {
+            if (distance <= distanceParamB) {
               spectrumout += spec[1] + " ";
               rem = int(disA[r]);
               exit = 1;
@@ -149,6 +134,21 @@ String decide(String[] spectrumA, String[] prob, String[] check2) {
   }
   return spectrumout;
 }
+int distanceSelect(String resource, int pos) {
+  String[] distanceA = loadResourcesB(resource);
+  String[] arr = split(distanceA[pos], ",");
+  int exit = 0;
+  int selection = 0;
+  for (int x = 0; x < distanceParamA && exit == 0; x++) {
+    for (int z = 0; z < arr.length - 1 && exit == 0; z++) {
+      if (int(arr[z]) == x) {
+        selection = x;
+        exit = 1;
+      }
+    }
+  }
+  return selection;
+}
 String generate(String spectrum, String[] loopA, String full) {
   String loop = join(loopA, "\n");
   String[] eny = split(spectrum, " ");// guide
@@ -157,8 +157,8 @@ String generate(String spectrum, String[] loopA, String full) {
       float r = random(loopA.length-1);
       int x = round(r);
       if (loopA[x] != null ) {
-        if (full.indexOf(eny[j] + " " + loopA[x] + " ") > -1 && full.indexOf(" " + loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf("\n" + eny[j] + "\n") == -1 && loop.indexOf("\n" + eny[j+1] + "\n") == -1 && full.indexOf(eny[j] + " " + eny[j+1]) == -1) {
-          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " " + eny[j+2] + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + "^^" + eny[j+2] + " ");
+        if (full.indexOf(eny[j] + " " + loopA[x] + " ") > -1 && full.indexOf(" " + loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf("\n" + eny[j] + "\n") == -1 && loop.indexOf("\n" + eny[j+1] + "\n") == -1) {
+          spectrum = spectrum.replace(eny[j] + " " + eny[j+1]  + " ", eny[j] + " " + loopA[x] + " " + eny[j+1] + " ");
           break;
         }
       }
