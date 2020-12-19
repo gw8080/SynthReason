@@ -8,7 +8,7 @@ int searchlength2 = 64;
 int searchlengthInit = 64;
 int selectionSize = 128;
 int distanceParamA = 64;
-int distanceParamB = 4;
+int distanceParamB = 2;
 void setup()
 {
   outputz = createWriter("output/output.txt");
