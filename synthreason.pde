@@ -6,7 +6,7 @@ int sens = 64;
 int searchlength = 64;
 int searchlength2 = 64;
 int searchlengthInit = 64;
-int selectionSize = 128;
+int selectionSize = 512;
 int distanceParamA = 64;
 int distanceParamB = 2;
 void setup()
