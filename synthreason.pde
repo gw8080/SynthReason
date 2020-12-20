@@ -1,6 +1,6 @@
 PrintWriter outputx; //<>//
 PrintWriter outputz;
-int block = 256;
+int block = 128;
 int num = 32;
 int sens = 64;
 int searchlength = 64;
