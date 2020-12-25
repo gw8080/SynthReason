@@ -1,21 +1,13 @@
-PrintWriter outputx; //<>// //<>//
-PrintWriter outputy;
-PrintWriter outputz;
-int block = 256;
+PrintWriter outputz; //<>//
 int num = 100;
-int sens = 64;
-int searchlength = 64;
-int searchlength2 = 64;
+int sens = 20;
 int searchlengthInit = 64;
-int selectionSize = 64;
-int distanceParamA = 64;
-int distanceParamB = 8;
 void setup()
 {
   outputz = createWriter("output/output.txt");
   String spectrum = "";
   for (int loop = 0; loop < num; loop++) {  
-    spectrum += decide(initTuring("turing.txt"), probability("prob.txt"), loadFilter("filter.txt"));
+    spectrum += decide(initTuring("turing.txt"), probability("prob.txt"));
     spectrum += " ";
   }
   spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
@@ -32,31 +24,11 @@ String[] loadFilter(String resource)
   String[] str3 = split(str2, "\n");
   return str3;
 }
-String loadFilterstr(String resource)
-{
-  String[] KB = loadStrings(resource);
-  String str2 = join(KB, "\n");
-  return str2;
-}
 String loadResources(String resource)
 {
   String[] KB = loadStrings(resource);
   String str2 = join(KB, "");
   return str2;
-}
-String[] loadResourcesA(String resource)
-{
-  String[] KB = loadStrings(resource);
-  String str2 = join(KB, "");
-  String[] str3 = split(str2, ".");
-  return str3;
-}
-String[] loadResourcesB(String resource)
-{
-  String[] KB = loadStrings(resource);
-  String str2 = join(KB, "");
-  String[] str3 = split(str2, ":");
-  return str3;
 }
 String[] initTuring(String file) {
   String[] KB = loadStrings(file);
@@ -70,13 +42,13 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
-String decide(String[] spectrumA, String[] prob, String[] check2) {
+String decide(String[] spectrumA, String[] prob) {
   String[] spec = new String[0], spec2 = new String[0];
   for (int count = 0; count < searchlengthInit; count++) {
     float r = random(spectrumA.length-1);
     int xx = round(r);
     spec = split(spectrumA[xx], " ");
-    if (int(prob[xx]) > 20 ) {
+    if (int(prob[xx]) > sens ) {
       break;
     }
   }
