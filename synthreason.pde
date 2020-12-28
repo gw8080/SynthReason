@@ -1,19 +1,21 @@
 PrintWriter outputz; //<>// //<>//
-int num = 50;
+int num = 50000;
 int limit = 64;
-int actions = 32;
+int actions = 4;
 int tries = 64000;
+String search = "exist";
 void setup()
 {
   outputz = createWriter("output/output.txt");
-  String spectrum = "";
   for (int loop = 0; loop < num; loop++) {  
-    spectrum += decide(initTuring("turing.txt"), probability("prob.txt"));
-    spectrum += ".\n\n";
+    String spectrumcheck = decide(initTuring("turing.txt"), probability("prob.txt"));
+    String[] check = split(spectrumcheck, " ");
+    if (check[check.length-1] == search) {
+      spectrumcheck = spectrumcheck.replace(" .\n\n", ".\n\n");
+      outputz.println(spectrumcheck);
+      outputz.flush();
+    }
   }
-  spectrum = spectrum.replace(" .\n\n", ".\n\n");
-  outputz.println(spectrum);
-  outputz.println();
   outputz.flush();
   outputz.close();
   exit();
