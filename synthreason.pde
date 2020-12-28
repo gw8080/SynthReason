@@ -1,7 +1,7 @@
 PrintWriter outputz; //<>// //<>//
 int num = 50000;
 int limit = 64;
-int actions = 16;
+int actions = 4;
 int tries = 64000;
 String input = "mind mind";
 void setup()
