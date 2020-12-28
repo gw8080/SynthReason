@@ -1,17 +1,20 @@
 PrintWriter outputz; //<>// //<>//
 int num = 50000;
 int limit = 64;
-int actions = 4;
+int actions = 8;
 int tries = 64000;
 String input = "mind mind";
 void setup()
 {
   String search = loadFilter("problem.txt");
+  String search2 = loadFilter("filter.txt");
   outputz = createWriter("output/output.txt");
+  String[] turing = initTuring("turing.txt");
+  String[] prob = probability("prob.txt");
   for (int loop = 0; loop < num; loop++) {  
-    String spectrumcheck = decide(initTuring("turing.txt"), probability("prob.txt"));
+    String spectrumcheck = decide(turing, prob);
     String[] check = split(spectrumcheck, " ");
-    if (search.indexOf("\n" + check[check.length-1]) > -1) {
+    if (search.indexOf("\n" + check[check.length-2] + "\n") > -1 && search2.indexOf("\n" + check[check.length-2] + "\n") == -1) {
       spectrumcheck = spectrumcheck.replace(" .\n\n", ".\n\n");
       outputz.println(spectrumcheck);
       outputz.flush();
