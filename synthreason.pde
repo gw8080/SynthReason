@@ -4,14 +4,14 @@ int limit = 64;
 int actions = 4;
 int tries = 64000;
 String input = "mind mind";
-String search = "exist";
 void setup()
 {
+  String search = loadFilter("problem.txt");
   outputz = createWriter("output/output.txt");
   for (int loop = 0; loop < num; loop++) {  
     String spectrumcheck = decide(initTuring("turing.txt"), probability("prob.txt"));
     String[] check = split(spectrumcheck, " ");
-    if (check[check.length-1] == search) {
+    if (search.indexOf("\n" + check[check.length-1]) > -1) {
       spectrumcheck = spectrumcheck.replace(" .\n\n", ".\n\n");
       outputz.println(spectrumcheck);
       outputz.flush();
@@ -21,17 +21,10 @@ void setup()
   outputz.close();
   exit();
 }
-String[] loadFilter(String resource)
+String loadFilter(String resource)
 {
   String[] KB = loadStrings(resource);
   String str2 = join(KB, "\n");
-  String[] str3 = split(str2, "\n");
-  return str3;
-}
-String loadResources(String resource)
-{
-  String[] KB = loadStrings(resource);
-  String str2 = join(KB, "");
   return str2;
 }
 String[] initTuring(String file) {
