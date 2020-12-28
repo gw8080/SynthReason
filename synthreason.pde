@@ -6,7 +6,7 @@ int tries = 64000;
 String input = "mind mind";
 void setup()
 {
-  String search = loadFilter("problem.txt");
+  String search = loadFilter("positive.txt");
   String search2 = loadFilter("filter.txt");
   outputz = createWriter("output/output.txt");
   String[] turing = initTuring("turing.txt");
