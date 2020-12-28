@@ -4,7 +4,7 @@ PrintWriter outputz;
 int num = 5;
 int limit = 64;
 int actions = 64;
-int tries = 64;
+int tries = 64000;
 void setup()
 {
   outputz = createWriter("output/output.txt");
@@ -51,7 +51,7 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob, int p
     float r = random(spectrumA.length-1);
     int xx = round(r);
     spec = split(spectrumA[xx], " ");
-    if (int(prob[xx]) > probheight && spec[0].equals(specOriginal[1]) == true) {
+    if (int(prob[xx]) < probheight && spec[0].equals(specOriginal[1]) == true) {
       break;
     }
   }
@@ -63,14 +63,19 @@ String decide(String[] spectrumA, String[] prob) {
   String spectrumout = "";
   String[] SpecOriginal = split(input, " ");
   float r = random(limit);
-  int chance = round(r), count = 0;
-  for (String[] spec = task_AC(SpecOriginal, spectrumA, prob, chance, tries); count < actions; count++ ) {
-    SpecOriginal = spec;
+  int chance = round(r);
+  for (int count = 0; count < actions; count++) {
+    String[] spec = task_AC(SpecOriginal, spectrumA, prob, chance, tries);
     r = random(limit);
     chance = round(r);
+    spectrumout += join(spec, " ") + " ";
+    SpecOriginal = spec;
   }
 
-
+  String[] check = split(spectrumout, " ");
+  for (int z = 0; z < check.length-1; z++) {
+    spectrumout = spectrumout.replace(check[z] + " " + check[z] + " ", check[z] + " ");
+  }
   return spectrumout;
 }
 String generate(String spectrum, String[] loopA, String full) {
