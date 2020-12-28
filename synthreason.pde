@@ -3,6 +3,7 @@ int num = 50000;
 int limit = 64;
 int actions = 4;
 int tries = 64000;
+String input = "mind mind";
 String search = "exist";
 void setup()
 {
@@ -58,7 +59,6 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob, int p
   return spec;
 }
 String decide(String[] spectrumA, String[] prob) {
-  String input = "mind mind";
   String spectrumout = "";
   String[] SpecOriginal = split(input, " ");
   float r = random(limit);
