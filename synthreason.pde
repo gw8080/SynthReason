@@ -1,6 +1,6 @@
 PrintWriter outputz; //<>// //<>//
 int probLimit = 128;
-int actions = 4;
+int actions = 8;
 int tries = 64000;
 String input = "mind mind";
 void setup()
@@ -41,7 +41,7 @@ String[] probability(String file) {
 String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob, int probheight, int searchlength) {
   String[] spec = new String[0];
   for (int count = 0; count < searchlength; count++) {
-    float r = random(spectrumA.length-1);
+    float r = random(spectrumA.length-2);
     int xx = round(r);
     spec = split(spectrumA[xx], " ");
     if (int(prob[xx]) < probheight && spec[0].equals(specOriginal[1]) == true) {
