@@ -1,6 +1,5 @@
 PrintWriter outputz; //<>// //<>//
-int num = 50000;
-int limit = 64;
+int probLimit = 128;
 int actions = 4;
 int tries = 64000;
 String input = "mind mind";
@@ -11,7 +10,7 @@ void setup()
   outputz = createWriter("output/output.txt");
   String[] turing = initTuring("turing.txt");
   String[] prob = probability("prob.txt");
-  for (int loop = 0; loop < num; loop++) {  
+  while (true) {  
     String spectrumcheck = decide(turing, prob);
     String[] check = split(spectrumcheck, " ");
     if (search.indexOf("\n" + check[check.length-2] + "\n") > -1 && search2.indexOf("\n" + check[check.length-2] + "\n") == -1) {
@@ -20,9 +19,6 @@ void setup()
       outputz.flush();
     }
   }
-  outputz.flush();
-  outputz.close();
-  exit();
 }
 String loadFilter(String resource)
 {
@@ -57,11 +53,11 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob, int p
 String decide(String[] spectrumA, String[] prob) {
   String spectrumout = "";
   String[] SpecOriginal = split(input, " ");
-  float r = random(limit);
+  float r = random(probLimit);
   int chance = round(r);
   for (int count = 0; count < actions; count++) {
     String[] spec = task_AC(SpecOriginal, spectrumA, prob, chance, tries);
-    r = random(limit);
+    r = random(probLimit);
     chance = round(r);
     spectrumout += join(spec, " ") + " ";
     SpecOriginal = spec;
@@ -70,6 +66,5 @@ String decide(String[] spectrumA, String[] prob) {
   for (int z = 0; z < check.length-1; z++) {
     spectrumout = spectrumout.replace(check[z] + " " + check[z] + " ", check[z] + " ");
   }
-
   return spectrumout;
 }
