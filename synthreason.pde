@@ -1,9 +1,7 @@
-PrintWriter outputx; //<>// //<>// //<>// //<>//
-PrintWriter outputy;
-PrintWriter outputz;
-int num = 5;
+PrintWriter outputz; //<>// //<>//
+int num = 50;
 int limit = 64;
-int actions = 64;
+int actions = 32;
 int tries = 64000;
 void setup()
 {
@@ -11,8 +9,9 @@ void setup()
   String spectrum = "";
   for (int loop = 0; loop < num; loop++) {  
     spectrum += decide(initTuring("turing.txt"), probability("prob.txt"));
+    spectrum += ".\n\n";
   }
-  //spectrum = generate(spectrum, loadFilter("filter.txt"), loadResources("text.txt"));
+  spectrum = spectrum.replace(" .\n\n", ".\n\n");
   outputz.println(spectrum);
   outputz.println();
   outputz.flush();
@@ -44,7 +43,6 @@ String[] probability(String file) {
   String[] prob = split(list, ",");
   return prob;
 }
-
 String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob, int probheight, int searchlength) {
   String[] spec = new String[0];
   for (int count = 0; count < searchlength; count++) {
@@ -57,7 +55,6 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob, int p
   }
   return spec;
 }
-
 String decide(String[] spectrumA, String[] prob) {
   String input = "mind mind";
   String spectrumout = "";
@@ -71,28 +68,9 @@ String decide(String[] spectrumA, String[] prob) {
     spectrumout += join(spec, " ") + " ";
     SpecOriginal = spec;
   }
-
   String[] check = split(spectrumout, " ");
   for (int z = 0; z < check.length-1; z++) {
     spectrumout = spectrumout.replace(check[z] + " " + check[z] + " ", check[z] + " ");
   }
   return spectrumout;
-}
-String generate(String spectrum, String[] loopA, String full) {
-  String loop = join(loopA, "\n");
-  String[] eny = split(spectrum, " ");// guide
-  for (int j = 0; j < eny.length - 2; j++) {
-    for (int a = 0; a != loopA.length-1; a++) {
-      float r = random(loopA.length-1);
-      int x = round(r);
-      if (loopA[x] != null ) {
-        if (full.indexOf(eny[j] + " " + loopA[x] + " ") > -1 && full.indexOf(" " + loopA[x] + " " + eny[j+1]) > -1 && loop.indexOf("\n" + eny[j] + "\n") == -1 && loop.indexOf("\n" + eny[j+1] + "\n") == -1) {
-          spectrum = spectrum.replace(eny[j] + " " + eny[j+1] + " ", eny[j] + " " + loopA[x] + "^^" + eny[j+1] + " ");
-          break;
-        }
-      }
-    }
-  }
-  spectrum = spectrum.replace("^^", " ");
-  return spectrum;
 }
