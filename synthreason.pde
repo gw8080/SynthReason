@@ -1,7 +1,7 @@
 PrintWriter outputz; //<>// //<>//
 int num = 50000;
 int limit = 64;
-int actions = 8;
+int actions = 16;
 int tries = 64000;
 String input = "mind mind";
 void setup()
@@ -15,8 +15,8 @@ void setup()
     String spectrumcheck = decide(turing, prob);
     String[] check = split(spectrumcheck, " ");
     if (search.indexOf("\n" + check[check.length-2] + "\n") > -1 && search2.indexOf("\n" + check[check.length-2] + "\n") == -1) {
-      spectrumcheck = spectrumcheck.replace(" .\n\n", ".\n\n");
       outputz.println(spectrumcheck);
+      outputz.println();
       outputz.flush();
     }
   }
@@ -70,5 +70,6 @@ String decide(String[] spectrumA, String[] prob) {
   for (int z = 0; z < check.length-1; z++) {
     spectrumout = spectrumout.replace(check[z] + " " + check[z] + " ", check[z] + " ");
   }
+
   return spectrumout;
 }
