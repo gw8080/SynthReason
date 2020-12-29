@@ -2,10 +2,11 @@ PrintWriter outputz; //<>// //<>//
 int probLimit = 128;
 int actions = 4;
 int tries = 64000;
-String input = "mind mind";
+String problem = "problem.txt";
+String solution = "positive.txt";
 void setup()
 {
-  String search = loadFilter("positive.txt");
+  String search = loadFilter(solution);
   String search2 = loadFilter("filter.txt");
   outputz = createWriter("output/output.txt");
   String[] turing = initTuring("turing.txt");
@@ -52,13 +53,14 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob, int p
 }
 String decide(String[] spectrumA, String[] prob) {
   String spectrumout = "";
-  String[] origin = split(loadFilter("problem.txt"), "\n");
+  String[] origin = split(loadFilter(problem), "\n");
   float r2 = random(origin.length-1);
   int xx = round(r2);
   String[] SpecOriginal = split("null " + origin[xx], " ");
   float r = random(probLimit);
   int chance = round(r);
-  for (int count = 0; count < actions; count++) {
+  spectrumout += SpecOriginal[1] + " ";
+  for (int count = 0; count != actions; count++) {
     String[] spec = task_AC(SpecOriginal, spectrumA, prob, chance, tries);
     r = random(probLimit);
     chance = round(r);
