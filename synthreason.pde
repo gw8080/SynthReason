@@ -5,18 +5,23 @@ int tries = 64000;
 String problem = "problem.txt";
 String solution = "positive.txt";
 int distanceParamA = 64;
-int distanceParamB = 1;
+int distanceParamB = 4;
+int correlationClusterLocation = 0;
 void setup()
 {
-  String search = loadFilter(solution);
+  String[] ResourceA = loadResourcesA("text.txt");
+
   String search2 = loadFilter("filter.txt");
   outputz = createWriter("output/output.txt");
   String[] turing = initTuring("turing.txt");
   String[] prob = probability("prob.txt");
   while (true) {  
+    float r3 = random(ResourceA.length-1);
+    int yy = round(r3);
+    String search = ResourceA[yy];
     String spectrumcheck = decide(turing, prob);
     String[] check = split(spectrumcheck, " ");
-    if (search.indexOf("\n" + check[check.length-2] + "\n") > -1 && search2.indexOf("\n" + check[check.length-2] + "\n") == -1) {
+    if (search.indexOf(" " + check[check.length-2] + " ") > -1 && search2.indexOf("\n" + check[check.length-2] + "\n") == -1) {
       outputz.println(spectrumcheck);
       outputz.println();
       outputz.flush();
@@ -48,6 +53,13 @@ String[] loadResourcesB(String resource)
   String[] str3 = split(str2, ":");
   return str3;
 }
+String[] loadResourcesA(String resource)
+{
+  String[] KB = loadStrings(resource);
+  String str2 = join(KB, "");
+  String[] str3 = split(str2, ".");
+  return str3;
+}
 int distanceSelect(String[] distanceA, int pos) {
   String[] arr = split(distanceA[pos], ",");
   int exit = 0;
@@ -69,7 +81,8 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob, int p
     float r = random(spectrumA.length-2);
     int xx = round(r);
     spec = split(spectrumA[xx], " ");
-    int distance = distanceSelect(distanceA, xx);
+    correlationClusterLocation = xx;
+    int distance = distanceSelect(distanceA, correlationClusterLocation);
     if (distance <= distanceParamB) {
       if (int(prob[xx]) < probheight && spec[0].equals(specOriginal[1]) == true) {
         break;
@@ -80,9 +93,13 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob, int p
 }
 String decide(String[] spectrumA, String[] prob) {
   String spectrumout = "";
-  String[] origin = split(loadFilter(problem), "\n");
+  String[] ResourceA = loadResourcesA("text.txt");
+  float r3 = random(ResourceA.length-1);
+  int yy = round(r3);
+  String[] origin = split(ResourceA[yy], " ");
   float r2 = random(origin.length-1);
   int xx = round(r2);
+
   String[] SpecOriginal = split("null " + origin[xx], " ");
   float r = random(probLimit);
   int chance = round(r);
