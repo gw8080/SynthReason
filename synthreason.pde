@@ -20,8 +20,7 @@ void setup()
     String spectrumcheck = decide(turing, prob);
     String[] check = split(spectrumcheck, " ");
     if (search.indexOf(" " + check[check.length-2] + " ") > -1 && search2.indexOf("\n" + check[check.length-2] + "\n") == -1) {
-      outputz.println(spectrumcheck);
-      outputz.println();
+      outputz.print(spectrumcheck);
       outputz.flush();
     }
   }
