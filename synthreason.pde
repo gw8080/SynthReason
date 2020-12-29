@@ -2,8 +2,6 @@ PrintWriter outputz; //<>// //<>//
 int probLimit = 128;
 int actions = 4;
 int tries = 64000;
-String problem = "problem.txt";
-String solution = "positive.txt";
 int distanceParamA = 64;
 int distanceParamB = 4;
 int correlationClusterLocation = 0;
