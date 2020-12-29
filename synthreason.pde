@@ -1,6 +1,6 @@
 PrintWriter outputz; //<>// //<>//
 int probLimit = 128;
-int actions = 8;
+int actions = 4;
 int tries = 64000;
 String input = "mind mind";
 void setup()
@@ -52,7 +52,10 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob, int p
 }
 String decide(String[] spectrumA, String[] prob) {
   String spectrumout = "";
-  String[] SpecOriginal = split(input, " ");
+  String[] origin = split(loadFilter("problem.txt"), "\n");
+  float r2 = random(origin.length-1);
+  int xx = round(r2);
+  String[] SpecOriginal = split("null " + origin[xx], " ");
   float r = random(probLimit);
   int chance = round(r);
   for (int count = 0; count < actions; count++) {
