@@ -29,7 +29,7 @@ void data1() {
   for (int i = stagebegin; i < ((spectrumFeed.length-1)/(4))*stageend; i++)
   {
     outputz = createWriter("output/progress1.txt");
-    outputz.println(i + "/" + spectrumFeed.length);
+    outputz.println(i + "/" + ((spectrumFeed.length-1)/(4))*stageend);
     outputz.close();
     String spectrumx = "";
     String[] knowledge = loadResourcesA("text.txt");
@@ -55,7 +55,7 @@ void data2() {
   for (int i = ((spectrumFeed.length-1)/(4))*stagebegin; i < ((spectrumFeed.length-1)/(4))*stageend; i++)
   {
     outputz2 = createWriter("output/progress2.txt");
-    outputz2.println(i + "/" + spectrumFeed.length);
+    outputz2.println(i + "/" + ((spectrumFeed.length-1)/(4))*stageend);
     outputz2.close();
     String spectrumx = "";
     String[] knowledge = loadResourcesA("text.txt");
@@ -81,7 +81,7 @@ void data3() {
   for (int i = ((spectrumFeed.length-1)/(4))*stagebegin; i < ((spectrumFeed.length-1)/(4))*stageend; i++)
   {
     outputz3 = createWriter("output/progress3.txt");
-    outputz3.println(i + "/" + spectrumFeed.length);
+    outputz3.println(i + "/" + ((spectrumFeed.length-1)/(4))*stageend);
     outputz3.close();
     String spectrumx = "";
     String[] knowledge = loadResourcesA("text.txt");
@@ -107,7 +107,7 @@ void data4() {
   for (int i = ((spectrumFeed.length-1)/(4))*stagebegin; i < ((spectrumFeed.length-1)/(4))*stageend; i++)
   {
     outputz4 = createWriter("output/progress4.txt");
-    outputz4.println(i + "/" + spectrumFeed.length);
+    outputz4.println(i + "/" + ((spectrumFeed.length-1)/(4))*stageend);
     outputz4.close();
     String spectrumx = "";
     String[] knowledge = loadResourcesA("text.txt");
