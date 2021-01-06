@@ -1,7 +1,7 @@
 PrintWriter outputz;
 PrintWriter outputx;
 int num = 10000;
-int activationCount = 5;
+int minimumConnections = 10;
 String output = "";
 void setup()
 {
@@ -44,8 +44,10 @@ void setup()
     int chance2 = round(r2);
     String[] spec3 = split(spectrumA[chance2], "::");
     String[] data = loadResourcesB("activeData.txt");
-    if (spec[1].length() > 3 && spec2[0].equals(spec3[0]) == true && activeData(data, spec, spec3) > activationCount && activeData(data, spec, spec4) > activationCount) {
-      output += spec[1] + " " + spec2[0] + " ";
+    if (spec.length == 2 && spec2.length == 2 && spec3.length == 2 && spec4.length == 2) {
+      if (spec[1].length() > 3 && spec2[0].equals(spec3[0]) == true && activeData(data, spec, spec3) > minimumConnections && activeData(data, spec4, spec) > minimumConnections && activeData(data, spec, spec4) > minimumConnections) {
+        output += spec[1] + " " + spec2[0] + " ";
+      }
     }
     if (count > num) {
       exit = true;
@@ -67,7 +69,7 @@ int activeData(String[] data, String[] spec1, String[] spec2) {
   for (int x = 0; x != data.length; x++) {
     String[] word = split(data[x], " ");
     for (int y = 0; y != word.length; y++) {
-      String[] file = loadStrings(word[y] + ".txt");
+      String[] file = loadStrings("vocab/" + word[y] + ".txt");
       if (file != null) {
         string += join(file, " ") + "::";
       }
