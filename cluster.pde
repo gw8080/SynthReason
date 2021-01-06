@@ -1,7 +1,7 @@
 PrintWriter outputz;
 PrintWriter outputx;
-int num = 10000;
-int minimumConnections = 10;
+int num = 30000;
+int minimumConnections = 5;
 String output = "";
 void setup()
 {
