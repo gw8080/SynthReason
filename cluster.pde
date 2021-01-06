@@ -5,7 +5,7 @@ int activationCount = 5;
 String output = "";
 void setup()
 {
-  String[] resourceA = loadResourcesA("text.txt");
+  String[] resourceA = loadResourcesA("uber.txt");
   String search = loadFilter("filter.txt");
   outputz = createWriter("debugoutput.txt");
   outputx = createWriter("output.txt");
@@ -45,7 +45,7 @@ void setup()
     String[] spec3 = split(spectrumA[chance2], "::");
     String[] data = loadResourcesB("activeData.txt");
     if (spec2[0].equals(spec3[0]) == true && activeData(data, spec, spec3) > activationCount && activeData(data, spec, spec4) > activationCount) {
-      output += spec[1] + " ";
+      output += spec[1] + " " + spec2[0] + " ";
     }
     if (count > num) {
       exit = true;
