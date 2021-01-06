@@ -1,15 +1,16 @@
 PrintWriter outputz;
 PrintWriter outputx;
-int num = 100000;
+int num = 1000000;
+int activationCount = 10;
 void setup()
 {
   String[] resourceA = loadResourcesA("text.txt");
   String search = loadFilter("filter.txt");
   outputz = createWriter("debugoutput.txt");
   outputx = createWriter("output.txt");
-  String[] array = new String[1024000];
+  String[] array = new String[10240000];
 
-  for (int x = 0; x < resourceA.length; x++) {
+  for (int x = 1; x < resourceA.length-2; x++) {
     String[] wordsA = split(resourceA[x], " ");
     for (int y = 0; y < wordsA.length; y++) { // find relative position
       if (search.indexOf(wordsA[y]) > -1) {
@@ -40,7 +41,8 @@ void setup()
     float r2 = random(spectrumA.length-2);
     int chance2 = round(r2);
     String[] spec3 = split(spectrumA[chance2], "::");
-    if (spec2[0].equals(spec3[0]) == true) {
+    String[] data = loadResourcesB("activeData.txt");
+    if (spec2[0].equals(spec3[0]) == true && activeData(data, spec, spec3) > activationCount) {
       output += spec[1] + " ";
     }
     if (count > num) {
@@ -55,7 +57,30 @@ void setup()
   outputx.close();
   exit();
 }
-
+int activeData(String[] data, String[] spec1, String[] spec2) {
+  int count = 0;
+  String string = "";
+  for (int x = 0; x < data.length; x++) {
+    String[] word = split(data[x], " ");
+    for (int y = 0; y < word.length; y++) {
+      String[] file = loadStrings(word[y] + ".txt");
+      if (file != null) {
+        string += join(file, " ") + "::";
+      }
+    }
+  }
+  String[] array = split(string, "::");
+  String[] xx = split(spec1[1], " ");
+  String[] yy = split(spec2[1], " ");
+  for (int x = 0; x < xx.length; x++) {
+    for (int y = 0; y < yy.length; y++) {
+      if (array[0].indexOf(xx[x]) >-1 && array[1].indexOf(yy[y]) >-1) {
+        count++;
+      }
+    }
+  }
+  return count;
+}
 String loadFilter(String resource)
 {
   String[] KB = loadStrings(resource);
@@ -67,5 +92,12 @@ String[] loadResourcesA(String resource)
   String[] KB = loadStrings(resource);
   String str2 = join(KB, "");
   String[] str3 = split(str2, ".");
+  return str3;
+}
+String[] loadResourcesB(String resource)
+{
+  String[] KB = loadStrings(resource);
+  String str2 = join(KB, "");
+  String[] str3 = split(str2, "\n");
   return str3;
 }
