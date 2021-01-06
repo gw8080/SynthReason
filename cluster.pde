@@ -44,7 +44,7 @@ void setup()
     int chance2 = round(r2);
     String[] spec3 = split(spectrumA[chance2], "::");
     String[] data = loadResourcesB("activeData.txt");
-    if (spec2[0].equals(spec3[0]) == true && activeData(data, spec, spec3) > activationCount && activeData(data, spec, spec4) > activationCount) {
+    if (spec[1].length() > 3 && spec2[0].equals(spec3[0]) == true && activeData(data, spec, spec3) > activationCount && activeData(data, spec, spec4) > activationCount) {
       output += spec[1] + " " + spec2[0] + " ";
     }
     if (count > num) {
