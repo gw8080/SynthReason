@@ -1,7 +1,8 @@
 PrintWriter outputz;
 PrintWriter outputx;
-int num = 100000;
+int num = 10000;
 int activationCount = 5;
+String output = "";
 void setup()
 {
   String[] resourceA = loadResourcesA("text.txt");
@@ -32,22 +33,25 @@ void setup()
 
 
   boolean exit = false;
-  String output = "";
+  float r = random(spectrumA.length-2);
+  int chance = round(r);
+  String[] spec4 = split(spectrumA[chance], "::");
   for (int count = 0; exit == false; count++) {
-    float r = random(spectrumA.length-2);
-    int chance = round(r);
+
     String[] spec = split(spectrumA[chance], "::");
     String[] spec2 = split(spectrumA[chance+1], "::");
     float r2 = random(spectrumA.length-2);
     int chance2 = round(r2);
     String[] spec3 = split(spectrumA[chance2], "::");
     String[] data = loadResourcesB("activeData.txt");
-    if (spec2[0].equals(spec3[0]) == true && activeData(data, spec, spec3) > activationCount) {
+    if (spec2[0].equals(spec3[0]) == true && activeData(data, spec, spec3) > activationCount && activeData(data, spec, spec4) > activationCount) {
       output += spec[1] + " ";
     }
     if (count > num) {
       exit = true;
     }
+    r = random(spectrumA.length-2);
+    chance = round(r);
   }
   while (output.indexOf("  ") > -1) {
     output = output.replace("  ", " ");
@@ -70,12 +74,17 @@ int activeData(String[] data, String[] spec1, String[] spec2) {
     }
   }
   String[] array = split(string, "::");
-  String[] xx = split(spec1[1], " ");
-  String[] yy = split(spec2[1], " ");
-  for (int x = 0; x != xx.length; x++) {
-    for (int y = 0; y != yy.length; y++) {
-      if (array[0].indexOf(xx[x]) >-1 && array[1].indexOf(yy[y]) >-1) {
-        count++;
+  if (spec1[1] != null && spec2[1] != null ) {
+    String[] xx = split(spec1[1], " ");
+    String[] yy = split(spec2[1], " ");
+    for (int x = 0; x != xx.length; x++) {
+      for (int y = 0; y != yy.length; y++) {
+        if (array[0].indexOf(xx[x]) >-1 && array[1].indexOf(yy[y]) >-1) {
+          count++;
+        }
+        if (array[1].indexOf(xx[x]) >-1 && array[0].indexOf(yy[y]) >-1) {
+          count++;
+        }
       }
     }
   }
