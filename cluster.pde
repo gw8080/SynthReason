@@ -5,7 +5,7 @@ int minimumConnections = 5;
 String output = "";
 void setup()
 {
-  String[] resourceA = loadResourcesA("xz.txt");
+  String[] resourceA = loadResourcesA("text.txt");
   String search = loadFilter("filter.txt");
   outputz = createWriter("debugoutput.txt");
   outputx = createWriter("output.txt");
@@ -46,7 +46,7 @@ void setup()
     String[] data = loadResourcesB("activeData.txt");
     if (spec.length == 2 && spec2.length == 2 && spec3.length == 2 && spec4.length == 2) {
       if (spec[1].length() > 3 && spec2[0].equals(spec3[0]) == true && activeData(data, spec, spec3) > minimumConnections && activeData(data, spec3, spec) > minimumConnections) {
-        output += spec[1] + " " + spec3[0] + " " + spec3[1];
+        output += spec[1] + " " + spec3[0] + " " + spec3[1] + " ";
       }
     }
     if (count > num) {
