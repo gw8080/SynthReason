@@ -1,15 +1,15 @@
 PrintWriter outputz;
 PrintWriter outputx;
-int num = 30000;
+int num = 50000;
 int minimumConnections = 5;
 String output = "";
 void setup()
 {
-  String[] resourceA = loadResourcesA("uber.txt");
+  String[] resourceA = loadResourcesA("xz.txt");
   String search = loadFilter("filter.txt");
   outputz = createWriter("debugoutput.txt");
   outputx = createWriter("output.txt");
-  String[] array = new String[10240000];
+  String[] array = new String[102400000];
 
   for (int x = 1; x != resourceA.length-2; x++) {
     String[] wordsA = split(resourceA[x], " ");
@@ -45,8 +45,8 @@ void setup()
     String[] spec3 = split(spectrumA[chance2], "::");
     String[] data = loadResourcesB("activeData.txt");
     if (spec.length == 2 && spec2.length == 2 && spec3.length == 2 && spec4.length == 2) {
-      if (spec[1].length() > 3 && spec2[0].equals(spec3[0]) == true && activeData(data, spec, spec3) > minimumConnections && activeData(data, spec4, spec) > minimumConnections && activeData(data, spec, spec4) > minimumConnections) {
-        output += spec[1] + " " + spec2[0] + " ";
+      if (spec[1].length() > 3 && spec2[0].equals(spec3[0]) == true && activeData(data, spec, spec3) > minimumConnections && activeData(data, spec3, spec) > minimumConnections) {
+        output += spec[1] + " " + spec3[0] + " " + spec3[1];
       }
     }
     if (count > num) {
