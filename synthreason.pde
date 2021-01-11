@@ -1,7 +1,7 @@
 PrintWriter outputz; //<>// //<>// //<>//
 PrintWriter outputp;
-int actions = 15;
-int tries = 64000;
+int actions = 25;
+int tries = 640000;
 void setup()
 {
   String[] turing = initTuring("turing.txt");
@@ -64,7 +64,7 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob) {
     spec = split(spectrumA[xx], " ");
     if (spec[0].equals(specOriginal[1]) == true) { 
       for (int v = 0; v < int(prob[xx]); v++) {
-        pool += count + ",";
+        pool += xx + ",";
       }
     }
   }
