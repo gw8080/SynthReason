@@ -1,36 +1,18 @@
 PrintWriter outputz; //<>// //<>// //<>//
 PrintWriter outputp;
-PrintWriter debug;
-int probLimit = 128;
+int actions = 15;
 int tries = 64000;
-int distanceParamA = 64;
-int distanceParamB = 4;
-int correlationClusterLocation = 0;
-int chain = 0;
-int chainLength = 1;
-String[] turing = new String[0];
-String[] prob = new String[0];
-String text = "";
-int actions = 2;
 void setup()
 {
-  turing = initTuring("turing.txt");
-
-  text = loadResources("text.txt");
+  String[] turing = initTuring("turing.txt");
+  String[] prob = probability("prob.txt");
   outputz = createWriter("output/output.txt");
-  debug = createWriter("test.txt");
 
   while (true) {  
-    prob = probability("prob.txt");
     String spectrumcheck = decide(turing, prob, actions);
-    if (text.indexOf(spectrumcheck) > -1) {
-      outputz.print(spectrumcheck);
-      outputz.flush();
-      outputp = createWriter("prob.txt");
-      outputp.println(join(prob, ","));
-      outputp.flush();
-      outputp.close();
-    }
+    outputz.println(spectrumcheck);
+    outputz.println();
+    outputz.flush();
   }
 }
 String loadFilter(String resource)
@@ -71,27 +53,25 @@ String loadResources(String resource)
   String str2 = join(KB, "");
   return str2;
 }
-String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob, int probheight, int searchlength) {
+String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob) {
+  String pool = "";
   String[] spec = new String[0];
-  for (int count = 0; count < searchlength; count++) {
-    float r = random(spectrumA.length-2);
+  for (int count = 0; count < tries; count++) {
+    float r = random(spectrumA.length-1);
     int xx = round(r);
-    spec = split(spectrumA[xx], " ");
-    correlationClusterLocation = xx;
 
-    if (int(prob[xx]) < probheight && spec[0].equals(specOriginal[1]) == true) {
-      if (chain == actions) {
-        prob[xx] = str(int(prob[xx])+1);
-        chain = 0;
+
+    spec = split(spectrumA[xx], " ");
+    if (spec[0].equals(specOriginal[1]) == true) { 
+      for (int v = 0; v < int(prob[xx]); v++) {
+        pool += count + ",";
       }
-      if (chain > actions) {
-        prob[xx] = str(int(prob[xx])-1);
-        chain = 0;
-      }
-      chain++;
-      break;
     }
   }
+  String[] poolA = split(pool, ",");
+  float r = random(poolA.length-1);
+  int xx = round(r);
+  spec = split(spectrumA[int(poolA[xx])], " ");
   return spec;
 }
 String decide(String[] spectrumA, String[] prob, int actions) {
@@ -104,13 +84,9 @@ String decide(String[] spectrumA, String[] prob, int actions) {
   int xx = round(r2);
 
   String[] SpecOriginal = split("null " + origin[xx], " ");
-  float r = random(probLimit);
-  int chance = round(r);
   spectrumout += SpecOriginal[1] + " ";
   for (int count = 0; count < actions-1; count++) {
-    String[] spec = task_AC(SpecOriginal, spectrumA, prob, chance, tries);
-    r = random(probLimit);
-    chance = round(r);
+    String[] spec = task_AC(SpecOriginal, spectrumA, prob);
     spectrumout += join(spec, " ") + " ";
     SpecOriginal = spec;
   }
