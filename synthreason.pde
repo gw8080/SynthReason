@@ -1,18 +1,37 @@
 PrintWriter outputz; //<>// //<>// //<>//
 PrintWriter outputp;
-int actions = 25;
-int tries = 640000;
+int actions = 2;
+int tries = 6400;
+int chain = 0;
+String[] prob = new String[0];
+String learnpath = "";
+String[] learnpathA = new String[0];
 void setup()
 {
   String[] turing = initTuring("turing.txt");
-  String[] prob = probability("prob.txt");
+  prob = probability("prob.txt");
   outputz = createWriter("output/output.txt");
+  String text = loadResources("text.txt");
+  String check = "";
+  while (true) { 
+    prob = probability("prob.txt");
 
-  while (true) {  
     String spectrumcheck = decide(turing, prob, actions);
-    outputz.println(spectrumcheck);
-    outputz.println();
+
+    if (text.indexOf(check+spectrumcheck) > -1 && chain == actions) {
+      for (int xt = 0; xt != learnpathA.length; xt++) {
+        prob[int(learnpathA[xt])] = str(int(prob[int(learnpathA[xt])])+1);
+      }
+      learnpath = "";
+      chain = 0;
+      check = spectrumcheck;
+    }
+    outputz.print(spectrumcheck);
     outputz.flush();
+    outputp = createWriter("prob.txt");
+    outputp.println(join(prob, ","));
+    outputp.flush();
+    outputp.close();
   }
 }
 String loadFilter(String resource)
@@ -59,8 +78,6 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob) {
   for (int count = 0; count < tries; count++) {
     float r = random(spectrumA.length-1);
     int xx = round(r);
-
-
     spec = split(spectrumA[xx], " ");
     if (spec[0].equals(specOriginal[1]) == true) { 
       for (int v = 0; v < int(prob[xx]); v++) {
@@ -72,18 +89,16 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob) {
   float r = random(poolA.length-1);
   int xx = round(r);
   spec = split(spectrumA[int(poolA[xx])], " ");
+  learnpath += int(poolA[xx]) + ",";
+  learnpathA = split(learnpath, ",");
+  chain++;
   return spec;
 }
 String decide(String[] spectrumA, String[] prob, int actions) {
   String spectrumout = "";
-  String[] ResourceA = loadResourcesA("text.txt");
-  float r3 = random(ResourceA.length-1);
-  int yy = round(r3);
-  String[] origin = split(ResourceA[yy], " ");
-  float r2 = random(origin.length-1);
+  float r2 = random(spectrumA.length-2);
   int xx = round(r2);
-
-  String[] SpecOriginal = split("null " + origin[xx], " ");
+  String[] SpecOriginal = split(spectrumA[xx], " ");
   spectrumout += SpecOriginal[1] + " ";
   for (int count = 0; count < actions-1; count++) {
     String[] spec = task_AC(SpecOriginal, spectrumA, prob);
