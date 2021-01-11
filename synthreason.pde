@@ -59,6 +59,8 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob) {
   for (int count = 0; count < tries; count++) {
     float r = random(spectrumA.length-1);
     int xx = round(r);
+
+
     spec = split(spectrumA[xx], " ");
     if (spec[0].equals(specOriginal[1]) == true) { 
       for (int v = 0; v < int(prob[xx]); v++) {
@@ -80,6 +82,7 @@ String decide(String[] spectrumA, String[] prob, int actions) {
   String[] origin = split(ResourceA[yy], " ");
   float r2 = random(origin.length-1);
   int xx = round(r2);
+
   String[] SpecOriginal = split("null " + origin[xx], " ");
   spectrumout += SpecOriginal[1] + " ";
   for (int count = 0; count < actions-1; count++) {
