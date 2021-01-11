@@ -76,7 +76,7 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob) {
   String pool = "";
   String[] spec = new String[0];
   for (int count = 0; count < tries; count++) {
-    float r = random(spectrumA.length-1);
+    float r = random(spectrumA.length-2);
     int xx = round(r);
     spec = split(spectrumA[xx], " ");
     if (spec[0].equals(specOriginal[1]) == true) { 
