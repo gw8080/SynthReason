@@ -97,7 +97,7 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob) {
 String decide(String[] spectrumA, String[] prob, int actions) {
   String spectrumout = "";
   float r2 = random(spectrumA.length-2);
-  int xx = round(r2);
+  int xx = round(r2)+1;
   String[] SpecOriginal = split(spectrumA[xx], " ");
   spectrumout += SpecOriginal[1] + " ";
   for (int count = 0; count < actions-1; count++) {
