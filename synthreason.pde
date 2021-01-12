@@ -13,25 +13,18 @@ void setup()
   outputz = createWriter("output/output.txt");
   String text = loadResources("text.txt");
   String check = "";
+  prob = probability("prob.txt");
+  String spectrumcheck = decide(turing, prob, actions);
+  check = spectrumcheck;
   while (true) { 
-    prob = probability("prob.txt");
 
-    String spectrumcheck = decide(turing, prob, actions);
 
-    if (text.indexOf(check+spectrumcheck) > -1 && chain == actions) {
-      for (int xt = 0; xt != learnpathA.length; xt++) {
-        prob[int(learnpathA[xt])] = str(int(prob[int(learnpathA[xt])])+1);
-      }
-      learnpath = "";
-      chain = 0;
+    spectrumcheck = decide(turing, prob, actions);
+    if (text.indexOf(check+spectrumcheck) > -1) {
       check = spectrumcheck;
+      outputz.print(spectrumcheck);
+      outputz.flush();
     }
-    outputz.print(spectrumcheck);
-    outputz.flush();
-    outputp = createWriter("prob.txt");
-    outputp.println(join(prob, ","));
-    outputp.flush();
-    outputp.close();
   }
 }
 String loadFilter(String resource)
@@ -89,14 +82,11 @@ String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob) {
   float r = random(poolA.length-1);
   int xx = round(r);
   spec = split(spectrumA[int(poolA[xx])], " ");
-  learnpath += int(poolA[xx]) + ",";
-  learnpathA = split(learnpath, ",");
-  chain++;
   return spec;
 }
 String decide(String[] spectrumA, String[] prob, int actions) {
   String spectrumout = "";
-  float r2 = random(spectrumA.length-2);
+  float r2 = random(prob.length-2);
   int xx = round(r2)+1;
   String[] SpecOriginal = split(spectrumA[xx], " ");
   spectrumout += SpecOriginal[1] + " ";
