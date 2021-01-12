@@ -54,6 +54,10 @@ String[] loadResources(String resource)
 {
   String[] KB = loadStrings(resource);
   String str2 = join(KB, "");
+  String[] eliminate2 = {"[", "]", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
+  for (int k = 0; k < eliminate2.length; k++) {
+    str2 = str2.replace(eliminate2[k], "");
+  }
   String[] str3 = split(str2, " ");
   return str3;
 }
