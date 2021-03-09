@@ -1,103 +1,76 @@
-PrintWriter outputz; //<>// //<>// //<>//
-PrintWriter outputp;
-int actions = 2;
-int tries = 6400;
-int chain = 0;
-String[] prob = new String[0];
-String learnpath = "";
-String[] learnpathA = new String[0];
+/* 
+ Copyright (C) 2020 George Wagenknecht SynthReason, This program is free
+ software; you can redistribute it and/or modify it under the terms of the
+ GNU General Public License as published by the Free Software Foundation;
+ either version 2 of the License, or (at your option) any later version.
+ This program is distributed in the hope that it will be useful, but WITHOUT 
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ more details. You should have received a copy of the GNU General Public
+ License along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
+
+PrintWriter outputx;
+PrintWriter debug;
+String resource = "reason.txt";// knowledgebase
+String rules = "reason.txt";// rules
+String output = "";
+String txt = "";
 void setup()
 {
-  String[] turing = initTuring("turing.txt");
-  prob = probability("prob.txt");
-  outputz = createWriter("output/output.txt");
-  String text = loadResources("text.txt");
-  String check = "";
-  prob = probability("prob.txt");
-  String spectrumcheck = decide(turing, prob, actions);
-  check = spectrumcheck;
-  while (true) { 
-
-
-    spectrumcheck = decide(turing, prob, actions);
-    if (text.indexOf(check+spectrumcheck) > -1) {
-      check = spectrumcheck;
-      outputz.print(spectrumcheck);
-      outputz.flush();
-    }
-  }
-}
-String loadFilter(String resource)
-{
-  String[] KB = loadStrings(resource);
-  String str2 = join(KB, "\n");
-  return str2;
-}
-String[] initTuring(String file) {
-  String[] KB = loadStrings(file);
-  String spectrumx = join(KB, "");
-  String[] spectrumA = split(spectrumx, ",");
-  return spectrumA;
-}
-String[] probability(String file) {
-  String[] KB = loadStrings(file);
-  String list = join(KB, "");
-  String[] prob = split(list, ",");
-  return prob;
-}
-String[] loadResourcesB(String resource)
-{
-  String[] KB = loadStrings(resource);
-  String str2 = join(KB, "");
-  String[] str3 = split(str2, ":");
-  return str3;
-}
-String[] loadResourcesA(String resource)
-{
-  String[] KB = loadStrings(resource);
-  String str2 = join(KB, "");
-  String[] str3 = split(str2, ".");
-  return str3;
-}
-String loadResources(String resource)
-{
-  String[] KB = loadStrings(resource);
-  String str2 = join(KB, "");
-  return str2;
-}
-String[] task_AC(String[] specOriginal, String[] spectrumA, String[] prob) {
-  String pool = "";
-  String[] spec = new String[0];
-  for (int count = 0; count < tries; count++) {
-    float r = random(prob.length-2);
-    int xx = round(r);
-    spec = split(spectrumA[xx], " ");
-    if (spec[0].equals(specOriginal[1]) == true) { 
-      for (int v = 0; v < int(prob[xx]); v++) {
-        pool += xx + ",";
+  int count = 0;
+  String[]vocabproc;
+  String vocabsyn = "";
+  for (count = 0; count < 25; count++)
+  {
+    vocabproc = loadStrings(count + ".txt");
+    if (vocabproc != null)
+    {
+      String voc = join(vocabproc, '\n');
+      if (voc.length() > 0)
+      {
+        vocabsyn += voc + ":::::";// load vocabulary
+      }
+      if (voc.length() == 0)
+      {
+        break;
       }
     }
   }
-  String[] poolA = split(pool, ",");
-  float r = random(poolA.length-1);
-  int xx = round(r);
-  spec = split(spectrumA[int(poolA[xx])], " ");
-  return spec;
-}
-String decide(String[] spectrumA, String[] prob, int actions) {
-  String spectrumout = "";
-  float r2 = random(prob.length-2);
-  int xx = round(r2)+1;
-  String[] SpecOriginal = split(spectrumA[xx], " ");
-  spectrumout += SpecOriginal[1] + " ";
-  for (int count = 0; count < actions-1; count++) {
-    String[] spec = task_AC(SpecOriginal, spectrumA, prob);
-    spectrumout += join(spec, " ") + " ";
-    SpecOriginal = spec;
+  String[]enx = split(join(loadStrings(rules), ""), ".");
+  String[]vocabprep = vocabsyn.split(":::::");
+  for (int z = 0; z < enx.length; z++)
+  {
+    String[]enwords = split(enx[z], " ");
+
+    for (int x = 0; x < enwords.length; x++)
+    {
+      for (int y = 0; y < vocabprep.length; y++)
+      {
+        if (vocabprep[y].indexOf("\n" + enwords[x] + "\n") > -1)
+        {
+          txt += y + ",";// load rules
+          break;
+        }
+      }
+    }
+    txt += "::";
   }
-  String[] check = split(spectrumout, " ");
-  for (int z = 0; z < check.length-1; z++) {
-    spectrumout = spectrumout.replace(check[z] + " " + check[z] + " ", check[z] + " ");
+  String str = join(loadStrings(resource), "");
+  String[]catfull = split(txt, "::");
+  outputx = createWriter("output.txt");
+  for (int catPos2 = 0; catPos2 != catfull.length-1; catPos2++)
+  {
+    String[]cat = split(catfull[catPos2], ",");
+    String outputprep = "";
+    for (int catPos = 0; catPos != cat.length-1; catPos++)
+    {
+      outputprep += split(vocabprep[int (cat[catPos])], "\n")[round(random(split(vocabprep[int (cat[catPos])], "\n").length-1))] + " " ;
+    }
+    output += outputprep + ".\n";
   }
-  return spectrumout;
+  outputx.println(output);
+  outputx.flush();
+  outputx.close();
+  exit();
 }
