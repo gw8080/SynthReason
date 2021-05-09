@@ -1,5 +1,5 @@
 PrintWriter outputx;
-int attempts = 100;
+int attempts = 50;
 void setup()
 {
   String[] noun = loadStrings("noun.txt");
