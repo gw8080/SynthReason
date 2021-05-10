@@ -4,6 +4,7 @@ void setup()
 {
   String[] noun = loadStrings("noun.txt");
   String[] verb = loadStrings("verb.txt");
+  String[] adj = loadStrings("adj.txt");
   String res = join(loadStrings("uber.txt"), "");
   String stream = "";
   for (int h = 0; h < attempts; h++ ) {
@@ -15,8 +16,13 @@ void setup()
         for (int h3 = 0; h3 < attempts && exit == false; h3++ ) {
           String combo2 = wordsMulti( split(test, " ")[split(test, " ").length-1], split(res, " "), join(noun, "\n"), join(verb, "\n"));
           if (combo2.length() > 3 ) {
-            stream += test + ": " + combo1 + " then " + combo2 + ".\n";
-            exit = true;
+            for (int h4 = 0; h4 < attempts && exit == false; h4++ ) {
+              String combo3 = words("is", split(res, " "), join(adj, "\n"));
+              if (combo3.length() > 3 ) {
+                stream += test + ": " + combo1 + " " + combo3  + " " + combo2 + ".\n";
+                exit = true;
+              }
+            }
           }
         }
       }
@@ -64,6 +70,20 @@ String words(String input, String[] res, String noun) {
       }
       if (noun.indexOf("\n" + res[rand+1] + "\n") == -1 && noun.indexOf("\n" + res[rand+2] + "\n") > -1) {
         state = res[rand-1] + " " + res[rand] + " " + res[rand+1] + " " + res[rand+2];
+        break;
+      }
+    }
+  }
+  return state;
+}
+String wordsJoin(String input, String[] res, String adj) {
+  String state = "";
+  for (int x = 0; x < 10000; x++ ) {
+    int rand = round(random(res.length-4))+2;
+
+    if ( res[rand].equals(input) == true) {
+      if (adj.indexOf("\n" + res[rand+1] + "\n") > -1 && adj.indexOf("\n" + res[rand+1] + "\n") == -1) {
+        state = res[rand-1] + " " + res[rand] + " " + res[rand+1];
         break;
       }
     }
