@@ -4,26 +4,31 @@ int combineSize = 50;
 
 void setup()
 {
-  String[] noun = loadStrings("noun.txt");
-  String[] verb = loadStrings("verb.txt");
-  String[] adj = loadStrings("adj.txt");
+
+  String[] vocab = split(join(loadStrings("noun.txt"), "\n") + "::" + join(loadStrings("verb.txt"), "\n") + "::" + join(loadStrings("adj.txt"), "\n") + "::" + join(loadStrings("problem.txt"), "\n") + "::" + join(loadStrings("prep.txt"), "\n"), "::");
+
   String res = join(loadStrings("uber.txt"), "");
   String stream = "";
   for (int h = 0; h < constructionAttempts; h++ ) {
-    String[] test = words(loadStrings("problem.txt")[round(random(loadStrings("problem.txt").length-1))], split(res, " "), join(noun, "\n"));
+    String[] one = split(vocab[round(random(vocab.length-1))], "\n");
+    String[] two = split(vocab[round(random(vocab.length-1))], "\n");
+    String[] three = split(vocab[round(random(vocab.length-1))], "\n");
+    String[] four = split(vocab[round(random(vocab.length-1))], "\n");
+    String[] five = split(vocab[round(random(vocab.length-1))], "\n");
+    String[] test = words(four[round(random(four.length-1))], split(res, " "), join(one, "\n"));
     boolean exit = false;
     if (test.length-1 == 1) {
       if (test[0].length() > 3) {
         for (int h2 = 0; h2 < constructionAttempts && exit == false; h2++ ) {
-          String[] combo1 = wordsMulti( split(test[0], " ")[0], split(res, " "), join(noun, "\n"), join(verb, "\n"));
+          String[] combo1 = wordsMulti( split(test[0], " ")[0], split(res, " "), join(one, "\n"), join(two, "\n"));
           if (combo1.length-1 == 1) {
             if (combo1[0].length() > 3) {
               for (int h3 = 0; h3 < constructionAttempts && exit == false; h3++ ) {
-                String[] combo2 = words(loadStrings("prep.txt")[round(random(loadStrings("prep.txt").length-1))], split(res, " "), join(adj, "\n"));
+                String[] combo2 = words(five[round(random(five.length-1))], split(res, " "), join(three, "\n"));
                 if (combo2.length-1 == 1) {
                   if (combo2[0].length() > 3) {
                     for (int h4 = 0; h4 < constructionAttempts && exit == false; h4++ ) {
-                      String[] combo3 = wordsMulti( split(combo2[0], " ")[split(combo2[0], " ").length-1], split(res, " "), join(noun, "\n"), join(verb, "\n"));
+                      String[] combo3 = wordsMulti( split(combo2[0], " ")[split(combo2[0], " ").length-1], split(res, " "), join(one, "\n"), join(two, "\n"));
                       if (combo3.length-1 == 1) {
                         if (combo3[0].length() > 3) {
                           stream += test[0] + "::" + combo1[0] + " " + combo3[0] + "\n";
@@ -59,12 +64,12 @@ void setup()
   exit();
 }
 
-Boolean perm(String input, String input2, String adj) {
+Boolean perm(String input, String input2, String three) {
   Boolean state = false;
   String[] test = split(input, " ");
   for (int x = 0; x < 10000; x++ ) {
     int rand = round(random(test.length-1));
-    if ( input2.indexOf(test[rand]) > -1 && adj.indexOf("\n" + test[rand] + "\n") > -1) {
+    if ( input2.indexOf(test[rand]) > -1 && three.indexOf("\n" + test[rand] + "\n") > -1) {
       state = true;
       break;
     }
@@ -72,24 +77,24 @@ Boolean perm(String input, String input2, String adj) {
 
   return state;
 }
-String[] wordsMulti(String input2, String[] res, String verb, String noun) {
+String[] wordsMulti(String input2, String[] res, String two, String one) {
   String state = "";
   for (int x = 0; x < 10000; x++ ) {
     int rand = round(random(res.length-10))+4;
     if ( res[rand].equals(input2) == true) {
-      if (verb.indexOf("\n" + res[rand-1] + "\n") > -1) {
+      if (two.indexOf("\n" + res[rand-1] + "\n") > -1) {
         state = res[rand-1] + " " + res[rand];
         break;
       }
-      if (verb.indexOf("\n" + res[rand-2] + "\n") > -1 && verb.indexOf("\n" + res[rand-1] + "\n") == -1) {
+      if (two.indexOf("\n" + res[rand-2] + "\n") > -1 && two.indexOf("\n" + res[rand-1] + "\n") == -1) {
         state = res[rand-2] + " " + res[rand-1] + " " + res[rand];
         break;
       }
-      if (verb.indexOf("\n" + res[rand-3] + "\n") > -1 && verb.indexOf("\n" + res[rand-2] + "\n") == -1 && verb.indexOf("\n" + res[rand-1] + "\n") == -1) {
+      if (two.indexOf("\n" + res[rand-3] + "\n") > -1 && two.indexOf("\n" + res[rand-2] + "\n") == -1 && two.indexOf("\n" + res[rand-1] + "\n") == -1) {
         state =  res[rand-3] + " " + res[rand-2] + " " + res[rand-1] + " " + res[rand];
         break;
       }
-      if (verb.indexOf("\n" + res[rand-3] + "\n") > -1 && verb.indexOf("\n" + res[rand-2] + "\n") == -1 && verb.indexOf("\n" + res[rand-1] + "\n") == -1 && noun.indexOf("\n" + res[rand+1] + "\n") > -1) {
+      if (two.indexOf("\n" + res[rand-3] + "\n") > -1 && two.indexOf("\n" + res[rand-2] + "\n") == -1 && two.indexOf("\n" + res[rand-1] + "\n") == -1 && one.indexOf("\n" + res[rand+1] + "\n") > -1) {
         state =  res[rand-3] + " " + res[rand-2] + " " + res[rand-1] + " " + res[rand] + " " + res[rand+1];
         break;
       }
@@ -103,17 +108,17 @@ String[] wordsMulti(String input2, String[] res, String verb, String noun) {
   }
   return split(state, "::");
 }
-String[] words(String input, String[] res, String noun) {
+String[] words(String input, String[] res, String one) {
   String state = "";
   for (int x = 0; x < 10000; x++ ) {
     int rand = round(random(res.length-5))+2;
 
     if ( res[rand].equals(input) == true) {
-      if (noun.indexOf("\n" + res[rand+1] + "\n") > -1) {
+      if (one.indexOf("\n" + res[rand+1] + "\n") > -1) {
         state = res[rand-1] + " " + res[rand] + " " + res[rand+1];
         break;
       }
-      if (noun.indexOf("\n" + res[rand+1] + "\n") == -1 && noun.indexOf("\n" + res[rand+2] + "\n") > -1) {
+      if (one.indexOf("\n" + res[rand+1] + "\n") == -1 && one.indexOf("\n" + res[rand+2] + "\n") > -1) {
         state = res[rand-1] + " " + res[rand] + " " + res[rand+1] + " " + res[rand+2];
         break;
       }
@@ -127,13 +132,13 @@ String[] words(String input, String[] res, String noun) {
   }
   return split(state, "::");
 }
-String wordsJoin(String input, String[] res, String adj) {
+String wordsJoin(String input, String[] res, String three) {
   String state = "";
   for (int x = 0; x < 10000; x++ ) {
     int rand = round(random(res.length-4))+2;
 
     if ( res[rand].equals(input) == true) {
-      if (adj.indexOf("\n" + res[rand+1] + "\n") > -1 && adj.indexOf("\n" + res[rand+1] + "\n") == -1) {
+      if (three.indexOf("\n" + res[rand+1] + "\n") > -1 && three.indexOf("\n" + res[rand+1] + "\n") == -1) {
         state = res[rand-1] + " " + res[rand] + " " + res[rand+1];
         break;
       }
