@@ -10,11 +10,11 @@ void setup()
   String res = join(loadStrings("uber.txt"), "");
   String stream = "";
   for (int h = 0; h < constructionAttempts; h++ ) {
-    String[] one = split(vocab[round(random(vocab.length-1))], "\n");
-    String[] two = split(vocab[round(random(vocab.length-1))], "\n");
-    String[] three = split(vocab[round(random(vocab.length-1))], "\n");
-    String[] four = split(vocab[round(random(vocab.length-1))], "\n");
-    String[] five = split(vocab[round(random(vocab.length-1))], "\n");
+    String[] one = split(vocab[0], "\n");
+    String[] two = split(vocab[3], "\n");
+    String[] three = split(vocab[1], "\n");
+    String[] four = split(vocab[4], "\n");
+    String[] five = split(vocab[1], "\n");
     String[] test = words(four[round(random(four.length-1))], split(res, " "), join(one, "\n"));
     boolean exit = false;
     if (test.length-1 == 1) {
@@ -32,6 +32,7 @@ void setup()
                       if (combo3.length-1 == 1) {
                         if (combo3[0].length() > 3) {
                           stream += test[0] + "::" + combo1[0] + " " + combo3[0] + "\n";
+
                           exit = true;
                         }
                       }
