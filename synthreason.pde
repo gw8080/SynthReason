@@ -1,7 +1,6 @@
 PrintWriter outputx;
-int constructionAttempts = 50;
+int constructionAttempts = 100;
 int combineSize = 50;
-
 void setup()
 {
   String[] noun = loadStrings("noun.txt");
@@ -32,18 +31,17 @@ void setup()
       }
     }
   }
-
   String[] predicate = split(stream, "\n");
   String combine = "";
   for (int x = 0; x < combineSize; ) {
     String[] test = split(predicate[round(random(predicate.length-1))], "::");
     String[] test2 = split(predicate[round(random(predicate.length-1))], "::");
-    if (test.length-1 == 1 && test2.length-1 == 1) {
-      combine += test[0] + " " + test2[1] + ".\n";
+    String[] test3 = split(predicate[round(random(predicate.length-1))], "::");
+    if (test.length-1 == 1 && test2.length-1 == 1 && test3.length-1 == 1) {
+      combine += test[0] + " " + test2[1] + " " + test3[0]+ ".\n";
       x++;
     }
   }
-
   outputx = createWriter("output.txt");
   outputx.println(combine);
   outputx.close();
