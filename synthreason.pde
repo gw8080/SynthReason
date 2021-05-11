@@ -15,7 +15,7 @@ void setup()
     if (test.length-1 == 1) {
       if (test[0].length() > 3) {
         for (int h2 = 0; h2 < constructionAttempts && exit == false; h2++ ) {
-          String[] combo1 = wordsMulti( split(test[0], " ")[0], split(res, " "), join(noun, "\n"), join(verb, "\n"));
+          String[] combo1 = wordsMulti(loadStrings("problem.txt")[round(random(loadStrings("problem.txt").length-1))], split(res, " "), join(noun, "\n"), join(verb, "\n"));
           if (combo1.length-1 == 1) {
             if (combo1[0].length() > 3) {
               for (int h3 = 0; h3 < constructionAttempts && exit == false; h3++ ) {
