@@ -1,5 +1,5 @@
 PrintWriter outputx;
-int constructionAttempts = 100;
+int constructionAttempts = 200;
 int combineSize = 50;
 
 void setup()
