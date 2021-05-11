@@ -8,19 +8,21 @@ void setup()
   String res = join(loadStrings("uber.txt"), "");
   String stream = "";
   for (int h = 0; h < attempts; h++ ) {
-    String test = words("of", split(res, " "), join(noun, "\n"));
+    String test = words(loadStrings("prep.txt")[round(random(loadStrings("prep.txt").length-1))], split(res, " "), join(noun, "\n"));
     boolean exit = false;
-    for (int h2 = 0; h2 < attempts && exit == false; h2++ ) {
-      String combo1 = wordsMulti( split(test, " ")[0], split(res, " "), join(noun, "\n"), join(verb, "\n"));
-      if (combo1.length() > 3 ) {
-        for (int h3 = 0; h3 < attempts && exit == false; h3++ ) {
-          String combo2 = wordsMulti( split(test, " ")[split(test, " ").length-1], split(res, " "), join(noun, "\n"), join(verb, "\n"));
-          if (combo2.length() > 3 ) {
-            for (int h4 = 0; h4 < attempts && exit == false; h4++ ) {
-              String combo3 = words("is", split(res, " "), join(adj, "\n"));
-              if (combo3.length() > 3 ) {
-                stream += test + ": " + combo1 + " " + combo3  + " " + combo2 + ".\n";
-                exit = true;
+    if (test.length() > 3 ) {
+      for (int h2 = 0; h2 < attempts && exit == false; h2++ ) {
+        String combo1 = wordsMulti( split(test, " ")[0], split(res, " "), join(noun, "\n"), join(verb, "\n"));
+        if (combo1.length() > 3 ) {
+          for (int h3 = 0; h3 < attempts && exit == false; h3++ ) {
+            String combo2 = wordsMulti( split(test, " ")[split(test, " ").length-1], split(res, " "), join(noun, "\n"), join(verb, "\n"));
+            if (combo2.length() > 3 ) {
+              for (int h4 = 0; h4 < attempts && exit == false; h4++ ) {
+                String combo3 = words("is", split(res, " "), join(adj, "\n"));
+                if (combo3.length() > 3 ) {
+                  stream += test + ": " + combo1 + " " + combo3  + " " + combo2 + ".\n";
+                  exit = true;
+                }
               }
             }
           }
