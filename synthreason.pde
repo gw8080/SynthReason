@@ -1,5 +1,7 @@
 PrintWriter outputx;
-int attempts = 50;
+int constructionAttempts = 50;
+int combineSize = 50;
+
 void setup()
 {
   String[] noun = loadStrings("noun.txt");
@@ -7,20 +9,20 @@ void setup()
   String[] adj = loadStrings("adj.txt");
   String res = join(loadStrings("uber.txt"), "");
   String stream = "";
-  for (int h = 0; h < attempts; h++ ) {
+  for (int h = 0; h < constructionAttempts; h++ ) {
     String test = words(loadStrings("prep.txt")[round(random(loadStrings("prep.txt").length-1))], split(res, " "), join(noun, "\n"));
     boolean exit = false;
     if (test.length() > 3 ) {
-      for (int h2 = 0; h2 < attempts && exit == false; h2++ ) {
+      for (int h2 = 0; h2 < constructionAttempts && exit == false; h2++ ) {
         String combo1 = wordsMulti( split(test, " ")[0], split(res, " "), join(noun, "\n"), join(verb, "\n"));
         if (combo1.length() > 3 ) {
-          for (int h3 = 0; h3 < attempts && exit == false; h3++ ) {
+          for (int h3 = 0; h3 < constructionAttempts && exit == false; h3++ ) {
             String combo2 = wordsMulti( split(test, " ")[split(test, " ").length-1], split(res, " "), join(noun, "\n"), join(verb, "\n"));
             if (combo2.length() > 3 ) {
-              for (int h4 = 0; h4 < attempts && exit == false; h4++ ) {
+              for (int h4 = 0; h4 < constructionAttempts && exit == false; h4++ ) {
                 String combo3 = words("is", split(res, " "), join(adj, "\n"));
                 if (combo3.length() > 3 ) {
-                  stream += test + ": " + combo1 + " " + combo3  + " " + combo2 + ".\n";
+                  stream += test + "::" + combo1 + " " + combo3  + " " + combo2 + "\n";
                   exit = true;
                 }
               }
@@ -30,8 +32,20 @@ void setup()
       }
     }
   }
+
+  String[] predicate = split(stream, "\n");
+  String combine = "";
+  for (int x = 0; x < combineSize; ) {
+    String[] test = split(predicate[round(random(predicate.length-1))], "::");
+    String[] test2 = split(predicate[round(random(predicate.length-1))], "::");
+    if (test.length-1 == 1 && test2.length-1 == 1) {
+      combine += test[0] + " " + test2[1] + ".\n";
+      x++;
+    }
+  }
+
   outputx = createWriter("output.txt");
-  outputx.println(stream);
+  outputx.println(combine);
   outputx.close();
   exit();
 }
