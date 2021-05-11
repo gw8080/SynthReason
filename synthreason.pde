@@ -15,18 +15,18 @@ void setup()
     if (test.length-1 == 1) {
       if (test[0].length() > 3) {
         for (int h2 = 0; h2 < constructionAttempts && exit == false; h2++ ) {
-          String[] combo1 = wordsMulti( verb[round(random(verb.length-1))], split(res, " "), join(noun, "\n"), join(verb, "\n"));
+          String[] combo1 = wordsMulti( split(test[0], " ")[0], split(res, " "), join(noun, "\n"), join(verb, "\n"));
           if (combo1.length-1 == 1) {
             if (combo1[0].length() > 3) {
               for (int h3 = 0; h3 < constructionAttempts && exit == false; h3++ ) {
-                String[] combo2 = wordsMulti(verb[round(random(verb.length-1))], split(res, " "), join(noun, "\n"), join(verb, "\n"));
+                String[] combo2 = words(loadStrings("prep.txt")[round(random(loadStrings("prep.txt").length-1))], split(res, " "), join(adj, "\n"));
                 if (combo2.length-1 == 1) {
                   if (combo2[0].length() > 3) {
                     for (int h4 = 0; h4 < constructionAttempts && exit == false; h4++ ) {
-                      String[] combo3 = words(loadStrings("prep.txt")[round(random(loadStrings("prep.txt").length-1))], split(res, " "), join(adj, "\n"));
+                      String[] combo3 = wordsMulti( split(combo2[0], " ")[split(combo2[0], " ").length-1], split(res, " "), join(noun, "\n"), join(verb, "\n"));
                       if (combo3.length-1 == 1) {
                         if (combo3[0].length() > 3) {
-                          stream += test[0] + "::" + combo1[0] + " " + combo3[0]  + " " + combo2[0] + "\n";
+                          stream += test[0] + "::" + combo1[0] + " " + combo3[0] + "\n";
                           exit = true;
                         }
                       }
