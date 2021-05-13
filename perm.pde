@@ -30,8 +30,8 @@ void setup()
         }
         if (currentState.length() > 2) {
           x++;
-          outputx.println(function[0] + "->" + currentState);
-          stream += function[0] + "->" + currentState + "\n";
+          outputx.println(function[0] + ";" + currentState);
+          stream += function[0] + ";" + currentState + "\n";
           outputx.flush();
         }
         if (retry >= retryLimit) {
