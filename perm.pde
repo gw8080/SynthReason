@@ -10,7 +10,8 @@ void setup()
   String XS = join(loadStrings("noun.txt"), "\n");
   String XA = join(loadStrings("verb.txt"), "\n");
   int retry = 0;
-  String stateChange = "", currentState = "", function = "", simulationData = "";
+  String stateChange = "", currentState = "", simulationData = "", stream = "";
+  String[] function =new String[1];
   outputx = createWriter("output.txt");
   for (int x = 0; x < iterations; ) {
     if (x == 0) {
@@ -21,22 +22,25 @@ void setup()
     simulationData = permission(split(res, " "), split(res2, " "), XA, XS);
     if (simulationData.indexOf("\n") > -1) {
       function = selectFunction(simulationData, currentState);
-      currentState = function;
-      if (currentState.equals("") == true) {
-        simulationData = permission(split(res, " "), split(res2, " "), XA, XS);
-        retry++;
-      }
-      if (currentState.length() > 2) {
-        x++;
-        outputx.println(currentState);
-        outputx.flush();
-      }
-      if (retry >= retryLimit) {
-        stateChange = permission(split(res, " "), split(res2, " "), XA, XS);
-        currentState = split(split(split(stateChange, "\n")[round(random(split(stateChange, "\n").length-1))], ":")[1], "->")[0];
-        function = selectFunction(stateChange, currentState);
-        outputx.println("[done]");
-        retry = 0;
+      if (function.length-1 == 1) {
+        currentState = function[1];
+        if (currentState.equals("") == true) {
+          simulationData = permission(split(res, " "), split(res2, " "), XA, XS);
+          retry++;
+        }
+        if (currentState.length() > 2) {
+          x++;
+          outputx.println(function[0] + "->" + currentState);
+          stream += function[0] + "->" + currentState + "\n";
+          outputx.flush();
+        }
+        if (retry >= retryLimit) {
+          stateChange = permission(split(res, " "), split(res2, " "), XA, XS);
+          currentState = split(split(split(stateChange, "\n")[round(random(split(stateChange, "\n").length-1))], ":")[1], "->")[0];
+          function = selectFunction(stateChange, currentState);
+          outputx.println("[done]");
+          retry = 0;
+        }
       }
     }
   }
@@ -44,19 +48,18 @@ void setup()
   outputx.close();
   exit();
 }
-String selectFunction(String simulationData, String currentState) {
-
+String[] selectFunction(String simulationData, String currentState) {
   String state = "";
   for (int x = 0; x < functionChances; x++) {
     int match = round(random(split(simulationData, "\n").length-1));
     if (split(simulationData, "\n")[match].indexOf(":") > -1 && split(simulationData, "\n")[match].indexOf("->") > -1) {
       if (split(split(split(simulationData, "\n")[match], ":")[1], "->")[0].equals(currentState) == true) {
-        state = split(split(split(simulationData, "\n")[match], ":")[1], "->")[1];
+        state = split(split(simulationData, "\n")[match], ":")[0] + ":" + split(split(split(simulationData, "\n")[match], ":")[1], "->")[1];
         break;
       }
     }
   }
-  return state;
+  return split(state, ":");
 }
 String permission(String[] res, String[] res2, String objects, String transitions) {
   String state = "";
