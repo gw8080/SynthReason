@@ -44,25 +44,6 @@ String selectFunction(String simulationData, String currentState) {
   }
   return state;
 }
-String[] workingMemory(String res, String res2, String function) {
-  String[] resA = split(res, ".");
-  String[] res2A = split(res2, ".");
-  String mem = "";
-  for (int x = 0; x < resA.length-1; x++) {
-    if (resA[x].indexOf(function) > -1) {
-      mem += resA[x] + ".";
-    }
-  }
-  mem += ":::::";
-  for (int x = 0; x < res2A.length-1; x++) {
-    if (res2A[x].indexOf(function) > -1) {
-      mem += res2A[x] + ".";
-    }
-  }
-  String[] state = split(mem, ":::::");
-  return state;
-}
-
 String permission(String[] res, String[] res2, String objects, String transitions) {
   String state = "";
   for (int x = 0; x < realityConstructionAttempts; ) {
