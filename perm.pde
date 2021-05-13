@@ -1,35 +1,44 @@
 PrintWriter outputx;
-int realityConstructionAttempts = 20000;
+int realityConstructionAttempts = 100;
 int functionChances = 10000;
-int iterations = 5;
-
+int iterations = 10;
+int retryLimit = 5;
 void setup()
 {
   String res = join(loadStrings("exp.txt"), "").replace(".", "").replace(":", "");
   String res2 = join(loadStrings("uber.txt"), "").replace(".", "").replace(":", "");
   String XS = join(loadStrings("noun.txt"), "\n");
   String XA = join(loadStrings("verb.txt"), "\n");
-  String stateChange = "", currentState = "", function = "";
+  int retry = 0;
+  String stateChange = "", currentState = "", function = "",simulationData = "";
   outputx = createWriter("output.txt");
   for (int x = 0; x < iterations; ) {
     if (x == 0) {
-      stateChange = permission(split(res, " "), split(res2, " "), XA, XS);
-      currentState = split(split(split(stateChange, "\n")[round(random(split(stateChange, "\n").length-1))], ":")[1], "->")[0];
-      function = selectFunction(stateChange, currentState);
+      simulationData = permission(split(res, " "), split(res2, " "), XA, XS);
+      currentState = split(split(split(simulationData, "\n")[round(random(split(simulationData, "\n").length-1))], ":")[1], "->")[0];
+      function = selectFunction(simulationData, currentState);
     }
-    String simulationData = permission(split(res, " "), split(res2, " "), XA, XS);
+    simulationData = permission(split(res, " "), split(res2, " "), XA, XS);
     if (simulationData.indexOf("\n") > -1) {
-      x++;
       function = selectFunction(simulationData, currentState);
       currentState = function;
       if (currentState.equals("") == true) {
+        simulationData = permission(split(res, " "), split(res2, " "), XA, XS);
+        retry++;
+      }
+      if (currentState.length() > 2) {
+        x++;
+        outputx.println(currentState);
+        outputx.flush();
+      }
+      if (retry > retryLimit) {
         stateChange = permission(split(res, " "), split(res2, " "), XA, XS);
         currentState = split(split(split(stateChange, "\n")[round(random(split(stateChange, "\n").length-1))], ":")[1], "->")[0];
         function = selectFunction(stateChange, currentState);
         outputx.println("[done]");
+        retry = 0;
       }
-      outputx.println(currentState);
-      outputx.flush();
+      
     }
   }
   outputx.println("[done]");
