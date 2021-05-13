@@ -1,8 +1,8 @@
 PrintWriter outputx;
-int realityConstructionAttempts = 20000;
+int realityConstructionAttempts = 5000;
 int functionChances = 10000;
 int iterations = 10;
-int retryLimit = 5;
+int retryLimit = 4;
 void setup()
 {
   String res = join(loadStrings("exp.txt"), "").replace(".", "").replace(":", "");
@@ -31,7 +31,7 @@ void setup()
         outputx.println(currentState);
         outputx.flush();
       }
-      if (retry > retryLimit) {
+      if (retry >= retryLimit) {
         stateChange = permission(split(res, " "), split(res2, " "), XA, XS);
         currentState = split(split(split(stateChange, "\n")[round(random(split(stateChange, "\n").length-1))], ":")[1], "->")[0];
         function = selectFunction(stateChange, currentState);
