@@ -1,5 +1,5 @@
 PrintWriter outputx;
-int realityConstructionAttempts = 100;
+int realityConstructionAttempts = 20000;
 int functionChances = 10000;
 int iterations = 10;
 int retryLimit = 5;
@@ -10,7 +10,7 @@ void setup()
   String XS = join(loadStrings("noun.txt"), "\n");
   String XA = join(loadStrings("verb.txt"), "\n");
   int retry = 0;
-  String stateChange = "", currentState = "", function = "",simulationData = "";
+  String stateChange = "", currentState = "", function = "", simulationData = "";
   outputx = createWriter("output.txt");
   for (int x = 0; x < iterations; ) {
     if (x == 0) {
@@ -38,7 +38,6 @@ void setup()
         outputx.println("[done]");
         retry = 0;
       }
-      
     }
   }
   outputx.println("[done]");
