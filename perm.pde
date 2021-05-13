@@ -1,7 +1,7 @@
 PrintWriter outputx;
 int realityConstructionAttempts = 20000;
 int functionChances = 10000;
-int iterations = 3;
+int iterations = 5;
 
 void setup()
 {
@@ -22,6 +22,12 @@ void setup()
       x++;
       function = selectFunction(simulationData, currentState);
       currentState = function;
+      if (currentState.equals("") == true) {
+        stateChange = permission(split(res, " "), split(res2, " "), XA, XS);
+        currentState = split(split(split(stateChange, "\n")[round(random(split(stateChange, "\n").length-1))], ":")[1], "->")[0];
+        function = selectFunction(stateChange, currentState);
+        outputx.println("[done]");
+      }
       outputx.println(currentState);
       outputx.flush();
     }
