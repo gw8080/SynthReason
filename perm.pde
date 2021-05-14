@@ -1,7 +1,7 @@
 PrintWriter outputx;
 int realityConstructionAttempts = 5000;
 int functionChances = 10000;
-int iterations = 10;
+int iterations = 20;
 int retryLimit = 4;
 void setup()
 {
@@ -30,8 +30,8 @@ void setup()
         }
         if (currentState.length() > 2) {
           x++;
-          outputx.println(function[0] + ";" + currentState);
-          stream += function[0] + ";" + currentState + "\n";
+          outputx.println( "the " + currentState + " of " + function[0] + ".");
+          stream +=  "the " + currentState + " of " + function[0] + ".\n";
           outputx.flush();
         }
         if (retry >= retryLimit) {
