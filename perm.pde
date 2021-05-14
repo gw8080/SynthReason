@@ -22,7 +22,7 @@ void setup()
     simulationData = permission(split(res, " "), split(res2, " "), XA, XS);
     if (simulationData.indexOf("\n") > -1) {
       function = selectFunction(simulationData, currentState);
-      if (function.length-1 == 1) {
+      if (function.length-1 == 2) {
         currentState = function[1];
         if (currentState.equals("") == true) {
           simulationData = permission(split(res, " "), split(res2, " "), XA, XS);
@@ -30,8 +30,8 @@ void setup()
         }
         if (currentState.length() > 2) {
           x++;
-          outputx.println( "the " + currentState + " of " + function[0] + ".");
-          stream +=  "the " + currentState + " of " + function[0] + ".\n";
+          outputx.println(function[0] + " " + currentState + " of "+ function[2] + ".");
+          stream +=  function[0] + " " + currentState + " of "+ function[2] + ".\n";
           outputx.flush();
         }
         if (retry >= retryLimit) {
@@ -53,8 +53,8 @@ String[] selectFunction(String simulationData, String currentState) {
   for (int x = 0; x < functionChances; x++) {
     int match = round(random(split(simulationData, "\n").length-1));
     if (split(simulationData, "\n")[match].indexOf(":") > -1 && split(simulationData, "\n")[match].indexOf("->") > -1) {
-      if (split(split(split(simulationData, "\n")[match], ":")[1], "->")[0].equals(currentState) == true) {
-        state = split(split(simulationData, "\n")[match], ":")[0] + ":" + split(split(split(simulationData, "\n")[match], ":")[1], "->")[1];
+      if (split(split(split(simulationData, "\n")[match], ":")[1], "->")[0].equals(currentState) == true && split(split(split(simulationData, "\n")[match], ":")[1], "->")[1].length() > 3) {
+        state = split(split(simulationData, "\n")[match], ":")[0] + ":" + split(split(split(simulationData, "\n")[match], ":")[1], "->")[1] + ":" + split(split(split(simulationData, "\n")[match], ":")[1], "->")[0];
         break;
       }
     }
