@@ -2,16 +2,16 @@ String mode = "nlp";// "sim" = generate simulation, will overwrite current menta
 //NLP parameters
 PrintWriter vocabx;
 PrintWriter outputx;
-int NLPconstructionAttempts = 200;
-int combineSize = 50;
+int NLPconstructionAttempts = 400;
+int combineSize = 100;
 //simulation parameters
 PrintWriter status;
 int realityConstructionAttempts = 5000;
 int functionChances = 10000;
 int iterations = 20;
 int retryLimit = 4;
-String realityResource = "exp.txt";
-String realityResource2 = "uber.txt";
+String mentalResource = "exp.txt";
+String mentalResource2 = "uber.txt";
 String NLP_Resource = "uber.txt";
 String sim_Resource = "sim.txt";
 void setup()
@@ -89,8 +89,8 @@ void setup()
 }
 String createSimulation()
 {
-  String res = join(loadStrings(realityResource), "").replace(".", "").replace(":", "");
-  String res2 = join(loadStrings(realityResource2), "").replace(".", "").replace(":", "");
+  String res = join(loadStrings(mentalResource), "").replace(".", "").replace(":", "");
+  String res2 = join(loadStrings(mentalResource2), "").replace(".", "").replace(":", "");
   String XS = join(loadStrings("noun.txt"), "\n");
   String XA = join(loadStrings("verb.txt"), "\n");
   int retry = 0;
