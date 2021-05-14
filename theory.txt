@@ -1,2 +1,0 @@
-Working on this.
-Create a statement of a concept by explicitly requesting the semantics relating to the substance(s) in question, contents and components of the concept. then find suitable NLP patterns to show what it understands using the structured data and logical connectives, to explain the concept and make a statement.
