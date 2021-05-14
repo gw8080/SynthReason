@@ -115,7 +115,7 @@ String createSimulation()
         if (currentState.length() > 2) {
           x++;
           status.println(function[0] + " " + currentState + " of "+ function[2] + ".");
-          stream += currentState + "\n "+ function[2] + "\n";
+          stream += currentState + "\n" + function[2] + "\n";
           status.flush();
         }
         if (retry >= retryLimit) {
