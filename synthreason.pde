@@ -1,4 +1,4 @@
-String mode = "sim";// "sim" = generate simulation, will overwrite current mental simulation. "nlp" = generate natural language using mental simulation data. Generate mental simulation first!
+String mode = "nlp";// "sim" = generate simulation, will overwrite current mental simulation. "nlp" = generate natural language using mental simulation data. Generate mental simulation first!
 //NLP parameters
 PrintWriter vocabx;
 PrintWriter outputx;
