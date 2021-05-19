@@ -96,7 +96,7 @@ void setup()
           int randCat = round(random(cat.length-2));
           boolean exit = false;
           for (int h2 = 0; h2 < NLPconstructionAttempts && exit == false; h2++ ) {
-            String combo1 = words(vocab[round(random(split(vocab[int(split(cat[randCat], ",")[2])], "\n").length-1))], split(res, " "), vocab[int(split(cat[randCat], ",")[0])]);
+            String combo1 = words(split(simulationData, "\n")[h], split(res, " "), vocab[int(split(cat[randCat], ",")[0])]);
             if (combo1.length() > 3) {
               if (h < NLPconstructionAttempts) {
                 h++;
@@ -108,7 +108,7 @@ void setup()
                     h++;
                   }
                   for (int h4 = 0; h4 < NLPconstructionAttempts && exit == false; h4++ ) {
-                    String combo3 = words(vocab[round(random(split(vocab[int(split(cat[randCat], ",")[2])], "\n").length-1))], split(res, " "), vocab[int(split(cat[randCat], ",")[3])]);
+                    String combo3 = words(vocab[int(split(cat[randCat], ",")[2])], split(res, " "), vocab[int(split(cat[randCat], ",")[3])]);
                     if (combo3.length() > 3) {
                       if (h < NLPconstructionAttempts) {
                         h++;
