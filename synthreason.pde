@@ -2,24 +2,24 @@ String mode = "nlp";// "sim" = generate simulation, will overwrite current menta
 //NLP parameters
 PrintWriter vocabx;
 PrintWriter outputx;
-int NLPconstructionAttempts = 1800;
-int mainLoops = 10;
+int mainLoops = 3;
 String NLPFunction = "recall";// "generate" or "recall" NLP structures.
-String ruleList = "0,3,1,4,1:4,4,1,1,1:2,2,2,4,3:1,1,4,1,3:4,2,0,3,0:2,2,2,3,0:"; // custom rulelist for NLP structure
+String ruleList = "0,1,4,4,3:3,1,3,2,4:2,1,2,4,0:2,3,4,1,2:1,1,2,2,3:2,2,1,2,4:2,3,3,2,0:2,1,2,1,1:2,4,4,1,2:"; // custom rulelist for NLP structure
 //simulation parameters
 PrintWriter status;
 int realityConstructionAttempts = 5000;
 int functionChances = 10000;
-int iterations = 20;
+int iterations = 50;
 int retryLimit = 4;
 String mentalResource = "exp.txt";
 String mentalResource2 = "uber.txt";
-String NLP_Resource = "uber.txt";
+String NLP_Resource = "merged.txt";
 String sim_Resource = "sim.txt";
 
 
 void setup()
 {
+  String stream = "";
   String simulationData = join(loadStrings(sim_Resource), "\n");
   if (mode.equals("sim") == true) {
     simulationData = createSimulation();
@@ -31,74 +31,102 @@ void setup()
     int n = 0;
     String[] vocab = split(join(loadStrings("noun.txt"), "\n") + "::" + join(loadStrings("verb.txt"), "\n") + "::" + join(loadStrings("adj.txt"), "\n") + "::" + join(loadStrings("problem.txt"), "\n") + "::" + join(loadStrings("prep.txt"), "\n"), "::");
     String res = join(loadStrings(NLP_Resource), "");
-    String stream = "";
-
-    String[] one = split(vocab[0], "\n"), two = split(vocab[0], "\n"), three = split(vocab[0], "\n"), four = split(vocab[0], "\n"), five = split(vocab[0], "\n");
     int G1 = 0, G2 = 0, G3 = 0, G4 = 0, G5 = 0;
-    NLPconstructionAttempts = loadStrings("sim.txt").length-1;
-
+    int NLPconstructionAttempts = loadStrings("sim.txt").length-1;
     for (int q = 0; q < mainLoops; q++ ) {
       for (int h = 0; h < NLPconstructionAttempts; ) {
+        if (n > retryLimit) {
+          h++;
+          n = 0;
+        }
+        n++;
         if (NLPFunction.equals("generate") == true) {
           G1 = round(random(vocab.length-1));
           G2 = round(random(vocab.length-1));
           G3 = round(random(vocab.length-1));
           G4 = round(random(vocab.length-1));
           G5 = round(random(vocab.length-1));
-          one = split(vocab[G1], "\n");
-          two = split(vocab[G2], "\n");
-          three = split(vocab[G3], "\n");
-          four = split(vocab[G4], "\n");
-          five = split(vocab[G5], "\n");
-        }
-        if (NLPFunction.equals("recall") == true) {
-          String[] cat = split(ruleList, ":");
-          int randCat = round(random(cat.length-2));
-          G1 = int(split(cat[randCat], ",")[0]);
-          G2 = int(split(cat[randCat], ",")[1]);
-          G3 = int(split(cat[randCat], ",")[2]);
-          G4 = int(split(cat[randCat], ",")[3]);
-          G5 = int(split(cat[randCat], ",")[4]);
-          one = split(vocab[G1], "\n");
-          two = split(vocab[G2], "\n");
-          three = split(vocab[G3], "\n");
-          four = split(vocab[G4], "\n");
-          five = split(vocab[G5], "\n");
-        }
-        String[] test = words( split(simulationData, "\n")[h], split(res, " "), join(one, "\n"));
-        boolean exit = false;
-        if (n > retryLimit) {
-          h++;
-        }
-        n++;
-        if (test.length-1 == 1) {
-          if (test[0].length() > 3) {
-            if (h < NLPconstructionAttempts) {
-              h++;
-            }
-            for (int h2 = 0; h2 < NLPconstructionAttempts && exit == false; h2++ ) {
-              String[] combo1 = wordsMulti(  split(simulationData, "\n")[h], split(res, " "), join(one, "\n"), join(two, "\n"));
-              if (combo1.length-1 == 1) {
-                if (combo1[0].length() > 3) {
-                  for (int h3 = 0; h3 < NLPconstructionAttempts && exit == false; h3++ ) {
-                    String[] combo2 = words(five[round(random(five.length-1))], split(res, " "), join(three, "\n"));
-                    if (combo2.length-1 == 1) {
-                      if (combo2[0].length() > 3) {
-                        if (h < NLPconstructionAttempts) {
-                          h++;
-                        }
-                        for (int h4 = 0; h4 < NLPconstructionAttempts && exit == false; h4++ ) {
-                          String[] combo3 = wordsMulti( split(simulationData, "\n")[h], split(res, " "), join(one, "\n"), join(two, "\n"));
-                          if (combo3.length-1 == 1) {
-                            if (combo3[0].length() > 3) {
+          boolean exit = false;
+          for (int h2 = 0; h2 < NLPconstructionAttempts && exit == false; h2++ ) {
+            String combo1 = wordsMulti( split(simulationData, "\n")[h], split(res, " "), vocab[G1]);
+            if (combo1.length() > 3) {
+              if (h < NLPconstructionAttempts) {
+                h++;
+              }
+              for (int h3 = 0; h3 < NLPconstructionAttempts && exit == false; h3++ ) {
+                String combo2 = wordsMulti( split(simulationData, "\n")[h], split(res, " "), vocab[G2]);
+                if (combo2.length() > 3) {
+                  if (h < NLPconstructionAttempts) {
+                    h++;
+                  }
+                  for (int h4 = 0; h4 < NLPconstructionAttempts && exit == false; h4++ ) {
+                    String combo3 = wordsMulti( split(simulationData, "\n")[h], split(res, " "), vocab[G3]);
+                    if (combo3.length() > 3) {
+                      if (h < NLPconstructionAttempts) {
+                        h++;
+                      }
+                      for (int h5 = 0; h5 < NLPconstructionAttempts && exit == false; h5++ ) {
+                        String combo4 = wordsMulti( split(simulationData, "\n")[h], split(res, " "), vocab[G4]);
+                        if (combo4.length() > 3) {
+                          if (h < NLPconstructionAttempts) {
+                            h++;
+                          }
+                          for (int h6 = 0; h6 < NLPconstructionAttempts && exit == false; h6++ ) {
+                            String combo5 = wordsMulti( split(simulationData, "\n")[h], split(res, " "), vocab[G5]);
+                            if (combo5.length() > 3) {
                               if (h < NLPconstructionAttempts) {
                                 h++;
                               }
-                              stream += test[0] + " " + combo1[0] + " " + combo2[0] + " " +  combo3[0];
-                              if (NLPFunction.equals("generate") == true) {
-                                stream += " " + G1 + "," + G2 + "," + G3 + "," + G4 + "," + G5 + ":";
+                              stream += combo1 + " " + combo2 + " " + combo3 + " " +combo4 + " " +combo5 + " " + G1 + "," + G2 + "," + G3 + "," + G4 + "," + G5 + ":\n";
+                              exit = true;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+
+        if (NLPFunction.equals("recall") == true) {
+          String[] cat = split(ruleList, ":");
+          int randCat = round(random(cat.length-2));
+          boolean exit = false;
+          for (int h2 = 0; h2 < NLPconstructionAttempts && exit == false; h2++ ) {
+            String combo1 = wordsMulti( split(simulationData, "\n")[h], split(res, " "), vocab[int(split(cat[randCat], ",")[0])]);
+            if (combo1.length() > 3) {
+              if (h < NLPconstructionAttempts) {
+                h++;
+              }
+              for (int h3 = 0; h3 < NLPconstructionAttempts && exit == false; h3++ ) {
+                String combo2 = wordsMulti( split(simulationData, "\n")[h], split(res, " "), vocab[int(split(cat[randCat], ",")[1])]);
+                if (combo2.length() > 3) {
+                  if (h < NLPconstructionAttempts) {
+                    h++;
+                  }
+                  for (int h4 = 0; h4 < NLPconstructionAttempts && exit == false; h4++ ) {
+                    String combo3 = wordsMulti( split(simulationData, "\n")[h], split(res, " "), vocab[int(split(cat[randCat], ",")[2])]);
+                    if (combo3.length() > 3) {
+                      if (h < NLPconstructionAttempts) {
+                        h++;
+                      }
+                      for (int h5 = 0; h5 < NLPconstructionAttempts && exit == false; h5++ ) {
+                        String combo4 = wordsMulti( split(simulationData, "\n")[h], split(res, " "), vocab[int(split(cat[randCat], ",")[3])]);
+                        if (combo4.length() > 3) {
+                          if (h < NLPconstructionAttempts) {
+                            h++;
+                          }
+                          for (int h6 = 0; h6 < NLPconstructionAttempts && exit == false; h6++ ) {
+                            String combo5 = wordsMulti( split(simulationData, "\n")[h], split(res, " "), vocab[int(split(cat[randCat], ",")[4])]);
+                            if (combo5.length() > 3) {
+                              if (h < NLPconstructionAttempts) {
+                                h++;
                               }
-                              stream += "\n";
+                              stream += combo1 + " " + combo2 + " " + combo3 + " " +combo4 + " " +combo5 + ".\n";
                               exit = true;
                             }
                           }
@@ -113,10 +141,11 @@ void setup()
         }
       }
     }
-    outputx = createWriter("output.txt");
-    outputx.println(stream);
-    outputx.close();
   }
+
+  outputx = createWriter("output.txt");
+  outputx.println(stream);
+  outputx.close();
   exit();
 }
 String createSimulation()
@@ -208,57 +237,28 @@ String permission(String[] res, String[] res2, String objects, String transition
   }
   return state;
 }
-String[] wordsMulti(String input2, String[] res, String two, String one) {
+String wordsMulti(String input2, String[] res, String str) {
   String state = "";
   for (int x = 0; x < 10000; x++ ) {
     int rand = round(random(res.length-10))+4;
     if ( res[rand].equals(input2) == true) {
-      if (two.indexOf("\n" + res[rand-1] + "\n") > -1) {
+      if (str.indexOf("\n" + res[rand-1] + "\n") > -1) {
         state = res[rand-1] + " " + res[rand];
         break;
       }
-      if (two.indexOf("\n" + res[rand-2] + "\n") > -1 && two.indexOf("\n" + res[rand-1] + "\n") == -1) {
+      if (str.indexOf("\n" + res[rand-2] + "\n") > -1 && str.indexOf("\n" + res[rand-1] + "\n") == -1) {
         state = res[rand-2] + " " + res[rand-1] + " " + res[rand];
         break;
       }
-      if (two.indexOf("\n" + res[rand-3] + "\n") > -1 && two.indexOf("\n" + res[rand-2] + "\n") == -1 && two.indexOf("\n" + res[rand-1] + "\n") == -1) {
+      if (str.indexOf("\n" + res[rand-3] + "\n") > -1 && str.indexOf("\n" + res[rand-2] + "\n") == -1 && str.indexOf("\n" + res[rand-1] + "\n") == -1) {
         state =  res[rand-3] + " " + res[rand-2] + " " + res[rand-1] + " " + res[rand];
         break;
       }
-      if (two.indexOf("\n" + res[rand-3] + "\n") > -1 && two.indexOf("\n" + res[rand-2] + "\n") == -1 && two.indexOf("\n" + res[rand-1] + "\n") == -1 && one.indexOf("\n" + res[rand+1] + "\n") > -1) {
+      if (str.indexOf("\n" + res[rand-3] + "\n") > -1 && str.indexOf("\n" + res[rand-2] + "\n") == -1 && str.indexOf("\n" + res[rand-1] + "\n") == -1 && str.indexOf("\n" + res[rand+1] + "\n") > -1) {
         state =  res[rand-3] + " " + res[rand-2] + " " + res[rand-1] + " " + res[rand] + " " + res[rand+1];
         break;
       }
     }
   }
-  String[] ex = split(join(res, " "), ".");
-  for (int x = 0; x < ex.length-1; x++) {
-    if (ex[x].indexOf(state) > -1) {
-      state += "::" + ex[x];
-    }
-  }
-  return split(state, "::");
-}
-String[] words(String input, String[] res, String one) {
-  String state = "";
-  for (int x = 0; x < 10000; x++ ) {
-    int rand = round(random(res.length-5))+2;
-    if ( res[rand].equals(input) == true) {
-      if (one.indexOf("\n" + res[rand+1] + "\n") > -1) {
-        state = res[rand-1] + " " + res[rand] + " " + res[rand+1];
-        break;
-      }
-      if (one.indexOf("\n" + res[rand+1] + "\n") == -1 && one.indexOf("\n" + res[rand+2] + "\n") > -1) {
-        state = res[rand-1] + " " + res[rand] + " " + res[rand+1] + " " + res[rand+2];
-        break;
-      }
-    }
-  }
-  String[] ex = split(join(res, " "), ".");
-  for (int x = 0; x < ex.length-1; x++) {
-    if (ex[x].indexOf(state) > -1) {
-      state += "::" + ex[x];
-    }
-  }
-  return split(state, "::");
+  return state;
 }
