@@ -1,4 +1,4 @@
-String mode = "nlp";// "nlp" = generate simulation, will overwrite current mental simulation. "nlp" = generate natural language using mental simulation data. Generate mental simulation first!
+String mode = "nlp";// "sim" = generate simulation, will overwrite current mental simulation. "nlp" = generate natural language using mental simulation data. Generate mental simulation first!
 //NLP parameters
 PrintWriter vocabx;
 PrintWriter outputx;
@@ -13,7 +13,7 @@ int iterations = 50;
 int retryLimit = 4;
 String mentalResource = "exp.txt";
 String mentalResource2 = "uber.txt";
-String NLP_Resource = "uber.txt";
+String NLP_Resource = "merged.txt";
 String sim_Resource = "sim.txt";
 void setup()
 {
