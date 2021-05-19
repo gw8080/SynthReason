@@ -3,8 +3,8 @@ String mode = "nlp";// "nlp" = generate simulation, will overwrite current menta
 PrintWriter vocabx;
 PrintWriter outputx;
 int mainLoops = 3;
-String NLPFunction = "recall";// "generate" or "recall" NLP structures.
-String ruleList = "3,2,0,1,1,4,1,1:3,2,3,1,3,4,2,2:2,1,3,2,2,1,3,0:3,2,4,1,1,3,3,3:1,3,0,3,3,4,4,2:1,2,1,3,3,4,3,2:2,1,2,3,1,3,2,4:2,2,2,1,1,1,2,1:2,0,2,3,4,4,1,0:"; // custom rulelist for NLP structure
+String NLPFunction = "generate";// "generate" or "recall" NLP structures.
+String ruleList = ""; // custom rulelist for NLP structure
 //simulation parameters
 PrintWriter status;
 int realityConstructionAttempts = 5000;
@@ -108,7 +108,7 @@ void setup()
                     h++;
                   }
                   for (int h4 = 0; h4 < NLPconstructionAttempts && exit == false; h4++ ) {
-                    String combo3 = words(vocab[int(split(cat[randCat], ",")[2])], split(res, " "), vocab[int(split(cat[randCat], ",")[3])]);
+                    String combo3 = words(split(simulationData, "\n")[h], split(res, " "), vocab[int(split(cat[randCat], ",")[3])]);
                     if (combo3.length() > 3) {
                       if (h < NLPconstructionAttempts) {
                         h++;
