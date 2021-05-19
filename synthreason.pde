@@ -78,11 +78,11 @@ void setup()
             }
             for (int h2 = 0; h2 < NLPconstructionAttempts && exit == false; h2++ ) {
               String[] combo1 = wordsMulti(  split(simulationData, "\n")[h], split(res, " "), join(one, "\n"), join(two, "\n"));
-              if (combo1.length-1 == 1 && perm(combo1[1], join(loadStrings("problem.txt"), "\n")) == true) {
+              if (combo1.length-1 == 1) {
                 if (combo1[0].length() > 3) {
                   for (int h3 = 0; h3 < NLPconstructionAttempts && exit == false; h3++ ) {
                     String[] combo2 = words(five[round(random(five.length-1))], split(res, " "), join(three, "\n"));
-                    if (combo2.length-1 == 1 && perm(combo2[1], simulationData) == true) {
+                    if (combo2.length-1 == 1) {
                       if (combo2[0].length() > 3) {
                         if (h < NLPconstructionAttempts) {
                           h++;
@@ -204,33 +204,6 @@ String permission(String[] res, String[] res2, String objects, String transition
           x++;
         }
       }
-    }
-  }
-  return state;
-}
-String perm2(String[] input, String[] resNew, String objects) {
-  for (int x = 0; x < 100; ) {
-    int rand = round(random(input.length-2));
-    int rand2 = round(random(resNew.length-2));
-    //  && 
-    if (input[rand].equals(resNew[rand2]) == true ) {
-      if (objects.indexOf("\n" + input[rand] + "\n") > -1 && objects.indexOf("\n" + resNew[rand] + "\n") > -1) {
-        input[rand+1] = resNew[rand+1] +"!";
-        x++;
-      }
-    }
-  }
-  String state = join(input, " ");
-  return state;
-}
-Boolean perm(String input, String objects) {
-  Boolean state = false;
-  String[] test = split(input, " ");
-  for (int x = 0; x < 10000; x++ ) {
-    int rand = round(random(test.length-1));
-    if (objects.indexOf("\n" + test[rand] + "\n") > -1) {
-      state = true;
-      break;
     }
   }
   return state;
