@@ -13,7 +13,7 @@ int iterations = 50;
 int retryLimit = 4;
 String mentalResource = "exp.txt";
 String mentalResource2 = "uber.txt";
-String NLP_Resource = "merged.txt";
+String NLP_Resource = "uber.txt";
 String sim_Resource = "sim.txt";
 
 
