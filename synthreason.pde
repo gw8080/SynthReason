@@ -2,14 +2,14 @@ String mode = "nlp";// "sim" = generate simulation, will overwrite current menta
 //NLP parameters
 PrintWriter vocabx;
 PrintWriter outputx;
-int mainLoops = 3;
+int mainLoops = 10;
 String NLPFunction = "recall";// "generate" or "recall" NLP structures.
-String ruleList = "1,0,4,3,1,3,4,1:1,2,4,3,3,0,2,2:2,0,0,4,1,3,3,3:0,1,4,1,3,2,1,2:2,3,3,0,3,2,2,4:1,3,1,4,1,1,1,2:0,1,1,4,3,3,3,2:2,4,3,0,4,1,2,1:2,3,0,0,2,3,2,1:1,4,3,2,2,2,4,1:"; // custom rulelist for NLP structure
+String ruleList = "1,2,1,4,3,0,2,2:2,3,4,2,3,3,0,2:1,3,3,2,1,4,0,1:1,2,0,3,2,2,0,4:3,2,1,3,3,3,4,1:0,2,1,2,4,3,3,2:2,4,0,1,3,4,2,0:1,1,3,2,1,3,3,3:2,3,2,0,3,3,3,2:3,2,3,3,0,0,1,0:4,2,2,1,4,1,2,3:1,2,0,0,4,3,2,1:3,4,2,2,3,2,1,1:4,3,2,0,2,2,2,1:2,3,0,3,1,1,1,2:3,0,3,1,4,3,3,4:4,3,4,3,2,1,2,2:3,0,3,3,0,3,4,3:3,3,0,1,2,2,1,1:1,2,1,3,3,4,3,2:"; // custom rulelist for NLP structure
 //simulation parameters
 PrintWriter status;
 int realityConstructionAttempts = 50;
 int functionChances = 10000;
-int iterations = 50;
+int iterations = 20;
 int retryLimit = 4;
 String mentalResource = "exp.txt";
 String mentalResource2 = "uber.txt";
@@ -207,20 +207,20 @@ String[] selectFunction(String simulationData, String currentState) {
 String permission(String[] res, String[] res2, String objects, String transitions) {
   String state = "";
   for (int x = 0; x < realityConstructionAttempts; ) {
-    int rand = round(random(res.length-7)) + 5;
-    int rand2 = round(random(res2.length-7)) + 5;
+    int rand = round(random(res.length-27)) + 15;
+    int rand2 = round(random(res2.length-27)) + 15;
     if (res[rand].equals(res2[rand2]) == true ) { // = object
       if (objects.indexOf("\n" + res[rand] + "\n") > -1 && objects.indexOf("\n" + res2[rand2] + "\n") > -1) {
         String state0 = res[rand];
         String state1 = "";
         String state2 = "";
-        for (int y = -5; y < 5; y++) {
+        for (int y = -10; y < 10; y++) {
           if (transitions.indexOf("\n" + res[rand+y] + "\n") > -1 && res[rand+y].equals(state0) == false   ) {
             state1 = res[rand+y];
             break;
           }
         }
-        for (int y = -5; y < 5; y++) {
+        for (int y = -10; y < 10; y++) {
           if (transitions.indexOf("\n" + res2[rand2+y] + "\n") > -1 && res2[rand2+y].equals(state0) == false && state1.equals(state2) == false ) {
             state2 = res2[rand2+y];
             break;
