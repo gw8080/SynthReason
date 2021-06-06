@@ -21,7 +21,7 @@ void setup()
         output = combo + " ";
         h++;
       }
-      if (output.length() > 0 && combo.length() > 0) {
+      if (output.length() > 0 && split(combo, " ").length-1 > 1) {
         if (resFull.indexOf(split(combo, " ")[1]) > -1) {
           int contextCount = 0;
           for (int y = 0; y < accuracyValue; y++) {
