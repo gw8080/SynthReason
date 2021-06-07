@@ -1,10 +1,9 @@
 PrintWriter outputx;
 PrintWriter status;
-
 String mentalResource = "emotion.txt";
 String NLP_Resource = "exp.txt";
 int retryLimit = 50;
-int mainLoop = 10;
+int mainLoop = 100;
 int accuracyValue = 20;
 int comboSearchValue = 10000;
 void setup()
