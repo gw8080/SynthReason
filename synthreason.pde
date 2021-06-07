@@ -3,14 +3,14 @@ PrintWriter status;
 String mentalResource = "emotion.txt";
 String NLP_Resource = "exp.txt";
 int retryLimit = 50;
-int mainLoop = 100;
-int accuracyValue = 40;
+int mainLoop = 50;
+int accuracyValue = 30;
 int comboSearchValue = 10000;
 void setup()
 {
   String[] simulationData = split(eliminateGarbage(mentalResource), ".");
   String[] vocabulary = loadStrings("problem.txt");
-  String[] res = split(eliminateGarbage(NLP_Resource), " ");
+  String[] res = split(eliminateGarbage(NLP_Resource).replace(".", ""), " ");
   String resFull = eliminateGarbage(mentalResource);
   String output = "";
   for (int h2 = 0; h2 < mainLoop; h2++ ) {
