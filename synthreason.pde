@@ -1,4 +1,6 @@
 PrintWriter outputx;
+PrintWriter status;
+
 String mentalResource = "emotion.txt";
 String NLP_Resource = "exp.txt";
 int retryLimit = 50;
@@ -8,13 +10,24 @@ int comboSearchValue = 10000;
 void setup()
 {
   String[] simulationData = split(join(loadStrings(mentalResource), ""), ".");
+  String[] vocabulary = loadStrings("problem.txt");
   String[] res = split(join(loadStrings(NLP_Resource), ""), " ");
   String resFull = join(loadStrings(mentalResource), "");
   String output = "";
   for (int h2 = 0; h2 < mainLoop; h2++ ) {
+    status = createWriter("status.txt");
+    status.println(str(h2+1) + "/" + str(mainLoop));
+    status.close();
     int count = 0;
     int x = round(random(simulationData.length-1));
     int NLPconstructionAttempts = split(simulationData[x], " ").length-1;
+    for (int f = 0; f < NLPconstructionAttempts*retryLimit; f++) {
+      x = round(random(simulationData.length-1));
+      NLPconstructionAttempts = split(simulationData[x], " ").length-1;
+      if (simulationData[x].indexOf(vocabulary[round(random(vocabulary.length-1))]) > -1) {
+        break;
+      }
+    }
     for (int h = 0; h < NLPconstructionAttempts; count++) {
       String combo = words(split(simulationData[x], " ")[h], res);
       if (output.length() == 0) {
