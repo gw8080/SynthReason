@@ -4,14 +4,14 @@ String mentalResource = "emotion.txt";
 String NLP_Resource = "exp.txt";
 int retryLimit = 50;
 int mainLoop = 100;
-int accuracyValue = 20;
+int accuracyValue = 40;
 int comboSearchValue = 10000;
 void setup()
 {
-  String[] simulationData = split(join(loadStrings(mentalResource), ""), ".");
+  String[] simulationData = split(eliminateGarbage(mentalResource), ".");
   String[] vocabulary = loadStrings("problem.txt");
-  String[] res = split(join(loadStrings(NLP_Resource), ""), " ");
-  String resFull = join(loadStrings(mentalResource), "");
+  String[] res = split(eliminateGarbage(NLP_Resource), " ");
+  String resFull = eliminateGarbage(mentalResource);
   String output = "";
   for (int h2 = 0; h2 < mainLoop; h2++ ) {
     status = createWriter("status.txt");
@@ -81,4 +81,13 @@ String words(String input, String[] res) {
     }
   }
   return state;
+}
+String eliminateGarbage(String resource)
+{
+  String proc =  join(loadStrings(resource), "");
+  String[] eliminate2 = {"[", "]", ";", ":", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
+  for (int k = 0; k < eliminate2.length; k++) {
+    proc = proc.replace(eliminate2[k], "");
+  }
+  return proc;
 }
