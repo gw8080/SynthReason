@@ -29,7 +29,7 @@ void setup()
     }
     for (int h = 0; h < NLPconstructionAttempts; count++) {
       String combo = words(split(simulationData[x], " ")[h], res);
-      if (output.length() == 0) {
+      if (output.length() == 0 && split(combo, " ").length-1 > 1) {
         output = combo + " ";
         h++;
       }
