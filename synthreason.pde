@@ -1,6 +1,6 @@
 PrintWriter outputx;
-String mentalResource = "exp.txt";
-String NLP_Resource = "uber.txt";
+String mentalResource = "emotion.txt";
+String NLP_Resource = "exp.txt";
 int retryLimit = 50;
 int mainLoop = 10;
 int accuracyValue = 20;
@@ -15,7 +15,7 @@ void setup()
     int count = 0;
     int x = round(random(simulationData.length-1));
     int NLPconstructionAttempts = split(simulationData[x], " ").length-1;
-    for (int h = 0; h < NLPconstructionAttempts-1; count++) {
+    for (int h = 0; h < NLPconstructionAttempts; count++) {
       String combo = words(split(simulationData[x], " ")[h], res);
       if (output.length() == 0) {
         output = combo + " ";
@@ -34,7 +34,7 @@ void setup()
               for (int a = test.length-2; a > 0; a--) {
                 process += test[a] + " ";
               }
-              if (resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + split(combo, " ")[0]) > -1) {
+              if (resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + split(combo, " ")[0]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
                 output = process + combo + " ";
                 h++;
               }
