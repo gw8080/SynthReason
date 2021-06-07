@@ -3,8 +3,8 @@ PrintWriter status;
 String mentalResource = "emotion.txt";
 String NLP_Resource = "exp.txt";
 int retryLimit = 50;
-int mainLoop = 50;
-int accuracyValue = 30;
+int mainLoop = 100;
+int accuracyValue = 20;
 int comboSearchValue = 10000;
 void setup()
 {
@@ -14,9 +14,6 @@ void setup()
   String resFull = eliminateGarbage(mentalResource);
   String output = "";
   for (int h2 = 0; h2 < mainLoop; h2++ ) {
-    status = createWriter("status.txt");
-    status.println(str(h2+1) + "/" + str(mainLoop));
-    status.close();
     int count = 0;
     int x = round(random(simulationData.length-1));
     int NLPconstructionAttempts = split(simulationData[x], " ").length-1;
@@ -59,6 +56,9 @@ void setup()
         count = 0;
       }
     }
+    status = createWriter("status.txt");
+    status.println(str(h2+1) + "/" + str(mainLoop));
+    status.close();
   }
   String output2 = "";
   for (int b = split(output, " ").length/2; b > 0; b-- ) {
