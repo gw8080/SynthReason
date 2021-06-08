@@ -1,7 +1,7 @@
 PrintWriter outputx;
 PrintWriter status;
 String mentalResource = "emotion.txt";
-String NLP_Resource = "exp.txt";
+String NLP_Resource = "merged.txt";
 int retryLimit = 50;
 int mainLoop = 100;
 int accuracyValue = 20;
@@ -9,7 +9,7 @@ int comboSearchValue = 10000;
 void setup()
 {
   String[] simulationData = split(eliminateGarbage(mentalResource), ".");
-  String[] vocabulary = loadStrings("problem.txt");
+  String[] vocabulary = split(join(loadStrings("verb.txt"), "\n") + join(loadStrings("noun.txt"), "\n"), "\n");
   String[] res = split(eliminateGarbage(NLP_Resource).replace(".", ""), " ");
   String resFull = eliminateGarbage(NLP_Resource);
   String output = "";
