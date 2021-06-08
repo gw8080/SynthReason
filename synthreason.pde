@@ -3,7 +3,7 @@ PrintWriter status;
 String mentalResource = "emotion.txt";
 String NLP_Resource = "exp.txt";
 String vocab = "mixed.txt";// "mixed.txt" or "problem.txt", "mixed.txt" requires increased values for operational parameters
-int retryLimit = 150; // higher values reduce occurances where there is no thought where possible
+int retryLimit = 150; // higher values reduce occurances where there is no thought
 int mainLoop = 200; // how many attempts to make
 int accuracyValue = 20; // the accuracy of generated text
 int comboSearchValue = 10000; // combo search value
