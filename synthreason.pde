@@ -11,7 +11,7 @@ void setup()
   String[] simulationData = split(eliminateGarbage(mentalResource), ".");
   String[] vocabulary = loadStrings("problem.txt");
   String[] res = split(eliminateGarbage(NLP_Resource).replace(".", ""), " ");
-  String resFull = eliminateGarbage(mentalResource);
+  String resFull = eliminateGarbage(NLP_Resource);
   String output = "";
   for (int h2 = 0; h2 < mainLoop; h2++ ) {
     int count = 0;
