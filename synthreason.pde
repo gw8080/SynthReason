@@ -1,15 +1,16 @@
 PrintWriter outputx;
 PrintWriter status;
 String mentalResource = "emotion.txt";
-String NLP_Resource = "merged.txt";
-int retryLimit = 50;
-int mainLoop = 100;
-int accuracyValue = 20;
-int comboSearchValue = 10000;
+String NLP_Resource = "exp.txt";
+String vocab = "mixed.txt";// "mixed.txt" or "problem.txt", "mixed.txt" requires increased values for operational parameters
+int retryLimit = 150; // higher values reduce occurances where there is no thought where possible
+int mainLoop = 200; // how many attempts to make
+int accuracyValue = 20; // the accuracy of generated text
+int comboSearchValue = 10000; // combo search value
 void setup()
 {
   String[] simulationData = split(eliminateGarbage(mentalResource), ".");
-  String[] vocabulary = split(join(loadStrings("verb.txt"), "\n") + join(loadStrings("noun.txt"), "\n"), "\n");
+  String[] vocabulary = loadStrings(vocab);
   String[] res = split(eliminateGarbage(NLP_Resource).replace(".", ""), " ");
   String resFull = eliminateGarbage(NLP_Resource);
   String output = "";
