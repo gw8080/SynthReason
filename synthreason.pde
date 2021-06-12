@@ -2,7 +2,7 @@ PrintWriter outputx;
 PrintWriter status;
 String mentalResource = "n.txt";
 String NLP_Resource = "philosophy.txt";
-String vocab = "noun.txt";// "mixed.txt" or "problem.txt"
+String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
 int retryLimit = 150; // higher values reduce occurances where there is no output
 int mainLoop = 10; // how many attempts to generate text
 int accuracyValue = 10; // the detail accuracy of generated text
