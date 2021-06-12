@@ -2,9 +2,9 @@ PrintWriter outputx;
 PrintWriter status;
 String mentalResource = "philosophy.txt";
 String NLP_Resource = "n.txt";
-String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
+String vocab = "noun.txt";// "mixed.txt" or "problem.txt"
 int retryLimit = 150; // higher values reduce occurances where there is no output
-int mainLoop = 10; // how many attempts to generate text
+int mainLoop = 20; // how many attempts to generate text
 int accuracyValue = 20; // the detail accuracy of generated text
 int comboSearchValue = 10000; // combo search value
 void setup()
@@ -22,7 +22,7 @@ void setup()
       x = round(random(simulationData.length-1));
       NLPconstructionAttempts = split(simulationData[x], " ").length-1;
       String[] alpha = split(simulationData[x], " ");
-      if (vocabulary.indexOf(alpha[round(random(alpha.length-1))]) > -1) {
+      if (vocabulary.indexOf("\n" + alpha[round(random(alpha.length-1))] + "\n") > -1) {
         break;
       }
     }
