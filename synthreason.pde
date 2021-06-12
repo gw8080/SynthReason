@@ -1,18 +1,18 @@
 PrintWriter outputx;
 PrintWriter status;
-String mentalResource = "n.txt";
-String NLP_Resource = "philosophy.txt";
+String mentalResource = "exp.txt";
+String NLP_Resource = "uber.txt";
 String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
 int retryLimit = 150; // higher values reduce occurances where there is no output
 int mainLoop = 10; // how many attempts to generate text
-int accuracyValue = 10; // the detail accuracy of generated text
+int accuracyValue = 20; // the detail accuracy of generated text
 int comboSearchValue = 10000; // combo search value
 void setup()
 {
-  String[] simulationData = split(eliminateGarbage(mentalResource), ".");
+  String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
   String vocabulary = join(loadStrings(vocab), "\n");
-  String[] res = split(eliminateGarbage(NLP_Resource).replace(".", ""), " ");
-  String resFull = eliminateGarbage(NLP_Resource);
+  String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
+  String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
   String output = "";
   for (int h2 = 0; h2 < mainLoop; h2++ ) {
     int count = 0;
@@ -42,7 +42,7 @@ void setup()
             if (contextCount == accuracyValue) {
               String process = "";
               String[] test = split(output, " ");
-              for (int a = test.length-2; a > 0; a--) {
+              for (int a = test.length-2; a > -1; a--) {
                 process += test[a] + " ";
               }
               if (resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + split(combo, " ")[0]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
@@ -63,7 +63,7 @@ void setup()
     status.close();
   }
   String output2 = "";
-  for (int b = split(output, " ").length/2; b > 0; b-- ) {
+  for (int b = split(output, " ").length/2; b > -1; b-- ) {
     output2 += split(output, " ")[b] + " ";
   }
   outputx = createWriter("output.txt");
@@ -73,7 +73,7 @@ void setup()
 }
 String words(String input, String[] res) {
   String state = "";
-  for (int x = 1; x < comboSearchValue; x++ ) {
+  for (int x = 0; x < comboSearchValue; x++ ) {
     int rand = round(random(res.length-4))+2;
     if ( res[rand].equals(input) == true) {
       state = res[rand-1] + " " +  res[rand] + " " + res[rand+1];
