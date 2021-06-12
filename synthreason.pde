@@ -1,16 +1,16 @@
 PrintWriter outputx;
 PrintWriter status;
-String mentalResource = "emotion.txt";
-String NLP_Resource = "exp.txt";
-String vocab = "mixed.txt";// "mixed.txt" or "problem.txt", "mixed.txt" requires increased values for operational parameters
-int retryLimit = 150; // higher values reduce occurances where there is no thought
-int mainLoop = 200; // how many attempts to make
-int accuracyValue = 20; // the accuracy of generated text
+String mentalResource = "philosophy.txt";
+String NLP_Resource = "n.txt";
+String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
+int retryLimit = 150; // higher values reduce occurances where there is no output
+int mainLoop = 10; // how many attempts to generate text
+int accuracyValue = 20; // the detail accuracy of generated text
 int comboSearchValue = 10000; // combo search value
 void setup()
 {
   String[] simulationData = split(eliminateGarbage(mentalResource), ".");
-  String[] vocabulary = loadStrings(vocab);
+  String vocabulary = join(loadStrings(vocab), "\n");
   String[] res = split(eliminateGarbage(NLP_Resource).replace(".", ""), " ");
   String resFull = eliminateGarbage(NLP_Resource);
   String output = "";
@@ -21,7 +21,8 @@ void setup()
     for (int f = 0; f < NLPconstructionAttempts*retryLimit; f++) {
       x = round(random(simulationData.length-1));
       NLPconstructionAttempts = split(simulationData[x], " ").length-1;
-      if (simulationData[x].indexOf(vocabulary[round(random(vocabulary.length-1))]) > -1) {
+      String[] alpha = split(simulationData[x], " ");
+      if (vocabulary.indexOf(alpha[round(random(alpha.length-1))]) > -1) {
         break;
       }
     }
