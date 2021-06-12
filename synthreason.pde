@@ -40,7 +40,6 @@ void setup()
               contextCount++;
             }
             if (contextCount == accuracyValue) {
-
               String process = "";
               String[] test = split(output, " ");
               for (int a = test.length-2; a > 0; a--) {
