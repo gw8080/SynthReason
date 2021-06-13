@@ -1,73 +1,83 @@
 PrintWriter outputx;
 PrintWriter status;
-String mentalResource = "exp.txt";
-String NLP_Resource = "uber.txt";
+String mentalResource = "n.txt";
+String NLP_Resource = "n.txt";
 String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
 int retryLimit = 150; // higher values reduce occurances where there is no output
-int mainLoop = 10; // how many attempts to generate text
+int mainLoop = 5; // how many attempts to generate text
+int intermittentLoop = 20; // how many attempts to generate text
 int accuracyValue = 20; // the detail accuracy of generated text
 int comboSearchValue = 10000; // combo search value
 void setup()
 {
-  String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
-  String vocabulary = join(loadStrings(vocab), "\n");
-  String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
-  String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
-  String output = "";
-  for (int h2 = 0; h2 < mainLoop; h2++ ) {
-    int count = 0;
-    int x = round(random(simulationData.length-1));
-    int NLPconstructionAttempts = split(simulationData[x], " ").length-1;
-    for (int f = 0; f < NLPconstructionAttempts*retryLimit; f++) {
-      x = round(random(simulationData.length-1));
-      NLPconstructionAttempts = split(simulationData[x], " ").length-1;
-      String[] alpha = split(simulationData[x], " ");
-      if (vocabulary.indexOf("\n" + alpha[round(random(alpha.length-1))] + "\n") > -1) {
-        break;
+  outputx = createWriter("output.txt");
+  for (int h3 = 0; h3 < mainLoop; h3++ ) {
+    String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
+    String vocabulary = join(loadStrings(vocab), "\n");
+    String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
+    String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
+    String output = "";
+    for (int h2 = 0; h2 < intermittentLoop; h2++ ) {
+      int count = 0;
+      int x = round(random(simulationData.length-1));
+      int NLPconstructionAttempts = split(simulationData[x], " ").length-1;
+      for (int f = 0; f < NLPconstructionAttempts*retryLimit; f++) {
+        x = round(random(simulationData.length-1));
+        NLPconstructionAttempts = split(simulationData[x], " ").length-1;
+        String[] alpha = split(simulationData[x], " ");
+        if (vocabulary.indexOf("\n" + alpha[round(random(alpha.length-1))] + "\n") > -1) {
+          break;
+        }
       }
-    }
-    for (int h = 0; h < NLPconstructionAttempts; count++) {
-      String combo = words(split(simulationData[x], " ")[h], res);
-      if (output.length() == 0 && split(combo, " ").length-1 > 1) {
-        output = combo + " ";
-        h++;
-      }
-      if (split(output, " ").length-1 > 1 && split(combo, " ").length-1 > 1) {
-        if (resFull.indexOf(split(combo, " ")[1]) > -1) {
-          int contextCount = 0;
-          for (int y = 0; y < accuracyValue; y++) {
-            if (resFull.indexOf(split(output, " ")[round(random(split(output, " ").length-1))]) > -1) {
-              contextCount++;
-            }
-            if (contextCount == accuracyValue) {
-              String process = "";
-              String[] test = split(output, " ");
-              for (int a = test.length-2; a > -1; a--) {
-                process += test[a] + " ";
+      for (int h = 0; h < NLPconstructionAttempts; count++) {
+        String combo = words(split(simulationData[x], " ")[h], res);
+        if (output.length() == 0 && split(combo, " ").length-1 > 1) {
+          output = combo + " ";
+          h++;
+        }
+        if (split(output, " ").length-1 > 1 && split(combo, " ").length-1 > 1) {
+          if (resFull.indexOf(split(combo, " ")[1]) > -1) {
+            int contextCount = 0;
+            for (int y = 0; y < accuracyValue; y++) {
+              if (resFull.indexOf(split(output, " ")[round(random(split(output, " ").length-1))]) > -1) {
+                contextCount++;
               }
-              if (resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + split(combo, " ")[0]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
-                output = process + combo + " ";
-                h++;
+              if (contextCount == accuracyValue) {
+                String process = "";
+                String[] test = split(output, " ");
+                for (int a = test.length-2; a > -1; a--) {
+                  process += test[a] + " ";
+                }
+                if (resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + split(combo, " ")[0]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
+                  output = process + combo + " ";
+                  h++;
+                }
               }
             }
           }
         }
+        if (count > retryLimit*NLPconstructionAttempts) {
+          h++;
+          count = 0;
+        }
       }
-      if (count > retryLimit*NLPconstructionAttempts) {
-        h++;
-        count = 0;
-      }
+      status = createWriter("status.txt");
+      status.println(str(h2+1) + "/" + str(mainLoop));
+      status.close();
     }
-    status = createWriter("status.txt");
-    status.println(str(h2+1) + "/" + str(mainLoop));
-    status.close();
+    String output2 = "[prompt]\n";
+    for (int b = split(output, " ").length/2; b > -1; b-- ) {
+      output2 += split(output, " ")[b] + " ";
+    }
+    output2 += ".\n\n[response]";
+    for (int b = split(output, " ").length/2; b < split(output, " ").length-1; b++ ) {
+      output2 += split(output, " ")[b] + " ";
+    }
+    output2 += ".";
+    outputx.println(output2);
+    outputx.println();
+    outputx.flush();
   }
-  String output2 = "";
-  for (int b = split(output, " ").length/2; b > -1; b-- ) {
-    output2 += split(output, " ")[b] + " ";
-  }
-  outputx = createWriter("output.txt");
-  outputx.println(output2);
   outputx.close();
   exit();
 }
