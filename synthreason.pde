@@ -70,11 +70,11 @@ void setup()
       status.close();
     }
     String output2 = "[prompt]\n";
-    for (int b = 0; b < split(output, " ").length/2; b++ ) {
+    for (int b = split(output, " ").length/2; b > -1; b-- ) {
       output2 += split(output, " ")[b] + " ";
     }
     output2 += ".\n\n[response]\n";
-    for (int b = split(output, " ").length/2; b < split(output, " ").length-1; b++ ) {
+    for (int b = split(output, " ").length-1; b > split(output, " ").length/2; b-- ) {
       output2 += split(output, " ")[b] + " ";
     }
     output2 += ".";
