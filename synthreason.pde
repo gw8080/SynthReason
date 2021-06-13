@@ -73,7 +73,7 @@ void setup()
     for (int b = split(output, " ").length/2; b > -1; b-- ) {
       output2 += split(output, " ")[b] + " ";
     }
-    output2 += ".\n\n[response]";
+    output2 += ".\n\n[response]\n";
     for (int b = split(output, " ").length/2; b < split(output, " ").length-1; b++ ) {
       output2 += split(output, " ")[b] + " ";
     }
