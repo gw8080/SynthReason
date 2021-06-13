@@ -1,10 +1,10 @@
 PrintWriter outputx;
 PrintWriter status;
-String mentalResource = "exp.txt";
-String NLP_Resource = "uber.txt";
+String mentalResource = "n.txt";
+String NLP_Resource = "n.txt";
 String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
 int retryLimit = 150; // higher values reduce occurances where there is no output
-int mainLoop = 5; // how many attempts to generate text
+int mainLoop = 10; // how many attempts to generate a sample
 int intermittentLoop = 10; // how many attempts to generate text
 int accuracyValue = 20; // the detail accuracy of generated text
 int comboSearchValue = 10000; // combo search value
@@ -13,11 +13,11 @@ void setup()
   outputx = createWriter("output.txt");
   outputx.println("SynthReason output:\n\n" + "Mental resource used: " + mentalResource + "\n" +"NLP resource used: " + NLP_Resource + "\n");
   outputx.flush();
+  String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
+  String vocabulary = join(loadStrings(vocab), "\n");
+  String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
+  String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
   for (int h3 = 0; h3 < mainLoop; h3++ ) {
-    String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
-    String vocabulary = join(loadStrings(vocab), "\n");
-    String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
-    String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
     String output = "";
     for (int h2 = 0; h2 < intermittentLoop; h2++ ) {
       int count = 0;
@@ -70,7 +70,7 @@ void setup()
       status.close();
     }
     String output2 = "[prompt]\n";
-    for (int b = split(output, " ").length/2; b > -1; b-- ) {
+    for (int b = 0; b < split(output, " ").length/2; b++ ) {
       output2 += split(output, " ")[b] + " ";
     }
     output2 += ".\n\n[response]\n";
