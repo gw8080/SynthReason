@@ -1,16 +1,18 @@
 PrintWriter outputx;
 PrintWriter status;
-String mentalResource = "n.txt";
-String NLP_Resource = "n.txt";
+String mentalResource = "exp.txt";
+String NLP_Resource = "uber.txt";
 String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
 int retryLimit = 150; // higher values reduce occurances where there is no output
 int mainLoop = 5; // how many attempts to generate text
-int intermittentLoop = 20; // how many attempts to generate text
+int intermittentLoop = 10; // how many attempts to generate text
 int accuracyValue = 20; // the detail accuracy of generated text
 int comboSearchValue = 10000; // combo search value
 void setup()
 {
   outputx = createWriter("output.txt");
+  outputx.println("SynthReason output:\n\n" + "Mental resource used: " + mentalResource + "\n" +"NLP resource used: " + NLP_Resource + "\n");
+  outputx.flush();
   for (int h3 = 0; h3 < mainLoop; h3++ ) {
     String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
     String vocabulary = join(loadStrings(vocab), "\n");
@@ -62,7 +64,9 @@ void setup()
         }
       }
       status = createWriter("status.txt");
-      status.println(str(h2+1) + "/" + str(mainLoop));
+      status.println("SynthReason status");
+      status.println("Sample# " + str(h3+1) + "/" + str(mainLoop));
+      status.println("Sample progress: " + str(h2+1) + "/" + str(intermittentLoop));
       status.close();
     }
     String output2 = "[prompt]\n";
@@ -97,9 +101,9 @@ String words(String input, String[] res) {
 String eliminateGarbage(String resource)
 {
   String proc =  join(loadStrings(resource), "");
-  String[] eliminate2 = {"[", "]", ";", ":", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
-  for (int k = 0; k < eliminate2.length; k++) {
-    proc = proc.replace(eliminate2[k], "");
+  String[] eliminate = {"-", "=", "[", "]", ";", ":", ",", "\"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "\'", "?"};
+  for (int k = 0; k < eliminate.length; k++) {
+    proc = proc.replace(eliminate[k], "");
   }
   return proc;
 }
