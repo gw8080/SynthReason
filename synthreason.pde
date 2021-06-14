@@ -33,11 +33,11 @@ void setup()
       }
       for (int h = 0; h < NLPconstructionAttempts; count++) {
         String combo = words(split(simulationData[x], " ")[h], res);
-        if (output.length() == 0 && split(combo, " ").length-1 > 1) {
+        if (output.length() == 0 && split(combo, " ").length-1 > 2) {
           output = combo + " ";
           h++;
         }
-        if (split(output, " ").length-1 > 1 && split(combo, " ").length-1 > 1) {
+        if (split(output, " ").length-1 > 1 && split(combo, " ").length-1 > 2) {
           if (resFull.indexOf(split(combo, " ")[1]) > -1) {
             int contextCount = 0;
             for (int y = 0; y < accuracyValue; y++) {
@@ -58,7 +58,7 @@ void setup()
             }
           }
         }
-        if (count > retryLimit*NLPconstructionAttempts) {
+        if (count > retryLimit) {
           h++;
           count = 0;
         }
@@ -69,15 +69,10 @@ void setup()
       status.println("Sample progress: " + str(h2+1) + "/" + str(intermittentLoop));
       status.close();
     }
-    String output2 = "[prompt]\n";
+    String output2 = "";
     for (int b = split(output, " ").length/2; b > -1; b-- ) {
       output2 += split(output, " ")[b] + " ";
     }
-    output2 += ".\n\n[response]\n";
-    for (int b = split(output, " ").length-1; b > split(output, " ").length/2; b-- ) {
-      output2 += split(output, " ")[b] + " ";
-    }
-    output2 += ".";
     outputx.println(output2);
     outputx.println();
     outputx.flush();
