@@ -15,7 +15,7 @@ void setup()
   outputx.flush();
   String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
   String vocabulary = join(loadStrings(vocab), "\n");
-  String[] res = split(eliminateGarbage(mentalResource).replace(".", "").toLowerCase(), " ");
+  String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
   String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
   for (int h3 = 0; h3 < mainLoop; h3++ ) {
     String output = "";
