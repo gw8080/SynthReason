@@ -1,7 +1,7 @@
 PrintWriter outputx;
 PrintWriter status;
 String mentalResource = "n.txt";
-String NLP_Resource = "n.txt";
+String NLP_Resource = "exp.txt";
 String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
 int retryLimit = 150; // higher values reduce occurances where there is no output
 int mainLoop = 10; // how many attempts to generate a sample
@@ -15,7 +15,7 @@ void setup()
   outputx.flush();
   String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
   String vocabulary = join(loadStrings(vocab), "\n");
-  String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
+  String[] res = split(eliminateGarbage(mentalResource).replace(".", "").toLowerCase(), " ");
   String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
   for (int h3 = 0; h3 < mainLoop; h3++ ) {
     String output = "";
