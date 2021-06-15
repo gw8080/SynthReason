@@ -50,7 +50,7 @@ void setup()
                 for (int a = test.length-2; a > -1; a--) {
                   process += test[a] + " ";
                 }
-                if (resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + split(combo, " ")[0]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
+                if (resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + split(combo, " ")[2]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
                   output = process + combo + " ";
                   h++;
                 }
