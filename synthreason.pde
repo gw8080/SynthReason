@@ -1,12 +1,12 @@
 PrintWriter outputx;
 PrintWriter status;
-String mentalResource = "n.txt";
-String NLP_Resource = "exp.txt";
+String mentalResource = "existence.txt";
+String NLP_Resource = "merged.txt";
 String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
 int retryLimit = 150; // higher values reduce occurances where there is no output
 int mainLoop = 10; // how many attempts to generate a sample
 int intermittentLoop = 10; // how many attempts to generate text
-int accuracyValue = 20; // the detail accuracy of generated text
+int accuracyValue = 30; // the detail accuracy of generated text
 int comboSearchValue = 10000; // combo search value
 void setup()
 {
@@ -83,12 +83,9 @@ void setup()
 String words(String input, String[] res) {
   String state = "";
   for (int x = 0; x < comboSearchValue; x++ ) {
-    int rand = round(random(res.length-4))+2;
+    int rand = round(random(res.length-8))+4;
     if ( res[rand].equals(input) == true) {
-      state = res[rand-1] + " " +  res[rand] + " " + res[rand+1];
-      if (res[rand-1].length() > 3) {
-        break;
-      }
+      state = res[rand-2] + " " +  res[rand-1] + " " + res[rand];
     }
   }
   return state;
