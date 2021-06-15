@@ -1,7 +1,7 @@
 PrintWriter outputx;
 PrintWriter status;
 String mentalResource = "existence.txt";
-String NLP_Resource = "merged.txt";
+String NLP_Resource = "n.txt";
 String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
 int retryLimit = 150; // higher values reduce occurances where there is no output
 int mainLoop = 10; // how many attempts to generate a sample
@@ -85,7 +85,10 @@ String words(String input, String[] res) {
   for (int x = 0; x < comboSearchValue; x++ ) {
     int rand = round(random(res.length-8))+4;
     if ( res[rand].equals(input) == true) {
-      state = res[rand-2] + " " +  res[rand-1] + " " + res[rand];
+      state = res[rand-1] + " " +  res[rand] + " " + res[rand+1];
+      if (res[rand-1].length() > 3) {
+        break;
+      }
     }
   }
   return state;
