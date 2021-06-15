@@ -38,24 +38,14 @@ void setup()
           h++;
         }
         if (split(output, " ").length-1 > 1 && split(combo, " ").length-1 > 1) {
-          if (resFull.indexOf(split(combo, " ")[1]) > -1) {
-            int contextCount = 0;
-            for (int y = 0; y < accuracyValue; y++) {
-              if (resFull.indexOf(split(output, " ")[round(random(split(output, " ").length-1))]) > -1) {
-                contextCount++;
-              }
-              if (contextCount == accuracyValue) {
-                String process = "";
-                String[] test = split(output, " ");
-                for (int a = test.length-2; a > -1; a--) {
-                  process += test[a] + " ";
-                }
-                if (resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + split(combo, " ")[2]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
-                  output = process + combo + " ";
-                  h++;
-                }
-              }
-            }
+          String process = "";
+          String[] test = split(output, " ");
+          for (int a = test.length-2; a > -1; a--) {
+            process += test[a] + " ";
+          }
+          if (resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + split(combo, " ")[2]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
+            output = process + combo + " ";
+            h++;
           }
         }
         if (count > retryLimit) {
