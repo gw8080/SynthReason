@@ -15,6 +15,7 @@ void setup()
   String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
   String vocabulary = join(loadStrings(vocab), "\n");
   String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
+  String[] resSegment = split(eliminateGarbage(NLP_Resource).toLowerCase(), ".");
   String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
   for (int h3 = 0; h3 < mainLoop; h3++ ) {
     String output = "";
@@ -43,8 +44,10 @@ void setup()
             process += test[a] + " ";
           }
           if (resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + split(combo, " ")[2]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
-            output = process + combo + " ";
-            h++;
+            if (maximiseDivergence(split(process, " ")[split(process, " ").length-2], split(combo, " ")[0], resSegment) == true) {
+              output = process + combo + " ";
+              h++;
+            }
           }
         }
         if (count > retryLimit) {
@@ -90,4 +93,22 @@ String eliminateGarbage(String resource)
     proc = proc.replace(eliminate[k], "");
   }
   return proc;
+}
+boolean maximiseDivergence(String object, String interaction, String[] resource) {
+  boolean state = false;
+  int objectCount = 0, objectReductionCount = 0;
+  for (int j = 0; j < resource.length-1; j++) {
+    if (resource[j].indexOf(" " + object + " ") > -1 && resource[j].indexOf(" " + interaction + " ") > -1) {
+      objectCount++;
+    }
+  }
+  for (int j = 0; j < resource.length-1; j++) {
+    if (resource[j].indexOf(" " + object + " ") > -1 && resource[j].indexOf(" " + interaction + " ") == -1) {
+      objectReductionCount++;
+    }
+  }
+  if ( objectCount < objectReductionCount) {
+    state = true;
+  }
+  return state;
 }
