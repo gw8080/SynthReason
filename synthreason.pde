@@ -3,6 +3,7 @@ PrintWriter status;
 String mentalResource = "exp.txt";
 String NLP_Resource = "uber.txt";
 String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
+String filter = "filter.txt";
 int retryLimit = 150; // higher values reduce occurances where there is no output
 int mainLoop = 10; // how many attempts to generate a sample
 int intermittentLoop = 10; // how many attempts to generate text
@@ -17,6 +18,7 @@ void setup()
   String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
   String[] resSegment = split(eliminateGarbage(NLP_Resource).toLowerCase(), ".");
   String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
+  String filterControl = join(loadStrings(filter), "\n");
   for (int h3 = 0; h3 < mainLoop; h3++ ) {
     String output = "";
     for (int h2 = 0; h2 < intermittentLoop; h2++ ) {
@@ -32,7 +34,7 @@ void setup()
         }
       }
       for (int h = 0; h < NLPconstructionAttempts; count++) {
-        String combo = words(split(simulationData[x], " ")[h], res);
+        String combo = words(split(simulationData[x], " ")[h], res, filterControl);
         if (output.length() == 0 && split(combo, " ").length-1 > 1) {
           output = combo + " ";
           h++;
@@ -72,13 +74,13 @@ void setup()
   outputx.close();
   exit();
 }
-String words(String input, String[] res) {
+String words(String input, String[] res, String filterControl) {
   String state = "";
   for (int x = 0; x < comboSearchValue; x++ ) {
     int rand = round(random(res.length-8))+4;
     if ( res[rand].equals(input) == true) {
       state = res[rand-1] + " " +  res[rand] + " " + res[rand+1];
-      if (res[rand-1].length() > 3) {
+      if (filterControl.indexOf(res[rand-1]) == -1) {
         break;
       }
     }
