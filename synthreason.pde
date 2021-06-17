@@ -44,7 +44,7 @@ void setup()
             process += test[a] + " ";
           }
           if (resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + split(combo, " ")[2]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
-            if (maximiseDivergence(split(process, " ")[split(process, " ").length-2], split(combo, " ")[0], resSegment) == true) {
+            if (controlDivergence(split(process, " ")[0], split(combo, " ")[0], resSegment) == true) {
               output = process + combo + " ";
               h++;
             }
@@ -94,7 +94,7 @@ String eliminateGarbage(String resource)
   }
   return proc;
 }
-boolean maximiseDivergence(String object, String interaction, String[] resource) {
+boolean controlDivergence(String object, String interaction, String[] resource) {
   boolean state = false;
   int objectCount = 0, objectReductionCount = 0;
   for (int j = 0; j < resource.length-1; j++) {
