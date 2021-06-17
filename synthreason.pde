@@ -1,24 +1,24 @@
 PrintWriter outputx;
+PrintWriter outputz;
 PrintWriter status;
 String mentalResource = "exp.txt";
 String NLP_Resource = "uber.txt";
 String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
 String filter = "filter.txt";
 int retryLimit = 150; // higher values reduce occurances where there is no output
-int mainLoop = 10; // how many attempts to generate a sample
-int intermittentLoop = 10; // how many attempts to generate text
+int mainLoop = 50; // how many attempts to generate a sample
+int intermittentLoop = 5; // how many attempts to generate text
 int comboSearchValue = 10000; // combo search value
+int processSize = 1000; // logic variable
 void setup()
 {
-  outputx = createWriter("output.txt");
-  outputx.println("SynthReason output:\n\n" + "Mental resource used: " + mentalResource + "\n" +"NLP resource used: " + NLP_Resource + "\n");
-  outputx.flush();
   String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
   String vocabulary = join(loadStrings(vocab), "\n");
   String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
   String[] resSegment = split(eliminateGarbage(NLP_Resource).toLowerCase(), ".");
   String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
   String filterControl = join(loadStrings(filter), "\n");
+  String total = "";
   for (int h3 = 0; h3 < mainLoop; h3++ ) {
     String output = "";
     for (int h2 = 0; h2 < intermittentLoop; h2++ ) {
@@ -67,10 +67,12 @@ void setup()
     for (int b = split(output, " ").length/2; b > -1; b-- ) {
       output2 += split(output, " ")[b] + " ";
     }
-    outputx.println(output2);
-    outputx.println();
-    outputx.flush();
+    total += output2 + ".\n\n";
   }
+  total += "\nlogic:\n\n" + doLogic(total);
+  outputx = createWriter("output/output.txt");
+  outputx.println("SynthReason output:\n\n" + "Mental resource used: " + mentalResource + "\n" +"NLP resource used: " + NLP_Resource + "\n");
+  outputx.println(total);
   outputx.close();
   exit();
 }
@@ -113,4 +115,76 @@ boolean controlDivergence(String object, String interaction, String[] resource) 
     state = true;
   }
   return state;
+}
+
+String doLogic(String processText) {
+
+  String noun = join(loadStrings("noun.txt"), "\n");
+  String verb = join(loadStrings("verb.txt"), "\n");
+  String adjective = join(loadStrings("adjective.txt"), "\n");
+  String[] text = split(processText, ".");
+  String output = "";
+  String total = "";
+  for (int x = 0; x < text.length-1; x++) {
+    String proc = text[x];
+    int go = 1;
+    String noun1 = "", adj = "", verb1 = "";
+    for (int y = 0; y < split(proc, " ").length-1; y++) {
+      if (noun.indexOf("\n" + split(proc, " ")[y] + "\n") > -1 && go == 1) {
+        noun1 = split(proc, " ")[y];
+        go = 0;
+      }
+      if (adjective.indexOf("\n" + split(proc, " ")[y] + "\n") > -1) {
+        adj = split(proc, " ")[y];
+      }
+      if (verb.indexOf("\n" + split(proc, " ")[y] + "\n") > -1) {
+        verb1 = split(proc, " ")[y];
+      }
+      if (noun1.length() > 2 && adj.length() > 2 && verb1.length() > 2) {
+        if (noun1.equals(adj) == false && adj.equals(verb1) == false  && noun1.equals(verb1) == false ) {
+          output = noun1 + " is not " + adj + " because ";
+        }
+      }
+    }
+    Boolean exit = false;
+    String output3 = "";
+    int stat = 0;
+    for (int xx = 0; xx < text.length-1 && exit == false; xx++) {
+      String proc2 = text[xx];
+      for (int y = 0; y < split(proc2, " ").length-1 && exit == false; y++) {
+        if (noun1.length() > 2 && adj.length() > 2 && verb1.length() > 2) {
+          if (proc2.indexOf(noun1) > -1 && proc2.indexOf(adj) > -1 && proc2.indexOf(verb1) == -1) {   
+            stat++;
+          }
+        }
+      }
+    }
+    if (stat == 0) {
+      output3 = noun1 + " exist without " + verb1;
+    }
+    if (total.indexOf(output + output3+ ";") == -1 ) {
+      String check = output + output3+";";
+      if (check.indexOf(" ;") == -1) {
+        total += check + "\n";
+      }
+    }
+  }
+  total = total.replace(";", "");
+  String[] proc = split(total, "\n");
+  String process = "";
+  for (int x = 0; x < processSize; x++) {
+    String test = proc[round(random(proc.length-1))];
+    String test2 = proc[round(random(proc.length-1))];
+    String[] spl = split(test, " ");
+    String[] spl2 = split(test2, " ");
+    if (spl.length-1 == 8 && spl2.length-1 == 8) {
+      process += spl[0] + " of " + spl2[0] + " " + spl2[1] + " " + spl2[2] + " " + spl[3] + " " + spl[4] + " " + spl[5] + " " + spl[6] + " " + spl[7] + " " + spl[8]
+        + ", how do people achieve " + spl[3]  + " " + spl[0] + "? and how does one " + spl[8] +  " " + spl2[0] + " for " + spl[0] + "?" + "\n";
+    }
+  }
+  outputz = createWriter("output/questions.txt");
+  outputz.println(process);
+  outputz.println();
+  outputz.close();
+  return total;
 }
