@@ -67,7 +67,7 @@ void setup()
       status.close();
     }
     String output2 = "";
-    for (int b = split(output, " ").length-1; b > -1; ) {
+    for (int b = split(output, " ").length-1; b > 0; ) {
       int action = 1;
       if (action == 1) {
         if (filterControl.indexOf(split(output, " ")[b]) == -1 && filterControl.indexOf(split(output, " ")[b-1]) == -1) {
