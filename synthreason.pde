@@ -67,21 +67,24 @@ void setup()
       status.close();
     }
     String output2 = "";
-    for (int b = split(output, " ").length/2; b > -1; ) {
+    for (int b = split(output, " ").length-2; b > -1; ) {
       int action = 1;
       if (action == 1) {
-        if (filterControl.indexOf(split(output, " ")[b]) == -1 || filterControl.indexOf(split(output, " ")[b+1]) == -1) {
-          output2 += split(output, " ")[b] + " " + split(output, " ")[b+1] + " ";
+        if (filterControl.indexOf(split(output, " ")[b]) == -1 && filterControl.indexOf(split(output, " ")[b-1]) == -1) {
+          output2 += split(output, " ")[b-1] + " " + split(output, " ")[b] + " ";
           b-=2;
           action = 0;
         }
       }
       if (action == 1) {
-        if (filterControl.indexOf(split(output, " ")[b]) > -1 || filterControl.indexOf(split(output, " ")[b+1]) > -1) {
+        if (filterControl.indexOf(split(output, " ")[b]) > -1) {
           output2 += split(output, " ")[b] + " ";
           b--;
           action = 0;
         }
+      }
+      if (action == 1) {
+        b--;
       }
     }
     total += output2 + ".\n\n";
@@ -99,7 +102,7 @@ String words(String input, String[] res, String filterControl) {
     int rand = round(random(res.length-8))+4;
     if ( res[rand].equals(input) == true) {
       state = res[rand-1] + " " +  res[rand] + " " + res[rand+1];
-      if (filterControl.indexOf(res[rand-1]) == -1) {
+      if (filterControl.indexOf(res[rand-1]) == -1 &&filterControl.indexOf(res[rand]) == -1 ) {
         break;
       }
     }
