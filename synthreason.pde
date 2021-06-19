@@ -2,23 +2,23 @@ PrintWriter outputx;
 PrintWriter status;
 String mentalResource = "exp.txt";
 String NLP_Resource = "uber.txt";
+String rules = "reason.txt";// rules
 String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
 String filter = "filter.txt";
 int retryLimit = 150; // higher values reduce occurances where there is no output
-int mainLoop = 10; // how many attempts to generate a sample
-int intermittentLoop = 10; // how many attempts to generate text
+int mainLoop = 5; // how many attempts to generate a sample
+int intermittentLoop = 5; // how many attempts to generate text
 int comboSearchValue = 10000; // combo search value
+String txt = "";
 void setup()
 {
-  outputx = createWriter("output.txt");
-  outputx.println("SynthReason output:\n\n" + "Mental resource used: " + mentalResource + "\n" +"NLP resource used: " + NLP_Resource + "\n");
-  outputx.flush();
   String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
   String vocabulary = join(loadStrings(vocab), "\n");
   String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
   String[] resSegment = split(eliminateGarbage(NLP_Resource).toLowerCase(), ".");
   String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
   String filterControl = join(loadStrings(filter), "\n");
+  String total = "";
   for (int h3 = 0; h3 < mainLoop; h3++ ) {
     String output = "";
     for (int h2 = 0; h2 < intermittentLoop; h2++ ) {
@@ -35,9 +35,12 @@ void setup()
       }
       for (int h = 0; h < NLPconstructionAttempts; count++) {
         String combo = words(split(simulationData[x], " ")[h], res, filterControl);
+
         if (output.length() == 0 && split(combo, " ").length-1 > 1) {
-          output = combo + " ";
-          h++;
+          if (join(simulationData, " ").indexOf(split(combo, " ")[2]) > -1) {
+            output = combo + " ";
+            h++;
+          }
         }
         if (split(output, " ").length-1 > 1 && split(combo, " ").length-1 > 1) {
           String process = "";
@@ -64,13 +67,29 @@ void setup()
       status.close();
     }
     String output2 = "";
-    for (int b = split(output, " ").length/2; b > -1; b-- ) {
-      output2 += split(output, " ")[b] + " ";
+    for (int b = split(output, " ").length/2; b > -1; ) {
+      int action = 1;
+      if (action == 1) {
+        if (filterControl.indexOf(split(output, " ")[b]) == -1 || filterControl.indexOf(split(output, " ")[b+1]) == -1) {
+          output2 += split(output, " ")[b] + " " + split(output, " ")[b+1] + " ";
+          b-=2;
+          action = 0;
+        }
+      }
+      if (action == 1) {
+        if (filterControl.indexOf(split(output, " ")[b]) > -1 || filterControl.indexOf(split(output, " ")[b+1]) > -1) {
+          output2 += split(output, " ")[b] + " ";
+          b--;
+          action = 0;
+        }
+      }
     }
-    outputx.println(output2);
-    outputx.println();
-    outputx.flush();
+    total += output2 + ".\n\n";
   }
+  outputx = createWriter("output.txt");
+  outputx.println("SynthReason output:\n\n" + "Mental resource used: " + mentalResource + "\n" +"NLP resource used: " + NLP_Resource + "\n");
+  outputx.println(total);
+  outputx.println();
   outputx.close();
   exit();
 }
