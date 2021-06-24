@@ -50,8 +50,11 @@ void setup()
           }
           if (resFull.indexOf(split(process, " ")[0] + " " + split(combo, " ")[2]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
             if (controlDivergence(split(process, " ")[0], split(combo, " ")[0], resSegment) == true) {
-              output = process + combo + " ";
-              h++;
+              boolean outcome = calc(combo, split(combo, " ")[0], simulationData);
+              if (outcome == true) {
+                output = process + combo + " ";
+                h++;
+              }
             }
           }
         }
@@ -96,13 +99,23 @@ void setup()
   outputx.close();
   exit();
 }
+boolean calc(String input, String variable, String[] simulation) {
+  boolean state = false;
+  for (int x = 0; x < simulation.length-1; x++) {
+    if (simulation[x].indexOf(split(input, " ")[round(random(split(input, " ").length-1))]) > -1 && simulation[x].indexOf(split(input, " ")[round(random(split(input, " ").length-1))]) > -1 && simulation[x].indexOf(variable) > -1) {
+      state = true;
+      break;
+    }
+  }
+  return state;
+}
 String words(String input, String[] res, String filterControl) {
   String state = "";
   for (int x = 0; x < comboSearchValue; x++ ) {
     int rand = round(random(res.length-8))+4;
     if ( res[rand].equals(input) == true) {
       state = res[rand-1] + " " +  res[rand] + " " + res[rand+1];
-      if (filterControl.indexOf(res[rand-1]) == -1 &&filterControl.indexOf(res[rand]) == -1 ) {
+      if (filterControl.indexOf(res[rand-1]) == -1 && filterControl.indexOf(res[rand]) == -1 ) {
         break;
       }
     }
