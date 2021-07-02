@@ -1,6 +1,6 @@
 PrintWriter outputx;
 PrintWriter status;
-String mentalResource = "merged.txt";
+String mentalResource = "uber.txt";
 int mainLoop = 1000; // how many attempts to generate a sample
 int retryLimit = 1000; // how many attempts to generate a sample
 int comboSearchValue = 10000000; // combo search value
@@ -22,7 +22,7 @@ void setup()
         }
         if (controlDivergence(split(combo, " ")[round(random(split(combo, " ").length-1))], split(process, " ")[round(random(split(process, " ").length-2))], resSegment) == true) {
           if (z == precision) {
-            process += words(split(words(res[rand], res), " ")[round(random(2))], res) + " ";
+            process += words(split(words(split(words(split(words(split(words(split(words(split(words(res[rand], res), " ")[round(random(2))], res), " ")[round(random(2))], res), " ")[round(random(2))], res), " ")[round(random(2))], res), " ")[round(random(2))], res), " ")[round(random(2))], res) + " ";
             rand = round(random(res.length-1));
           }
         }
