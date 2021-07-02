@@ -1,123 +1,51 @@
 PrintWriter outputx;
 PrintWriter status;
-String mentalResource = "exp.txt";
-String NLP_Resource = "uber.txt";
-String rules = "reason.txt";// rules
-String vocab = "mixed.txt";// "mixed.txt" or "problem.txt"
-String filter = "filter.txt";
-int retryLimit = 150; // higher values reduce occurances where there is no output
-int mainLoop = 5; // how many attempts to generate a sample
-int intermittentLoop = 5; // how many attempts to generate text
-int comboSearchValue = 10000; // combo search value
+String mentalResource = "reason.txt";
+int mainLoop = 1000; // how many attempts to generate a sample
+int retryLimit = 1000; // how many attempts to generate a sample
+int comboSearchValue = 1000000; // combo search value
+int theoreticalMin = 1000;
 String txt = "";
 void setup()
 {
-  String[] simulationData = split(eliminateGarbage(mentalResource).toLowerCase(), ".");
-  String vocabulary = join(loadStrings(vocab), "\n");
-  String[] res = split(eliminateGarbage(NLP_Resource).replace(".", "").toLowerCase(), " ");
-  String[] resSegment = split(eliminateGarbage(NLP_Resource).toLowerCase(), ".");
-  String resFull = eliminateGarbage(NLP_Resource).toLowerCase();
-  String filterControl = join(loadStrings(filter), "\n");
-  String total = "";
-  for (int h3 = 0; h3 < mainLoop; h3++ ) {
-    String output = "";
-    for (int h2 = 0; h2 < intermittentLoop; h2++ ) {
-      int count = 0;
-      int x = round(random(simulationData.length-1));
-      int NLPconstructionAttempts = split(simulationData[x], " ").length-1;
-      for (int f = 0; f < NLPconstructionAttempts*retryLimit; f++) {
-        x = round(random(simulationData.length-1));
-        NLPconstructionAttempts = split(simulationData[x], " ").length-1;
-        String[] alpha = split(simulationData[x], " ");
-        if (vocabulary.indexOf("\n" + alpha[round(random(alpha.length-1))] + "\n") > -1) {
-          break;
-        }
-      }
-      for (int h = 0; h < NLPconstructionAttempts; count++) {
-        String combo = words(split(simulationData[x], " ")[h], res, filterControl);
-
-        if (output.length() == 0 && split(combo, " ").length-1 > 1) {
-          if (join(simulationData, " ").indexOf(split(combo, " ")[2]) > -1) {
-            output = combo + " ";
-            h++;
-          }
-        }
-        if (split(output, " ").length-1 > 1 && split(combo, " ").length-1 > 1) {
-          String process = "";
-          String[] test = split(output, " ");
-          for (int a = test.length-2; a > -1; a--) {
-            process += test[a] + " ";
-          }
-          if (resFull.indexOf(split(process, " ")[0] + " " + split(combo, " ")[2]) > -1 && resFull.indexOf(split(process, " ")[split(process, " ").length-2] + " " + combo) == -1 ) {
-            if (controlDivergence(split(process, " ")[0], split(combo, " ")[0], resSegment) == true) {
-              boolean outcome = calc(combo, split(combo, " ")[0], simulationData);
-              if (outcome == true) {
-                output = process + combo + " ";
-                h++;
+  String[] res = split(eliminateGarbage(mentalResource).replace(".", ". ").toLowerCase(), " ");
+  String[] resSegment = split(eliminateGarbage(mentalResource).replace(".", ". ").toLowerCase(), ".");
+  for (int y = 0; y < retryLimit; y++ ) {
+    int rand = round(random(res.length-1));
+    String process = words(res[rand], res) + " ";
+    for (int x = 0; x < mainLoop; x++ ) {
+      String combo = words(res[rand], res);
+      if (controlDivergence(split(combo, " ")[round(random(split(combo, " ").length-1))], split(process, " ")[round(random(split(process, " ").length-2))], resSegment) == true) {
+        if (controlDivergence(split(combo, " ")[round(random(split(combo, " ").length-1))], split(process, " ")[round(random(split(process, " ").length-2))], resSegment) == true) {
+          if (controlDivergence(split(combo, " ")[round(random(split(combo, " ").length-1))], split(process, " ")[round(random(split(process, " ").length-2))], resSegment) == true) {
+            if (controlDivergence(split(combo, " ")[round(random(split(combo, " ").length-1))], split(process, " ")[round(random(split(process, " ").length-2))], resSegment) == true) {
+              if (controlDivergence(split(combo, " ")[round(random(split(combo, " ").length-1))], split(process, " ")[round(random(split(process, " ").length-2))], resSegment) == true) {
+                process += words(split(words(res[rand], res), " ")[round(random(2))], res) + " ";
+                rand = round(random(res.length-1));
               }
             }
           }
         }
-        if (count > retryLimit) {
-          h++;
-          count = 0;
-        }
-      }
-      status = createWriter("status.txt");
-      status.println("SynthReason status");
-      status.println("Sample# " + str(h3+1) + "/" + str(mainLoop));
-      status.println("Sample progress: " + str(h2+1) + "/" + str(intermittentLoop));
-      status.close();
-    }
-    String output2 = "";
-    for (int b = split(output, " ").length-1; b > 0; ) {
-      int action = 1;
-      if (action == 1) {
-        if (filterControl.indexOf(split(output, " ")[b]) == -1 && filterControl.indexOf(split(output, " ")[b-1]) == -1) {
-          output2 += split(output, " ")[b-1] + " " + split(output, " ")[b] + " ";
-          b-=2;
-          action = 0;
-        }
-      }
-      if (action == 1) {
-        if (filterControl.indexOf(split(output, " ")[b]) > -1) {
-          output2 += split(output, " ")[b] + " ";
-          b--;
-          action = 0;
-        }
-      }
-      if (action == 1) {
-        b--;
       }
     }
-    total += output2 + ".\n\n";
-  }
-  outputx = createWriter("output.txt");
-  outputx.println("SynthReason output:\n\n" + "Mental resource used: " + mentalResource + "\n" +"NLP resource used: " + NLP_Resource + "\n");
-  outputx.println(total);
-  outputx.println();
-  outputx.close();
-  exit();
-}
-boolean calc(String input, String variable, String[] simulation) {
-  boolean state = false;
-  for (int x = 0; x < simulation.length-1; x++) {
-    if (simulation[x].indexOf(split(input, " ")[round(random(split(input, " ").length-1))]) > -1 && simulation[x].indexOf(split(input, " ")[round(random(split(input, " ").length-1))]) > -1 && simulation[x].indexOf(variable) > -1) {
-      state = true;
+    if (process.length() > theoreticalMin) {
+      outputx = createWriter("output.txt");
+      outputx.println("SynthReason output:\n\n" + "Mental resource used: " + mentalResource + "\n");
+      outputx.println(process);
+      outputx.println();
+      outputx.close();
       break;
     }
   }
-  return state;
+  exit();
 }
-String words(String input, String[] res, String filterControl) {
+String words(String input, String[] res) {
   String state = "";
   for (int x = 0; x < comboSearchValue; x++ ) {
-    int rand = round(random(res.length-8))+4;
+    int rand = round(random(res.length-4))+1;
     if ( res[rand].equals(input) == true) {
       state = res[rand-1] + " " +  res[rand] + " " + res[rand+1];
-      if (filterControl.indexOf(res[rand-1]) == -1 && filterControl.indexOf(res[rand]) == -1 ) {
-        break;
-      }
+      break;
     }
   }
   return state;
