@@ -1,9 +1,9 @@
 PrintWriter outputx;
 PrintWriter status;
-String mentalResource = "reason.txt";
+String mentalResource = "merged.txt";
 int mainLoop = 1000; // how many attempts to generate a sample
 int retryLimit = 1000; // how many attempts to generate a sample
-int comboSearchValue = 1000000; // combo search value
+int comboSearchValue = 10000000; // combo search value
 int theoreticalMin = 1000;
 int precision = 5;
 String txt = "";
@@ -41,9 +41,13 @@ void setup()
 }
 String words(String input, String[] res) {
   String state = "";
-  for (int x = 0; x < comboSearchValue; x++ ) {
+  for (int x = 0; x != comboSearchValue+1; x++ ) {
     int rand = round(random(res.length-4))+1;
     if ( res[rand].equals(input) == true) {
+      state = res[rand-1] + " " +  res[rand] + " " + res[rand+1];
+      break;
+    }
+    if (x == comboSearchValue) {
       state = res[rand-1] + " " +  res[rand] + " " + res[rand+1];
       break;
     }
