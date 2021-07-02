@@ -1,6 +1,6 @@
 PrintWriter outputx;
 PrintWriter status;
-String mentalResource = "reason.txt";
+String mentalResource = "uber.txt";
 int mainLoop = 1000; // how many attempts to generate a sample
 int retryLimit = 1000; // how many attempts to generate a sample
 int comboSearchValue = 10000000; // combo search value
@@ -14,7 +14,7 @@ void setup()
     int rand = round(random(res.length-1));
     String process = words(res[rand], res) + " ";
     for (int x = 0; x < mainLoop; x++ ) {
-      if (controlDivergence(loadStrings("problem.txt")[round(random(loadStrings("problem.txt").length-1))], split(process, " ")[round(random(split(process, " ").length-2))], resSegment) == true) {
+      if (controlDivergence(split(process, " ")[round(random(split(process, " ").length-2))],loadStrings("noun.txt")[round(random(loadStrings("noun.txt").length-1))],  resSegment) == true) {
         process += words(split(words(split(words(split(words(split(words(split(words(split(words(split(process, " ")[round(random(split(process, " ").length-1))], res), " ")[round(random(2))], res), " ")[round(random(2))], res), " ")[round(random(2))], res), " ")[round(random(2))], res), " ")[round(random(2))], res), " ")[round(random(2))], res) + " ";
         rand = round(random(res.length-1));
       }
