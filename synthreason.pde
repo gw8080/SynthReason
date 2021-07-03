@@ -12,7 +12,7 @@
 
 PrintWriter outputx;
 PrintWriter debug;
-String resource = "exp.txt";// knowledgebase
+String resource = "exp.txt";// knowledge
 String rules = "reason.txt";// rules
 String output = "";
 String txt = "";
@@ -20,7 +20,7 @@ int comboSearchValue = 10000000; // combo search value
 
 void setup()
 {
-  String[] res = split(eliminateGarbage("uber.txt").replace(".", ". ").toLowerCase(), " ");
+  String[] res = split(eliminateGarbage(resource).replace(".", ". ").toLowerCase(), " ");
   int count = 0;
   String[]vocabproc;
   String vocabsyn = "";
