@@ -12,13 +12,13 @@
 
 PrintWriter outputx;
 PrintWriter debug;
-String resource = "uber.txt";// knowledge
-String rules = "reason.txt";// rules
+String resource = "existence.txt";// knowledge
+String rules = "existence.txt";// rules
 String output = "";
 String txt = "";
 int comboSearchValue = 100000; // combo search value
 int sortMax = 99999999;
-int minimumSentenceLength = 20;
+int minimumSentenceLength = 30;
 void setup()
 {
   String[] res = split(eliminateGarbage(resource).replace(".", "").toLowerCase(), " ");
@@ -62,7 +62,7 @@ void setup()
   for (int catPos = 0; catPos < cat.length-1; catPos++ )
   {
     int x = round(random(split(vocabprep[int (cat[catPos])], "\n").length-1));
-    output += words(split(words(split(split(vocabprep[int (cat[catPos])], "\n")[x], " ")[round(random(split(split(vocabprep[int (cat[catPos])], "\n")[x], " ").length-1))], res), " ")[round(random(split(words(split(split(vocabprep[int (cat[catPos])], "\n")[x], " ")[round(random(split(split(vocabprep[int (cat[catPos])], "\n")[x], " ").length-1))], res), " ").length-1))], res) + " ";
+    output += split(words(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ")[round(random(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ").length-1))], res), " ")[round(random(split(words(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ")[round(random(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ").length-1))], res), " ").length-1))] + " ";
   }
   String[] sort = split(output, ".");
   String sorted = "";
@@ -93,7 +93,7 @@ void setup()
 String words(String input, String[] res) {
   String state = "";
   for (int x = 0; x != comboSearchValue+1; x++ ) {
-    int rand = round(random(res.length-4))+1;
+    int rand = round(random(res.length-3))+1;
     if ( res[rand+round(random(2))-1].equals(input) == true) {
       state = res[rand-1] + " " +  res[rand] + " " + res[rand+1];
       break;
