@@ -16,7 +16,7 @@ String resource = "exp.txt";// knowledge
 String rules = "reason.txt";// rules
 String output = "";
 String txt = "";
-int comboSearchValue = 1000000; // combo search value
+int comboSearchValue = 100000; // combo search value
 
 void setup()
 {
