@@ -12,15 +12,16 @@
 
 PrintWriter outputx;
 PrintWriter debug;
-String resource = "exp.txt";// knowledge
+String resource = "uber.txt";// knowledge
 String rules = "reason.txt";// rules
 String output = "";
 String txt = "";
 int comboSearchValue = 100000; // combo search value
-
+int sortMax = 99999999;
+int minimumSentenceLength = 20;
 void setup()
 {
-  String[] res = split(eliminateGarbage(resource).replace(".", ". ").toLowerCase(), " ");
+  String[] res = split(eliminateGarbage(resource).replace(".", "").toLowerCase(), " ");
   int count = 0;
   String[]vocabproc;
   String vocabsyn = "";
@@ -63,8 +64,29 @@ void setup()
     int x = round(random(split(vocabprep[int (cat[catPos])], "\n").length-1));
     output += words(split(words(split(split(vocabprep[int (cat[catPos])], "\n")[x], " ")[round(random(split(split(vocabprep[int (cat[catPos])], "\n")[x], " ").length-1))], res), " ")[round(random(split(words(split(split(vocabprep[int (cat[catPos])], "\n")[x], " ")[round(random(split(split(vocabprep[int (cat[catPos])], "\n")[x], " ").length-1))], res), " ").length-1))], res) + " ";
   }
+  String[] sort = split(output, ".");
+  String sorted = "";
+  int m = 0;
+  for (int n = 0; n < sortMax; n++) {
+    for (int x = 0; x < sort.length-1; x++) {
+      if (sort[x].length() == n) {
+        sorted += sort[x] + ".";
+        m++;
+      }
+    }
+    if (m == sort.length-1) {
+      break;
+    }
+  }
+  sort = split(sorted, ".");
+  sorted = "";
+  for (int x = 0; x < sort.length-1; x++) {
+    if (split(sort[x], " ").length-1 >= minimumSentenceLength) {
+      sorted += sort[x] + ".";
+    }
+  }
   outputx = createWriter("output.txt");
-  outputx.println(output);
+  outputx.println(sorted);
   outputx.close();
   exit();
 }
@@ -77,7 +99,7 @@ String words(String input, String[] res) {
       break;
     }
     if (x == comboSearchValue) {
-      state = res[rand-1] + " " +  res[rand] + " " + res[rand+1];
+      state = res[rand-1] + " " +  res[rand] + " " + res[rand+1] + ".";
       break;
     }
   }
