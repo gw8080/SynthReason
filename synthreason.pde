@@ -12,16 +12,18 @@
 
 PrintWriter outputx;
 PrintWriter debug;
-String resource = "existence.txt";// knowledge
-String rules = "existence.txt";// rules
+String resource = "exp.txt";// knowledge
+String rules = "reason.txt";// rules
 String output = "";
 String txt = "";
 int comboSearchValue = 100000; // combo search value
 int sortMax = 99999999;
 int minimumSentenceLength = 30;
+int precision = 10;
 void setup()
 {
   String[] res = split(eliminateGarbage(resource).replace(".", "").toLowerCase(), " ");
+  String[] resfull = split(eliminateGarbage(resource).toLowerCase(), ".");
   int count = 0;
   String[]vocabproc;
   String vocabsyn = "";
@@ -59,10 +61,22 @@ void setup()
     }
   }
   String[]cat = split(txt, ",");
-  for (int catPos = 0; catPos < cat.length-1; catPos++ )
+  for (int catPos = 0; catPos < cat.length-1; )
   {
     int x = round(random(split(vocabprep[int (cat[catPos])], "\n").length-1));
-    output += split(words(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ")[round(random(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ").length-1))], res), " ")[round(random(split(words(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ")[round(random(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ").length-1))], res), " ").length-1))] + " ";
+    String alpha = split(words(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ")[round(random(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ").length-1))], res), " ")[round(random(split(words(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ")[round(random(split(words(split(vocabprep[int (cat[catPos])], "\n")[x], res), " ").length-1))], res), " ").length-1))];
+
+    for (int z = 0; z != precision+1; z++) {
+      if (controlDivergence(split(output, " ")[round(random(split(output, " ").length-1))], split(alpha, " ")[round(random(split(alpha, " ").length-1))], resfull) == false) {
+        break;
+      }
+      if (controlDivergence(split(output, " ")[round(random(split(output, " ").length-1))], split(alpha, " ")[round(random(split(alpha, " ").length-1))], resfull) == true) {
+        if (z == precision) {
+          output += alpha + " ";
+          catPos++;
+        }
+      }
+    }
   }
   String[] sort = split(output, ".");
   String sorted = "";
@@ -113,4 +127,22 @@ String eliminateGarbage(String resource)
     proc = proc.replace(eliminate[k], "");
   }
   return proc;
+}
+boolean controlDivergence(String object, String interaction, String[] resource) {
+  boolean state = false;
+  int objectCount = 0, objectReductionCount = 0;
+  for (int j = 0; j < resource.length-1; j++) {
+    if (resource[j].indexOf(" " + object + " ") > -1 && resource[j].indexOf(" " + interaction + " ") > -1) {
+      objectCount++;
+    }
+  }
+  for (int j = 0; j < resource.length-1; j++) {
+    if (resource[j].indexOf(" " + object + " ") > -1 && resource[j].indexOf(" " + interaction + " ") == -1) {
+      objectReductionCount++;
+    }
+  }
+  if ( objectCount < objectReductionCount) {
+    state = true;
+  }
+  return state;
 }
