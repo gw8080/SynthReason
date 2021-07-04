@@ -19,7 +19,7 @@ String txt = "";
 int comboSearchValue = 100000; // combo search value
 int sortMax = 99999999;
 int minimumSentenceLength = 30;
-int precision = 10;
+int precision = 3;
 void setup()
 {
   String[] res = split(eliminateGarbage(resource).replace(".", "").toLowerCase(), " ");
