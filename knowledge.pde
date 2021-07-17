@@ -12,7 +12,7 @@
 
 PrintWriter outputx;
 PrintWriter debug;
-String resource = "n.txt";// knowledge
+String resource = "exp.txt";// knowledge
 String output = "";
 void setup()
 {
@@ -26,7 +26,8 @@ void setup()
       String wordx = concept(word, resfull, noun);
       String wordy = concept(wordx, resfull, noun);
       if (word.equals(wordy) == false) {
-        output+= word + " has " + wordy + " and influences " + wordx + "\n";
+        String wordz = concept(wordy, resfull, noun);
+        output+= word + " has " + wordy + " and influences " + wordx + " because of " + wordz + "\n";
       }
     }
   }
